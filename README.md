@@ -90,13 +90,13 @@ The `Search` class provides a way to search a `Catalog` or `Collection` for `Ite
 
 | Method                              | Description                                                              |
 |-------------------------------------|--------------------------------------------------------------------------|
-| itemLimitPerRequest(Number: 100 | null) | The number of items to retrieve in a single request. | 
-| bbox([Number, Number, Number, Number] | null) | Limits the returned items to the supplied bbox. |
-| collections(String | null) | A comma-seperated list of collection titles to search. |
-| between(to: String | null, from: String | null) | Limits the results by dates. | 
-| filter(Object | null) | Set the [filter object](https://github.com/radiantearth/stac-api-spec/blob/master/fragments/filter) for the search. |
-| query(Object | null) | Set the [query object](https://github.com/radiantearth/stac-api-spec/blob/master/fragments/query) for the search. NB Filter is prefered. |
-| fields(Object | null) | Set the [fields object](https://github.com/radiantearth/stac-api-spec/blob/master/fragments/fields) for the search, limiting what fields are returned for each `Item` (useful for reducing the payload sizeof each item). |
+| itemLimitPerRequest(Number: 100 or null) | The number of items to retrieve in a single request. | 
+| bbox([Number, Number, Number, Number] or null) | Limits the returned items to the supplied bbox. |
+| collections(String or| null) | A comma-seperated list of collection titles to search. |
+| between(to: String or null, from: String or null) | Limits the results by dates. | 
+| filter(Object or null) | Set the [filter object](https://github.com/radiantearth/stac-api-spec/blob/master/fragments/filter) for the search. |
+| query(Object or null) | Set the [query object](https://github.com/radiantearth/stac-api-spec/blob/master/fragments/query) for the search. NB Filter is prefered. |
+| fields(Object or null) | Set the [fields object](https://github.com/radiantearth/stac-api-spec/blob/master/fragments/fields) for the search, limiting what fields are returned for each `Item` (useful for reducing the payload sizeof each item). |
 | getFirstPageOfResults() | Retrieves only the first page of results | 
 | paginateThroughAllSearchResults() | Retrieves all the `Item`'s and populates the `results` property. | 
 | checkNumberOfSearchResults() | Returns the number of results for the current search parameters, without having to retrieve all the results. | 
