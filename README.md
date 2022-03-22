@@ -9,7 +9,7 @@ Note 2: For more information on the STAC API head to the [spec](https://github.c
 npm install stac-helper
 ````
 
-## Usage
+## Basic Usage
 ````
 import initialiseCatalog from 'stac-helper'
 
@@ -21,6 +21,23 @@ async function getData() {
 
 getData()
 ````
+
+### Example - Searching a catalog 
+````
+  const catalog = await initialiseCatalog('https://explorer.prod.dea.ga.gov.au/stac')
+
+  const searcher = catalog.createSearch()
+  searcher
+    .limit(20)
+    .collections('wofs_albers')
+    .bbox([135, -45, 140, -37])
+    .between('1989-08-15', '1990-11-15')
+
+  const numResults = await searcher.checkNumberOfSearchMatches()
+  await searcher.paginateThroughAllSearchResults()
+  console.log(searcher.results)
+````
+
 
 ## API
 Users call the `initialiseCatalog` method with a url of a root catalog, this method returns a new `Catalog` class.
@@ -101,23 +118,6 @@ The `Search` class provides a way to search a `Catalog` or `Collection` for `Ite
 | paginateThroughAllSearchResults() | Retrieves all the `Item`'s and populates the `results` property. | 
 | checkNumberOfSearchResults() | Returns the number of results for the current search parameters, without having to retrieve all the results. | 
 
-
-## Examples
-### Searching a catalog 
-````
-  const catalog = await initialiseCatalog('https://explorer.prod.dea.ga.gov.au/stac')
-
-  const searcher = catalog.createSearch()
-  searcher
-    .limit(20)
-    .collections('wofs_albers')
-    .bbox([135, -45, 140, -37])
-    .between('1989-08-15', '1990-11-15')
-
-  const numResults = await searcher.checkNumberOfSearchMatches()
-  await searcher.paginateThroughAllSearchResults()
-  console.log(searcher.results)
-````
 
 ### Library scope 
 - This library aims to provide a set of generic methods for working with STAC API services.
