@@ -1,0 +1,53 @@
+@import 'theme.less';
+@import 'colors.less';
+
+.cardStyleBase {
+  padding: @padding-24;
+  border: 2px solid @grey-200;
+  border-radius: 2px;
+  transition: 0.2s;
+}
+
+.cardStyle {
+  background: @grey-100;
+  .cardStyleBase();
+}
+
+.cardStyleSlimPadding {
+  background: @grey-100;
+  .cardStyleBase();
+  padding: @padding-12 @padding-24;
+}
+
+.cardStyleLight {
+  background: white;
+  .cardStyleBase();
+}
+
+.itemInListOfStacThings {
+  margin-bottom: @padding-12;
+  h3 {
+    font-size: 1.25rem!important;
+    margin-bottom: 5px;
+    cursor: pointer;
+  }
+  h3:hover {
+    color: #3dc2be;
+  }
+  p {
+    margin-bottom: 0px;
+  }
+}
+
+.hiddenParas {
+  p {
+  white-space: nowrap;
+  overflow-wrap: break-word;
+  text-overflow: ellipsis!important;
+  overflow: hidden!important;
+}
+
+:not(p:first-child) {
+  display: none
+}
+}

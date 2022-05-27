@@ -1,0 +1,58 @@
+@import 'classes.less';
+@import 'colors.less';
+
+@padding-48: 48px;
+@padding-32: 32px;
+@padding-24: 24px;
+@padding-16: 16px;
+@padding-12: 12px;
+@padding-8: 8px;
+@padding-4: 4px;
+@padding-2: 2px;
+
+// TABS
+.ant-tabs-top > .ant-tabs-nav::before {
+  border-bottom: none!important;
+}
+
+.ant-tabs-tab {
+  color: @grey-700;
+  font-size: 14px;
+  font-weight: 400;
+  padding-left: 0px!important;
+  padding-right: 0px!important;
+}
+
+.ant-tabs-tab.ant-tabs-tab-active .ant-tabs-tab-btn {
+  text-shadow: none;
+}
+
+.ant-table-thead > tr > th, .ant-table-tbody > tr > td {
+  overflow-wrap: normal!important;
+  word-wrap: break-word!important;
+}
+
+.ant-table-row-cell-break-word {
+  word-break: normal!important;
+}
+
+.ant-table-cell {
+  line-break: anywhere!important;
+}
+
+.table-striped td {
+  background-color: #fafafa!important;
+}
+
+.ant-table-thead > tr.ant-table-row-hover:not(.ant-table-expanded-row):not(.ant-table-row-selected) > td, .ant-table-tbody > tr.ant-table-row-hover:not(.ant-table-expanded-row):not(.ant-table-row-selected) > td, .ant-table-thead > tr:hover:not(.ant-table-expanded-row):not(.ant-table-row-selected) > td, .ant-table-tbody > tr:hover:not(.ant-table-expanded-row):not(.ant-table-row-selected) > td {
+  background-color: #eeeeee!important;
+}
+
+p {
+  a, a:hover {
+    text-decoration: underline;
+  }
+  a:hover {
+    color: #3dc2be;
+  }
+}

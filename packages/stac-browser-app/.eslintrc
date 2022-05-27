@@ -1,0 +1,20 @@
+{
+  "root": true,
+  "env": {
+    "node": true
+  },
+  "extends": [
+    "plugin:vue/essential",
+    "@vue/standard",
+    "plugin:vue/vue3-essential"
+  ],
+  "parserOptions": {
+    "parser": "babel-eslint"
+  },
+  "rules": {
+    "vue/no-v-html": "off",
+    "vue/no-v-model-argument": "off",
+    "no-unneeded-ternary": "off",
+    "no-new": "off"
+  }
+}

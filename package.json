@@ -1,43 +1,21 @@
 {
   "name": "stac-helper",
+  "private": true,
+  "workspaces": {
+    "packages": [
+      "packages/*"
+    ]
+  },
   "version": "1.0.0",
   "description": "",
-  "main": "blah.js",
-  "dependencies": {
-    "dayjs": "^1.10.7",
-    "query-string": "^7.1.0"
-  },
-  "devDependencies": {
-    "@chunkd/source-url": "^6.0.0",
-    "@cogeotiff/core": "^6.1.1",
-    "@mapbox/mapbox-gl-draw": "^1.3.0",
-    "@mapbox/tilebelt": "^1.0.2",
-    "@rollup/plugin-commonjs": "^21.0.1",
-    "@rollup/plugin-json": "^4.1.0",
-    "@rollup/plugin-node-resolve": "^13.1.3",
-    "@turf/turf": "^6.5.0",
-    "@vitejs/plugin-vue": "^2.0.0",
-    "ant-design-vue": "^2.2.8",
-    "antd-dayjs-vite-plugin": "^1.1.4",
-    "eslint": "^8.7.0",
-    "eslint-config-mourner": "^3.0.0",
-    "esm": "^3.2.25",
-    "geotiff": "^2.0.2",
-    "maplibre-gl": "^2.1.0",
-    "moment": "^2.29.1",
-    "node-fetch": "^3.2.0",
-    "rollup": "^2.66.1",
-    "rollup-plugin-terser": "^7.0.2",
-    "vite": "^2.7.2",
-    "vue": "^3.2.25"
-  },
+  "main": "index.js",
   "scripts": {
-    "build": "rollup -c",
-    "build:demo": "vite build demo",
-    "dev": "vite serve demo",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "author": "",
-  "license": "MIT",
-  "type": "module"
+  "license": "ISC",
+  "dependencies": {
+    "@radiantearth/stac-fields": "^1.0.0-beta.13",
+    "lerna": "^4.0.0"
+  }
 }
