@@ -13,7 +13,7 @@
       v-if="itemHasUsableThumbnail(item)"
     >
       <img
-        :src="item.thumbnailUrl  ? item.thumbnailUrl : item.overviewUrl" 
+        :src="itemUsableThumbnail(item)" 
         style="height: 50px;"
       />
     </ACol>
@@ -51,7 +51,10 @@ export default {
       return 'N/A'
     },
     itemHasUsableThumbnail (item) {
-      return item.thumbnailUrl !== null && item.thumbnailUrl.indexOf('s3:') === -1 || item.overviewUrl !== null 
+      return item.validHttpThumbnailUrl !== null || item.validHttpOverviewUrl !== null
+    },
+    itemUsableThumbnail (item) {
+      return item.validHttpThumbnailUrl !== null ? item.validHttpThumbnailUrl : item.validHttpOverviewUrl
     }
   }
 }

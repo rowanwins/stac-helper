@@ -6,10 +6,7 @@ export function getNextObj (page) {
 
 export async function getWithJsonResponse (pageUrl) {
     const response = await fetch(pageUrl, {
-        method: 'GET',
-        headers: {
-            'Content-Type': 'application/json'
-        }
+        method: 'GET'
     })
     if (!response.ok) {
         return null

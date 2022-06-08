@@ -1,6 +1,6 @@
 import {Parser, HtmlRenderer} from 'commonmark'
 import {sniffStacType, getWithJsonResponse, createStacItemFromDataAndType} from './utils.js'
-import {createValidFetchUrl, isRelativeUrl} from './urlUtils.js'
+import {createValidFetchUrl, isRelativeUrl, isValidHttpUrl} from './urlUtils.js'
 import resolveRelative from 'resolve-relative-url'
 
 
@@ -142,6 +142,16 @@ export class StacThing {
             }
         }
         return null
+    }
+
+    get validHttpThumbnailUrl () {
+        if (!isValidHttpUrl(this.thumbnailUrl)) return null
+        return this.thumbnailUrl
+    }
+
+    get validHttpOverviewUrl () {
+        if (!isValidHttpUrl(this.overviewUrl)) return null
+        return this.overviewUrl
     }
 
     get parentType () {

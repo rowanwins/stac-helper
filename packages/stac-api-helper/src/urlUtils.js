@@ -1,6 +1,12 @@
 import URI from 'urijs'
 import resolveRelative from 'resolve-relative-url'
 
+export function isValidHttpUrl (url) {
+    if (url === null) return false
+    if (url.indexOf('s3://') > -1) return false
+    return true
+}
+
 export function isRelativeUrl (href) {
     const uri = new URI(href)
     return uri.is('relative')

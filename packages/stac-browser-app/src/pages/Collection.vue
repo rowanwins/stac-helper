@@ -3,15 +3,25 @@
 
       <template #first-col-content>
         <CollectionOverview :collection="collection"/>
-        <AButton type="primary" ghost style="margin-top: 20px;" @click="backToCatalog">
+        <AButton
+          v-if="parent !== null"
+          type="primary"
+          ghost
+          style="margin-top: 20px;"
+          @click="backToParent"
+        >
           <template #icon><ArrowLeftOutlined /></template>
-          Back to Catalog
+          Back to {{parentType}}
+        </AButton>
+        <AButton v-else disabled>
+          <template #icon><ArrowLeftOutlined /></template>
+          NO PARENT FOUND
         </AButton>
       </template>
 
       <template #second-col-content>
         <ATabs v-model:activeKey="activeTab" :animated="false">
-          <ATabPane key="items" tab="Items" class="cardStyleLight">
+          <ATabPane key="items" tab="Items" class="cardStyleLight" :disabled="items.length === 0">
             <CollectionItems 
               v-if="collection"
               :items="items"
@@ -46,11 +56,11 @@
             <Providers v-else :providers="collection.rawJson.providers"/>
           </ATabPane>
 
-          <ATabPane key="catalogs" tab="Catalogs" class="cardStyleLight" v-if="collection.catalogs.length > 0">
+          <ATabPane key="catalogs" tab="Catalogs" class="cardStyleLight" :disabled="collection.catalogs.length === 0">
             <ListCatalogs :catalogs="collection.catalogs" @set-selected-catalog="selectCatalog"/>
           </ATabPane>
 
-          <ATabPane key="collections" tab="Collections" class="cardStyleLight" v-if="collection.collections.length > 0">
+          <ATabPane key="collections" tab="Collections" class="cardStyleLight" :disabled="collection.collections.length === 0">
             <ListCollections :collections="collection.collections" @set-selected-collection="selectCollection"/>
           </ATabPane>
 
@@ -118,7 +128,16 @@ export default {
       return this.collection !== null || this.collection !== undefined
     },
     collection () {
+      if (this.$store.getters.selectedStacType !== 'Collection') return null
       return this.$store.getters.selectedStac
+    },
+    parent () {
+      if (this.collection === null) return null
+      return this.collection.parent
+    },
+    parentType () {
+      if (this.parent === null) return null
+      return this.collection.parent.stacType
     },
     filteredCollection () {
       return this.$store.state.searchCollection
@@ -128,11 +147,17 @@ export default {
     }
   },
   watch: {
-    loadingChildren: {
+    // We watch the collection id in case we've navigated from 
+    // one collection to another nested collection
+    'collection.id': {
       handler () {
-        if (this.items.length === 0) {
-          this.items = this.collectionOrFilteredCollection.items
-        }
+        this.onChildrenLoaded()
+      },
+      immediate: true
+    },
+    'collection.childrenLoaded': {
+      handler () {
+        this.onChildrenLoaded()
       }
     }
   },
@@ -158,6 +183,18 @@ export default {
 
   },
   methods: {
+    onChildrenLoaded () {
+      if (this.collection === null || !this.collection.childrenLoaded) return
+      this.items = this.collectionOrFilteredCollection.items
+
+      if (this.collection.items.length === 0 && this.collection.catalogs.length > 0) {
+        this.activeTab = 'catalogs'
+      } else if (this.collection.items.length === 0 && this.collection.collections.length > 0) {
+        this.activeTab = 'collections'
+      } else if (this.collection.catalogs.length === 0 && this.collection.items.length > 0) {
+        this.activeTab = 'items'
+      }      
+    },
     async setSelectedItem (item) {
       await this.$store.dispatch('addOrSelectStacReferenceInStore', item)
       this.$router.push(`/external/${item.linkToSelf}`)
@@ -168,9 +205,13 @@ export default {
     },
     async selectCollection (collection) {
       await this.$store.dispatch('addOrSelectStacReferenceInStore', collection)
+      this.items = []
+      this.$store.commit('setSearchCollection', null)
+      this.$store.commit('setPageResultsIndex', 1)
+
       this.$router.push(`/external/${collection.linkToSelf}`)
     },
-    async backToCatalog () {
+    async backToParent () {
       const tmp = this.collection
       this.$store.commit('setPageResultsIndex', 1)
       this.$store.commit('setSearchCollection', null)

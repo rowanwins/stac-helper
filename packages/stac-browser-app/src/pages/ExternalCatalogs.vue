@@ -14,20 +14,23 @@
           <h3>Loading catalog...</h3> 
           <ASkeleton active />
         </ARow>
-        <ARow 
-          v-else
-          v-for="catalog in catalogs"
-          type="flex"
-          align="middle"
-          class="externalCatalog cardStyle"
-        >
+        <ARow v-else>
           <ACol :span="24">
-            <h3 @click="loadCatalog(catalog)">{{catalog.title}}</h3>
-            <p style="margin-bottom: 0px;">{{catalog.summary}}</p>
-            <!-- <p>{{catalog.description}}</p> -->
+            <SimpleListFilter @filter-changed="filterChanged"/>
+            <ARow
+              v-for="catalog in filteredCatalogs"
+              type="flex"
+              align="middle"
+              class="externalCatalog cardStyle"
+            >
+              <ACol :span="24">
+                <h3 @click="loadCatalog(catalog)">{{catalog.title}}</h3>
+                <p style="margin-bottom: 0px;">{{catalog.summary}}</p>
+              </ACol>
+            </ARow>
           </ACol>
         </ARow>
-
+        
       </template>
     </TwoColLayout>
 </template>
@@ -35,23 +38,34 @@
 
 <script>
 import TwoColLayout from '@/layouts/TwoColLayout.vue'
+import SimpleListFilter from '@/components/Base/SimpleListFilter.vue'
+
 import {initialiseFromUrl} from '@stac/stac-api-helper'
 import { notification } from "ant-design-vue"
 
 export default {
   name: 'ExternalCatalogs',
   components: {
-    TwoColLayout
+    TwoColLayout,
+    SimpleListFilter
   },
   data () {
     return {
         loadingCatalogs: false,
-        loadingCatalog: false
+        loadingCatalog: false,
+        filterText: ''
     }
   },
   computed: {
     catalogs () {
       return this.$store.state.allExternalCatalogs
+    },
+    filteredCatalogs () {
+      if (this.filterText === '') return this.catalogs
+      const ftLower = this.filterText.toLowerCase()
+      return this.catalogs.filter(c => {
+        return c.title.toLowerCase().indexOf(ftLower) > -1 || c.summary.toLowerCase().indexOf(ftLower) > -1
+      })
     }
   },
   async mounted () {
@@ -64,6 +78,9 @@ export default {
     }
   },
   methods: {
+    filterChanged (filterText) {
+      this.filterText = filterText
+    },
     async loadCatalog (selectedCatalog) {
 
       if (this.$store.getters.stacReferenceIsInStore(selectedCatalog.url)) {

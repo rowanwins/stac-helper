@@ -13,22 +13,22 @@
 
         <ATabs v-model:activeKey="activeTab" :animated="false" >
           <ATabPane key="collections" tab="Collections" class="cardStyleLight" :disabled="catalog.collections.length === 0">
-              <ListCollections :collections="catalog.collections" @set-selected-collection="selectCollection"/>
-              <ARow v-if="loadingChildren" >
+              <ListCollections v-if="!loadingChildren" :collections="catalog.collections" @set-selected-collection="selectCollection"/>
+              <ARow v-else>
                 <ASkeleton active/>
               </ARow>
           </ATabPane>
 
           <ATabPane key="catalogs" tab="Catalogs" class="cardStyleLight" :disabled="catalog.catalogs.length === 0">
-              <ListCatalogs :catalogs="catalog.catalogs" @set-selected-catalog="selectCatalog"/>
-              <ARow v-if="loadingChildren" >
+              <ListCatalogs v-if="!loadingChildren" :catalogs="catalog.catalogs" @set-selected-catalog="selectCatalog"/>
+              <ARow v-else>
                 <ASkeleton active/>
               </ARow>
           </ATabPane>
 
           <ATabPane key="items" tab="Items" class="cardStyleLight" :disabled="catalog.items.length === 0">
-            <ListItems :items="catalog.items" @set-selected-item="selectItem"/>
-            <ARow v-if="loadingChildren" >
+            <ListItems v-if="!loadingChildren" :items="catalog.items" @set-selected-item="selectItem"/>
+            <ARow v-else>
               <ASkeleton active/>
             </ARow>
           </ATabPane>
@@ -84,25 +84,36 @@ export default {
     }
   },
   watch: {
-    // We watch the catalog in case we've navigated from 
+    // We watch the catalog id in case we've navigated from 
     // one catalog to another nested catalog
-    catalog: {
+    'catalog.id': {
       handler () {
+        this.onChildrenLoaded()
+      },
+      immediate: true
+    },
+    'catalog.childrenLoaded': {
+      handler () {
+        this.onChildrenLoaded()
+      }
+    },
+  },
+  methods: {
+    onChildrenLoaded () {
+      if (this.catalog === null || !this.catalog.childrenLoaded) return
         if (this.catalog.collections.length === 0 && this.catalog.catalogs.length > 0) {
           this.activeTab = 'catalogs'
         } else if (this.catalog.collections.length > 0 && this.catalog.catalogs.length === 0) {
           this.activeTab = 'collections'
-        }
-      },
-      immediate: true,
-      deep: true
-    }
-  },
-  methods: {
-    backToParentOrExternalCatalogs () {
+        } else if (this.catalog.items.length > 0 && this.catalog.catalogs.length === 0) {
+          this.activeTab = 'items'
+        }    
+    },
+    async backToParentOrExternalCatalogs () {
       if (this.parentType !== null) {
-        if (this.parentType === 'Catalog') this.selectCatalog(this.catalog.parent)
-        if (this.parentType === 'Collection') this.selectCollection(this.catalog.parent)
+        const tmpParentType = this.parentType
+        if (tmpParentType === 'Catalog') await this.selectCatalog(this.parent)
+        else if (tmpParentType === 'Collection') await this.selectCollection(this.parent)
       } else this.$router.push({name: 'external-catalogs'})
     },
     async selectCollection (collection) {

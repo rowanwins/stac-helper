@@ -127,8 +127,8 @@ export default class LeafletMap {
   }
 
   async addCollectionItemThumbnailAsset (item, errorCallback) {
-    if (item.thumbnailUrl) {
-      const lyr = L.imageOverlay(item.thumbnailUrl, [
+    if (item.validHttpThumbnailUrl) {
+      const lyr = L.imageOverlay(item.validHttpThumbnailUrl, [
         [item.bbox[3], item.bbox[2]],
         [item.bbox[1], item.bbox[0]]
       ]).addTo(this.map)
@@ -137,8 +137,8 @@ export default class LeafletMap {
   }
 
   async addCollectionItemOverviewAsset (item, errorCallback) {
-    if (item.overviewUrl) {
-      const lyr = L.imageOverlay(item.overviewUrl, [
+    if (item.validHttpOverviewUrl) {
+      const lyr = L.imageOverlay(item.validHttpOverviewUrl, [
         [item.bbox[3], item.bbox[2]],
         [item.bbox[1], item.bbox[0]]
       ]).addTo(this.map)

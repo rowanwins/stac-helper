@@ -79,7 +79,8 @@ export default {
 
       try {
         const stacThing = await initialiseFromUrl(stacUrl)
-
+        console.log(stacThing)
+        
         if (stacThing === null) {
           notification.error({
             message: "Error",
