@@ -15,9 +15,17 @@
 </template>
 
 <script>
+
 export default {
   name: 'ListOfCollections',
-  props: ['collections'],
+  props: {
+    collections: {
+      type: Array,
+      default () {
+        return []
+      }
+    }
+  },
   emits: ['set-selected-collection'],
   methods: {
     selectCollection (collection) {

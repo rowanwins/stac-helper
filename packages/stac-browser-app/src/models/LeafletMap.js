@@ -126,23 +126,23 @@ export default class LeafletMap {
     })
   }
 
-  async addCollectionItemAsset (item) {
+  async addCollectionItemThumbnailAsset (item, errorCallback) {
     if (item.thumbnailUrl) {
-      L.imageOverlay(item.thumbnailUrl, [
-        [item.bbox[3], item.bbox[2]],
-        [item.bbox[1], item.bbox[0]]
-      ], {
-        crossOrigin: true
-      }).addTo(this.map)
-    }
-  }
-
-  async addCollectionItemOverviewAsset (item) {
-    if (item.overviewUrl) {
-      L.imageOverlay(item.overviewUrl, [
+      const lyr = L.imageOverlay(item.thumbnailUrl, [
         [item.bbox[3], item.bbox[2]],
         [item.bbox[1], item.bbox[0]]
       ]).addTo(this.map)
+      if (errorCallback) lyr.on('error', errorCallback)
+    }
+  }
+
+  async addCollectionItemOverviewAsset (item, errorCallback) {
+    if (item.overviewUrl) {
+      const lyr = L.imageOverlay(item.overviewUrl, [
+        [item.bbox[3], item.bbox[2]],
+        [item.bbox[1], item.bbox[0]]
+      ]).addTo(this.map)
+      if (errorCallback) lyr.on('error', errorCallback)
     }
   }
 

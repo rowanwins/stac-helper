@@ -61,7 +61,7 @@ export default class PaginatorMixin {
             return null
         }
         const parentForItem = this.stacType ? this : this.parent
-        this._itemsByPages[this._pageIndex] = json.features.map(f => new Item(f, parentForItem))
+        this._itemsByPages[this._pageIndex] = json.features.map(f => new Item(f, null, parentForItem))
         this._nextPageObj = getNextObj(json)
         return this._itemsByPages[this._pageIndex]
     }

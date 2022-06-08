@@ -6,15 +6,15 @@
 import StacFields from '@radiantearth/stac-fields'
 
 export default {
-  name: 'ItemMetadata',
-  props: ['item'],
+  name: 'AssetMetadata',
+  props: ['asset'],
   data () {
     return {
       groups: []
     }
   },
   mounted () {
-    if (this.item) this.groups = StacFields.formatItemProperties(this.item) 
+    if (this.asset) this.groups = StacFields.formatAsset(this.asset, null)
   }
 
 }

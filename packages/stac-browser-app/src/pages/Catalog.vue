@@ -11,17 +11,26 @@
 
       <template #second-col-content>
 
-        <ATabs v-model:activeKey="activeTab" :animated="false">
-          <ATabPane key="collections" tab="Collections" class="cardStyleLight">
+        <ATabs v-model:activeKey="activeTab" :animated="false" >
+          <ATabPane key="collections" tab="Collections" class="cardStyleLight" :disabled="catalog.collections.length === 0">
               <ListCollections :collections="catalog.collections" @set-selected-collection="selectCollection"/>
+              <ARow v-if="loadingChildren" >
+                <ASkeleton active/>
+              </ARow>
           </ATabPane>
 
-          <ATabPane key="catalogs" tab="Catalogs" class="cardStyleLight">
+          <ATabPane key="catalogs" tab="Catalogs" class="cardStyleLight" :disabled="catalog.catalogs.length === 0">
               <ListCatalogs :catalogs="catalog.catalogs" @set-selected-catalog="selectCatalog"/>
+              <ARow v-if="loadingChildren" >
+                <ASkeleton active/>
+              </ARow>
           </ATabPane>
 
-          <ATabPane key="items" tab="Items" class="cardStyleLight">
+          <ATabPane key="items" tab="Items" class="cardStyleLight" :disabled="catalog.items.length === 0">
             <ListItems :items="catalog.items" @set-selected-item="selectItem"/>
+            <ARow v-if="loadingChildren" >
+              <ASkeleton active/>
+            </ARow>
           </ATabPane>
         </ATabs>
 
@@ -38,24 +47,25 @@ import ListCollections from '@/components/ListCollections.vue'
 
 export default {
   name: 'Catalog',
+  props: {
+    loadingChildren: {
+      type: Boolean,
+      default: false
+    }
+  },
   components: {
     TwoColLayout,
     CatalogOverview,
     ArrowLeftOutlined,
     ListCatalogs,
     ListCollections
-},
+  },
   data () {
     return {
-      dataReady: false,
       activeTab: 'collections'
     }
   },
   computed: {
-    catalogLength () {
-      if (this.dataReady) return `(${this.catalog.collections.length})`
-      return 
-    },
     isCatalogReady () {
       return this.catalog !== undefined
     },
@@ -66,18 +76,27 @@ export default {
       return this.$store.getters.selectedStac.parent
     },
     parentType () {
-      if (!this.catalog.hasParent || this.parent === null) return null
+      if (!this.catalog.hasParent || this.catalog.isRoot || this.parent === null) return null
       return this.$store.getters.selectedStac.parent.stacType
     },
     backButtonText () {
       return this.parentType !== null ? `Back to ${this.parentType}` : 'Back to catalogs list'
     }
   },
-  async mounted () {
-    if (this.catalog.items.length === 0 && this.catalog.collections.length === 0 && this.catalog.catalogs.length === 0) {
-      await this.catalog.loadChildren()
-    } 
-    this.dataReady = true
+  watch: {
+    // We watch the catalog in case we've navigated from 
+    // one catalog to another nested catalog
+    catalog: {
+      handler () {
+        if (this.catalog.collections.length === 0 && this.catalog.catalogs.length > 0) {
+          this.activeTab = 'catalogs'
+        } else if (this.catalog.collections.length > 0 && this.catalog.catalogs.length === 0) {
+          this.activeTab = 'collections'
+        }
+      },
+      immediate: true,
+      deep: true
+    }
   },
   methods: {
     backToParentOrExternalCatalogs () {
@@ -88,22 +107,17 @@ export default {
     },
     async selectCollection (collection) {
       const collectionUrl = collection.linkToSelf
-      await this.$store.dispatch('addThingToStoreAndSetAsSelected', collection)
+      await this.$store.dispatch('addOrSelectStacReferenceInStore', collection)
       this.$router.push(`/external/${collectionUrl}`)
     },
     async selectCatalog (catalog) {
       const catalogUrl = catalog.linkToSelf
-      await this.$store.dispatch('addThingToStoreAndSetAsSelected', catalog)
-      if (catalog.collections.length === 0 && catalog.catalogs.length > 0) {
-        this.activeTab = 'catalogs'
-      } else if (catalog.collections.length > 0 && catalog.catalogs.length === 0) {
-        this.activeTab = 'collections'
-      }
+      await this.$store.dispatch('addOrSelectStacReferenceInStore', catalog)
       this.$router.push(`/external/${catalogUrl}`)
     },
     async selectItem (item) {
       const stacUrl = item.linkToSelf
-      await this.$store.dispatch('addThingToStoreAndSetAsSelected', item)
+      await this.$store.dispatch('addOrSelectStacReferenceInStore', item)
       this.$router.push(`/external/${stacUrl}`)
     }
   }

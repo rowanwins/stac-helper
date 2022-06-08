@@ -12,7 +12,7 @@ import {
   Tabs,
   Tag
 } from 'ant-design-vue'
-
+import 'ant-design-vue/es/notification/style/css';
 import dayjs from 'dayjs'
 import 'dayjs/locale/en-au'
 import router from './router/router'
@@ -31,6 +31,7 @@ app.use(Skeleton)
 app.use(Table)
 app.use(Tabs)
 app.use(Tag)
+
 
 app.use(router)
 router.app = app

@@ -2,18 +2,31 @@
   <ARow
     v-for="item in items"
     :key="item.id"
-    @mouseover="highlightItem(item)"
-    @mouseout="removeHighlight"
+    @mouseover="$emit('highlight-item', item)"
+    @mouseout="$emit('remove-highlight')"
     class="cardStyle"
     type="flex"
     style="flex-wrap: nowrap; margin-bottom: 10px;"
   >
-    <ACol flex="0 0 80px" v-if="item.thumbnailUrl !== null && item.thumbnailUrl.indexOf('s3:') === -1 || item.overviewUrl !== null ">
-      <img :src="item.thumbnailUrl  ? item.thumbnailUrl : item.overviewUrl" style="height: 50px;"/>
+    <ACol
+      flex="0 0 80px"
+      v-if="itemHasUsableThumbnail(item)"
+    >
+      <img
+        :src="item.thumbnailUrl  ? item.thumbnailUrl : item.overviewUrl" 
+        style="height: 50px;"
+      />
     </ACol>
     <ACol flex="0 0 auto">
-      <p style="font-weight: 500; margin-bottom: 5px; cursor: pointer;" @click="selectItem(item)">{{item.id}}</p>
-      <p style="font-size: 0.8rem; margin-bottom: 0px;">{{formatDateTime(item.datetime)}} UTC</p>            
+      <p 
+        style="font-weight: 500; margin-bottom: 5px; cursor: pointer;"
+        @click="$emit('set-selected-item', item)"
+      >
+        {{item.id}}
+      </p>
+      <p style="font-size: 0.8rem; margin-bottom: 0px;">
+        {{formatDateTime(item)}} UTC
+      </p>            
     </ACol>
   </ARow>
 </template>
@@ -28,17 +41,17 @@ export default {
   props: ['items'],
   emits: ['set-selected-item', 'highlight-item', 'remove-highlight'],
   methods: {
-    highlightItem (item) {
-      this.$emit('highlight-item', item)
+    formatDateTime (item) {
+      function format (d) {
+        return dayjs(d).utc().format('DD MMM YYYY HH:mm:ss')
+      }
+      if (item.datetime === null && item.datetimeRange === null) return 'N/A'
+      if (item.datetimeRange !== null) return `${format(item.datetimeRange[0])} to ${format(item.datetimeRange[1])}`
+      if (item.datetime !== null) return format(item.datetime)
+      return 'N/A'
     },
-    removeHighlight () {
-      this.$emit('remove-highlight')
-    },
-    formatDateTime (d) {
-      return dayjs(d).utc().format('DD MMM YYYY HH:mm:ss')
-    },
-    selectItem (item) {
-      this.$emit('set-selected-item', item)
+    itemHasUsableThumbnail (item) {
+      return item.thumbnailUrl !== null && item.thumbnailUrl.indexOf('s3:') === -1 || item.overviewUrl !== null 
     }
   }
 }

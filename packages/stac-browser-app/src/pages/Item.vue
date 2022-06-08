@@ -44,19 +44,21 @@ export default {
   },
   computed: {
     parent () {
-      return this.$store.getters.selectedStac.parent
+      return this.item.parent
     },
     parentType () {
+      if (this.parent === null) return null
       return this.parent.stacType
     },
     item () {
       return this.$store.getters.selectedStac
     }
   },
+
   methods: {
     backToParent () {
       const parentUrl = this.parent.linkToSelf
-      this.$store.commit('setSelectedStacId', null)
+      this.$store.dispatch('addOrSelectStacReferenceInStore', this.parent)
       this.$router.push(`/external/${parentUrl}`)
     },
     mapIsReady (LeafletMap) {
@@ -66,7 +68,11 @@ export default {
     async addItemThingsToMap () {
       this.LeafletMap.fitToBounds(this.item.bbox)
       this.LeafletMap.addCollectionItemOutline(this.item.rawJson)
-      await this.LeafletMap.addCollectionItemOverviewAsset(this.item)
+      if (this.item.overviewUrl) this.LeafletMap.addCollectionItemOverviewAsset(this.item, this.errorLoadingOverview)
+      else if (this.item.overviewUrl === null && this.item.thumbnailUrl) this.LeafletMap.addCollectionItemThumbnailAsset(this.item, this.errorLoadingOverview)
+    },
+    errorLoadingOverview () {
+      this.LeafletMap.addCollectionItemThumbnailAsset(this.item)
     }
   }
 }

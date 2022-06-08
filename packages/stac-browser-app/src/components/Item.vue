@@ -15,7 +15,7 @@
           <ItemMetadata :item="item.rawJson"/>
         </ATabPane>
         <ATabPane key="assets" tab="Assets" class="cardStyleLight">
-          <AssetTable :assets="item.rawJson.assets"/>
+          <AssetsTable :assets="item.rawJson.assets"/>
         </ATabPane>
         <ATabPane key="links" tab="Links" class="cardStyleLight">
           <ItemLinks :item="item.rawJson"/>
@@ -26,7 +26,7 @@
 
 <script>
 import {LeftOutlined} from '@ant-design/icons-vue'
-import AssetTable from './AssetTable.vue'
+import AssetsTable from './AssetsTable.vue'
 import ItemMetadata from './ItemMetadata.vue'
 import ItemLinks from './ItemLinks.vue'
 
@@ -34,7 +34,7 @@ export default {
   name: 'Item',
   components: {
     LeftOutlined,
-    AssetTable,
+    AssetsTable,
     ItemMetadata,
     ItemLinks
 },

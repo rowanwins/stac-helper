@@ -13,7 +13,8 @@ const routes = [
     path: "/external/:stacUrl(.*)",
     name: "stac",
     component: Stac
-  }
+  },
+  { path: '/:pathMatch(.*)*', name: 'NotFound', component: ExternalCatalogs },
 ]
 
 const router = createRouter({

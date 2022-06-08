@@ -35,7 +35,7 @@
 
 <script>
 import TwoColLayout from '@/layouts/TwoColLayout.vue'
-import {Catalog} from '@stac/stac-api-helper'
+import {initialiseFromUrl} from '@stac/stac-api-helper'
 import { notification } from "ant-design-vue"
 
 export default {
@@ -47,28 +47,6 @@ export default {
     return {
         loadingCatalogs: false,
         loadingCatalog: false
-        // catalogs: [
-          // {
-          //   title: 'Digital Earth Australia',
-          //   description: 'DEA is a platform that uses spatial data recorded by satellites orbiting our planet to detect physical changes across Australia in unprecented scale.',
-          //   url: 'https://explorer.sandbox.dea.ga.gov.au/stac'
-          // },
-          // {
-          //   title: 'Earth Search',
-          //   description: 'A STAC API of AWS Public Datasets.',
-          //   url: 'https://earth-search.aws.element84.com/v0'
-          // },
-          // {
-          //   title: 'Microsoft Planetary Computer',
-          //   description: 'Searchable spatio-temporal metadata describing Earth science datasets hosted by the Microsoft Planetary Computer.',
-          //   url: 'https://planetarycomputer.microsoft.com/api/stac/v1'
-          // },
-          // {
-          //   title: 'Microsoft Planetary Computer - Staging',
-          //   description: 'Searchable spatio-temporal metadata describing Earth science datasets hosted by the Microsoft Planetary Computer.',
-          //   url: 'https://planetarycomputer-staging.microsoft.com/api/stac/v1'
-          // }
-        // ]
     }
   },
   computed: {
@@ -88,43 +66,36 @@ export default {
   methods: {
     async loadCatalog (selectedCatalog) {
 
+      if (this.$store.getters.stacReferenceIsInStore(selectedCatalog.url)) {
+        this.$store.commit('setSelectedStacId', selectedCatalog.url)
+        this.$router.push(`/external/${selectedCatalog.url}`)
+        return
+      }
+
       this.loadingCatalog = true
-      let catalogData = null
       try {
-        const response = await fetch(selectedCatalog.url)
-        if (!response.ok) {
-            this.loadingCatalog = false
-            notification.error({
-              message: "Error",
-              description: `Could not load ${selectedCatalog.title} catalog.`,
-              duration: null,
-            });
-            return
+        const stacThing = await initialiseFromUrl(selectedCatalog.url)
+
+        if (stacThing === null) {
+          notification.error({
+            message: "Error",
+            description: 'The STAC reference could not be parsed, redirecting to home.',
+            duration: null,
+          })
+          this.loadingCatalog = false
+        } else {
+          await this.$store.dispatch('addOrSelectStacReferenceInStore', stacThing)
+          this.loadingCatalog = false
+          this.$router.push(`/external/${stacThing.linkToSelf}`)
         }
-        catalogData = await response.json()
-      } catch (e) {
-        this.loadingCatalog = false
+      } catch {
         notification.error({
           message: "Error",
           description: `Could not load ${selectedCatalog.title} catalog.`,
           duration: null,
-        });
-        return
+        })
+        this.loadingCatalog = false
       }
-
-      const catalog = new Catalog(catalogData)
-      // const catalogUrl = catalog.linkToSelf.replace('https://', '')
-      const catalogUrl = catalog.linkToSelf
-
-      this.$store.commit('addStacThing', {
-        id: catalogUrl,
-        stacThing: catalog
-      })
-      await catalog.loadChildren()
-      this.loadingCatalog = false
-
-      this.$store.commit('setSelectedStacId', catalogUrl)
-      this.$router.push(`/external/${catalogUrl}`)
     }
   }
 }

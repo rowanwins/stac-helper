@@ -37,19 +37,22 @@
           <ACol :span="6">
             <ARow style="margin-bottom: 4px; float: right;">
               <AButton
-                style="width: 120px;"
+                style="width: 140px;"
                 @click="filter"
-                :disabled="!anyFilterPropertiesSet"
+                :disabled="!anyFilterPropertiesSet || applyingFilter"
                 type="primary"
               >
+                <template #icon>
+                  <SyncOutlined spin v-if="applyingFilter"/>
+                </template>
                 Apply Filters
               </AButton>
             </ARow>
             <ARow style="float: right;">
               <AButton
-                style="width: 120px;"
+                style="width: 140px;"
                 @click="reset"
-                :disabled="!anyFilterPropertiesSet"
+                :disabled="!anyFilterPropertiesSet || applyingFilter"
                 ghost
                 type="primary"
               >
@@ -63,7 +66,7 @@
 </template>
 
 <script>
-import {PlusCircleFilled,MinusCircleFilled, GatewayOutlined} from '@ant-design/icons-vue'
+import {PlusCircleFilled,MinusCircleFilled, GatewayOutlined, SyncOutlined} from '@ant-design/icons-vue'
 import calcBbox from '@turf/bbox'
 import equal from 'deep-eql'
 
@@ -72,9 +75,10 @@ export default {
   components: {
     PlusCircleFilled,
     MinusCircleFilled,
-    GatewayOutlined
+    GatewayOutlined,
+    SyncOutlined
   },
-  props: ['leafletMap'],
+  props: ['leafletMap', 'applyingFilter'],
   data () {
     return {
       showFilter: false,
@@ -105,7 +109,7 @@ export default {
       return count
     }
   },
-  emits: ['filter', 'clear-filter', 'start-rectangle-draw'],
+  emits: ['filter', 'clear-filter', 'start-rectangle-draw', 'finish-rectangle-draw'],
   methods: {
     defaultFilter () {
       return {
@@ -117,10 +121,12 @@ export default {
       this.showFilter = !this.showFilter;
     },
     async startRectangle () {
+      this.$emit('start-rectangle-draw')
       this.leafletMap.clearDrawnLayers()
       this.leafletMap.startRectangeDraw()
       const rectangleGeojson = await this.leafletMap.awaitDrawnRectangle()
       this.standardFilters.bbox = calcBbox(rectangleGeojson)
+      this.$emit('finish-rectangle-draw')
     },
     filter () {
       this.$emit('filter', this.standardFilters)

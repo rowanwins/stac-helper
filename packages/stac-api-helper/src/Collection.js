@@ -22,7 +22,8 @@ export class Collection extends aggregation(StacThing, ChildrenMixin, ExtentMixi
     }
 
     get numberOfProviders () {
-        return this.rawJson.providers.length
+        if ('providers' in this.rawJson) return this.rawJson.providers.length
+        return null
     }
 
     async createSearch () {

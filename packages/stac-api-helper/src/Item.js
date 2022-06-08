@@ -26,6 +26,13 @@ export class Item extends aggregation(StacThing) {
         return null
     }
 
+    get datetimeRange () {
+        if ('start_datetime' in this.rawJson.properties) {
+            return [this.rawJson.properties.start_datetime, this.rawJson.properties.end_datetime]
+        }
+        return null
+    }
+
     get bbox () {
         if (this.rawJson.bbox) return this.rawJson.bbox
         return calcBbox(this.rawJson)

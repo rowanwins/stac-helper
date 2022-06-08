@@ -1,6 +1,7 @@
 import {Parser, HtmlRenderer} from 'commonmark'
 import {sniffStacType, getWithJsonResponse, createStacItemFromDataAndType} from './utils.js'
-import {createValidFetchUrl} from './urlUtils.js'
+import {createValidFetchUrl, isRelativeUrl} from './urlUtils.js'
+import resolveRelative from 'resolve-relative-url'
 
 
 const reader = new Parser()
@@ -10,8 +11,9 @@ const writer = new HtmlRenderer({safe: true, smart: true})
 // It contains functionality that are common across all
 export class StacThing {
 
-    constructor (json, parent = null) {
+    constructor (json, url = null, parent = null) {
         this.id = json.id
+        this.url = url
         this.rawJson = json
         this.parent = parent
 
@@ -32,18 +34,31 @@ export class StacThing {
     }
 
     get linkToSelf () {
+        if (this.url !== null) return this.url
         if (this.rawJson.links.findIndex(i => i.rel === 'self') !== -1) {
-            return this.rawJson.links.find(i => i.rel === 'self').href
+            const selfUrl = this.rawJson.links.find(i => i.rel === 'self').href
+            if (isRelativeUrl(selfUrl)) {
+                return resolveRelative(selfUrl, this.url)
+            }
+            return selfUrl
         }
 
         // Try navigate up the tree if StacThing doesn't have a self link
         if (this.parent && this.parent.rawJson.links.findIndex(l => l.title === this.id) > -1) {
-            const parentLink = this.parent.rawJson.links.find(l => l.title === this.id)
-            return parentLink.href
+            const parentUrl = this.parent.rawJson.links.find(l => l.title === this.id).href
+            if (isRelativeUrl(parentUrl)) {
+                return resolveRelative(parentUrl, this.url)
+            }
+            return parentUrl
         }
-        // This seems bad, can't remember which catalog needed it...
+
+        // This seems bad, think it's a remnant from old STAC Spec
+        // Eg maxar catalog v0.8.1
         if (this.rawJson.links.findIndex(i => i.rel === 'root') !== -1) {
-            return this.rawJson.links.find(i => i.rel === 'root').href
+            const rootUrl = this.rawJson.links.find(i => i.rel === 'root').href
+            if (isRelativeUrl(rootUrl)) {
+                return resolveRelative(rootUrl, this.url)
+            }
         }
         return null
     }
@@ -55,8 +70,24 @@ export class StacThing {
     }
 
     get linkToParent () {
-        if (this.hasParent && this.rawJson.links.findIndex(i => i.rel === 'parent') > -1) return this.rawJson.links.find(i => i.rel === 'parent').href
+        if (this.hasParent && this.rawJson.links.findIndex(i => i.rel === 'parent') > -1) {
+            const parentUrl = this.rawJson.links.find(i => i.rel === 'parent').href
+            if (isRelativeUrl(parentUrl)) {
+                return resolveRelative(parentUrl, this.url)
+            }
+            return parentUrl
+        }
         if (this.stacType === 'Item') return this.rawJson.links.find(i => i.rel === 'collection').href
+        return null
+    }
+
+    get isRoot () {
+        if (this.linkToRoot !== null) {
+            if (this.url === this.linkToRoot) return true
+            if (this.url === this.linkToRoot + '/') return true
+            if (this.url + '/' === this.linkToRoot) return true
+            return false
+        }
         return null
     }
 
@@ -65,7 +96,13 @@ export class StacThing {
     }
 
     get linkToRoot () {
-        if (this.hasRoot) return this.rawJson.links.find(i => i.rel === 'root').href
+        if (this.hasRoot) {
+            const rootUrl = this.rawJson.links.find(i => i.rel === 'root').href
+            if (isRelativeUrl(rootUrl)) {
+                return resolveRelative(rootUrl, this.url)
+            }
+            return rootUrl
+        }
         return null
     }
 
@@ -121,13 +158,13 @@ export class StacThing {
     }
 
     async _loadLink (link) {
-        // const validUrl = createValidFetchUrl(link, this)
         if (link === null) return null
+        const validUrl = createValidFetchUrl(link, this)
         const data = await getWithJsonResponse(link)
         if (data) {
             const stacType = sniffStacType(data)
             if (stacType === 'Catalog' || stacType === 'Collection') {
-                return createStacItemFromDataAndType(data, stacType, null)
+                return createStacItemFromDataAndType(data, stacType, validUrl, null)
             }
         }
         return null
@@ -135,16 +172,26 @@ export class StacThing {
 
     async loadParent () {
         if (this.parent !== null) return this.parent
-        const validUrl = createValidFetchUrl(this.linkToParent, this)
-        const out = await this._loadLink(validUrl)
-        if (out !== null) {
-            this.parent = out
-            return this.parent
+        if (this.hasParent) {
+            const validUrl = createValidFetchUrl(this.linkToParent, this)
+            const out = await this._loadLink(validUrl)
+            if (out !== null) {
+                this.parent = out
+                return this.parent
+            }
+        } else if (this.hasRoot) {
+            const root = await this.loadRoot()
+            if (root !== null) {
+                this.parent = root
+                return this.parent
+            }
         }
         return null
     }
 
     async loadRoot () {
+        if (this.linkToRoot === null) return null
+        if (this.linkToRoot === this.url) return null
         const out = await this._loadLink(this.linkToRoot)
         if (out !== null) return out
         return null

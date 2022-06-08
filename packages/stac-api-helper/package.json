@@ -9,6 +9,7 @@
     "aggregation": "^1.2.7",
     "commonmark": "^0.30.0",
     "dayjs": "^1.10.7",
+    "resolve-relative-url": "^1.0.0",
     "uri.js": "^0.1.3"
   },
   "devDependencies": {

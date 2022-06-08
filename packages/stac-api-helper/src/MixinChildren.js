@@ -3,6 +3,7 @@ import {createValidFetchUrl} from './urlUtils.js'
 
 export default class ChildrenMixin {
     initializer () {
+        this.childrenLoaded = false
         this.items = []
         this.catalogs = []
         this.collections = []
@@ -21,48 +22,61 @@ export default class ChildrenMixin {
         return this.rawJson.links.filter(l => l.rel === 'item')
     }
 
+    _loadChild (child) {
+        return new Promise((resolve, reject) => {
+            try {
+                const validUrl = createValidFetchUrl(child, this)
+                getWithJsonResponse(validUrl)
+                    .then((data) => {
+                        if (data !== null) {
+                            const stacType = sniffStacType(data)
+                            if (stacType === 'Catalog') this.catalogs.push(createStacItemFromDataAndType(data, stacType, validUrl, this))
+                            else if (stacType === 'Collection') this.collections.push(createStacItemFromDataAndType(data, stacType, validUrl, this))
+                            else if (stacType === 'CatalogCollections') {
+                                data.collections.forEach((c2) => {
+                                    this.collections.push(createStacItemFromDataAndType(c2, 'Collection', null, this))
+                                })
+                            } else if (stacType === 'Item') {
+                                this.items.push(createStacItemFromDataAndType(data, stacType, validUrl, this))
+                                this.numberOfStaticItems++
+                            }
+                            resolve()
+                        }
+                        reject()
+                    })
+                    .catch(() => {
+                        reject()
+                    })
+
+            } catch (e) {
+                reject()
+            }
+        })
+    }
+
     async loadChildren () {
+        if (this.childrenLoaded) return Promise.resolve()
         return new Promise((resolve) => {
             if (!this.childrenLinks.length === 0) resolve()
             let part1Done = false
             let part2Done = false
 
-            const promises1 = this.childrenLinks.map((child) => {
-                const validUrl = createValidFetchUrl(child, this)
-                return getWithJsonResponse(validUrl)
-            })
-
-            Promise.all(promises1).then((values) => {
-                values.forEach((childData) => {
-                    if (childData !== null) {
-                        const stacType = sniffStacType(childData)
-                        if (stacType === 'Catalog') this.catalogs.push(createStacItemFromDataAndType(childData, stacType, this))
-                        else if (stacType === 'Collection') this.collections.push(createStacItemFromDataAndType(childData, stacType, this))
-                        else if (stacType === 'CatalogCollections') {
-                            childData.collections.forEach((c2) => {
-                                this.collections.push(createStacItemFromDataAndType(c2, 'Collection', this))
-                            })
-                        } else if (stacType === 'Item') {
-                            this.items.push(createStacItemFromDataAndType(childData, stacType, this))
-                            this.numberOfStaticItems++
-                        }
-                    }
-                })
+            const promises1 = this.childrenLinks.map(child => this._loadChild(child))
+            Promise.allSettled(promises1).then(() => {
                 part1Done = true
-                if (part1Done && part2Done) resolve()
-            });
-
-            const promises2 = this.childrenItemLinks.map((child) => {
-                const validUrl = createValidFetchUrl(child, this)
-                return getWithJsonResponse(validUrl)
+                if (part1Done && part2Done) {
+                    this.childrenLoaded = true
+                    resolve()
+                }
             })
 
-            Promise.all(promises2).then((values) => {
-                values.forEach((childData) => {
-                    if (childData !== null) this.items.push(createStacItemFromDataAndType(childData, 'Item', this))
-                })
+            const promises2 = this.childrenItemLinks.map(child => this._loadChild(child))
+            Promise.allSettled(promises2).then(() => {
                 part2Done = true
-                if (part1Done && part2Done) resolve()
+                if (part1Done && part2Done) {
+                    this.childrenLoaded = true
+                    resolve()
+                }
             })
         })
     }
