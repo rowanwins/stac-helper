@@ -32,6 +32,10 @@ export default {
   name: 'MainLayout',
   methods: {
     headHome () {
+      this.$store.commit('setPageResultsIndex', 1)
+      this.$store.commit('setSearchCollection', null)
+      this.$store.commit('setSelectedStacId', null)
+      this.$store.state.searchFilter.clearFilters()
       this.$router.push('/')
     }
   }

@@ -1,8 +1,12 @@
+# NOTE THIS README IS WAY OUT OF DATE :)
+
 A small (5kb minified) library for helping interacting with and search STAC API endpoints in a web browser. 
 
 Note: Uses the [`Fetch API`](https://developer.mozilla.org/en-US/docs/Web/API/Fetch_API/Using_Fetch) for making requests.
 
 Note 2: For more information on the STAC API head to the [spec](https://github.com/radiantearth/stac-api-spec).
+
+
 
 ## Installation
 ````
