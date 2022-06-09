@@ -21,12 +21,13 @@
             :disabled="itemsLength < pageSize"
             :options="pageSizeOptions"
           />
+
           <AButton
             size="small"
             type="primary"
             ghost
             style="margin-right: 10px;"
-            :disabled="pageIndex === 1 || loadingItems || itemsLength < pageSize"
+            :disabled="prevPageUnavailable"
             @click="getPrevPage"
           >
             <left-outlined />
@@ -36,7 +37,7 @@
             size="small"
             type="primary"
             ghost
-            :disabled="loadingItems || itemsLength < pageSize"
+            :disabled="nextPageUnavailable"
             @click="getNextPage"
           >
             Next Page
@@ -83,6 +84,23 @@ export default {
     }
   },
   computed: {
+    maxNumberOfAvailableItems () {
+      if (this.loadingItems) return null
+      return this.collectionOrFilteredCollection.numberOfItems
+    },
+    prevPageUnavailable () {
+      if (this.loadingItems) return true
+      if (this.pageIndex === 1) return true
+      return false
+    },
+    nextPageUnavailable () {
+      if (this.loadingItems) return true
+      if (this.maxNumberOfAvailableItems !== null) {
+        if ((this.pageSize * this.pageIndex) >= this.maxNumberOfAvailableItems) return true
+      }
+      if (this.itemsLength < this.pageSize) return true
+      return false
+    },
     itemsLength () {
       if (this.items === null) return 0
       return this.items.length
