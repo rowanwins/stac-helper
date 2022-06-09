@@ -16,7 +16,7 @@
         <slot name="first-col-content" />
       </ACol>
 
-      <ACol flex="0 0 700px" id="secondCol">
+      <ACol flex="0 0 600px" id="secondCol">
         <slot name="second-col-content" />
       </ACol>
       <ACol flex="1 1 auto" id="thirdColContent">

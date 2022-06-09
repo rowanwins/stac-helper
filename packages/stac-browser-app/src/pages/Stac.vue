@@ -12,7 +12,6 @@ import CatalogPage from '@/pages/Catalog.vue';
 import LoadingPage from '@/pages/Loading.vue';
 import {initialiseFromUrl} from '@stac/stac-api-helper'
 import { notification } from "ant-design-vue"
-import { isReactive } from 'vue'
 
 export default {
   name: "Stac",
@@ -44,8 +43,9 @@ export default {
   beforeRouteEnter(to, from, next) {
     // This is called on the first mount of this component (used for all stac references)
     next(async (vm) => {
+      
+      // If someone loaded the app using an external STAC reference
       if (from.name === undefined) {
-        // If someone loaded the app with an external STAC reference
         await vm.loadNewItem(window.location.pathname.split('/external/')[1])
       } else if (from.name === 'external-catalogs') {
         // If someone came to the page via the external catalogs page
@@ -82,22 +82,14 @@ export default {
         console.log(stacThing)
         
         if (stacThing === null) {
-          notification.error({
-            message: "Error",
-            description: 'The STAC reference could not be parsed, redirecting to home.',
-            duration: null,
-          })
+          this.throwNotificationError('The STAC reference could not be parsed, redirecting to home.')
           this.headHome()
         } else {
           await this.$store.dispatch('addOrSelectStacReferenceInStore', stacThing)
           this.loadChildren()
         }
       } catch {
-        notification.error({
-          message: "Error",
-          description: 'STAC url could not be loaded, redirecting to home.',
-          duration: null,
-        })
+        this.throwNotificationError('STAC url could not be loaded, redirecting to home.')
         this.headHome()
       }
     },
@@ -114,6 +106,13 @@ export default {
     },
     headHome () {
       this.$router.push('/')
+    },
+    throwNotificationError (msg) {
+      notification.error({
+        message: "Error",
+        description: msg,
+        duration: null,
+      })
     }
   }
 }

@@ -3,7 +3,6 @@ import 'leaflet/dist/leaflet.css'
 import Draw from 'leaflet-draw'
 import 'leaflet-draw/dist/leaflet.draw.css'
 import bboxPoly from '@turf/bbox-polygon'
-// import hashed from 'hashed'
 
 export default class LeafletMap {
   constructor () {

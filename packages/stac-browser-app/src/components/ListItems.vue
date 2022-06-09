@@ -2,8 +2,8 @@
   <ARow
     v-for="item in items"
     :key="item.id"
-    @mouseover="$emit('highlight-item', item)"
-    @mouseout="$emit('remove-highlight')"
+    @mouseover="$emit('item-mouse-over', item)"
+    @mouseout="$emit('item-mouse-out')"
     class="cardStyle"
     type="flex"
     style="flex-wrap: nowrap; margin-bottom: 10px;"
@@ -39,7 +39,7 @@ dayjs.extend(utc)
 export default {
   name: 'ListOfItems',
   props: ['items'],
-  emits: ['set-selected-item', 'highlight-item', 'remove-highlight'],
+  emits: ['set-selected-item', 'item-mouse-over', 'item-mouse-out'],
   methods: {
     formatDateTime (item) {
       function format (d) {

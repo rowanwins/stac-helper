@@ -101,13 +101,13 @@ export default {
   methods: {
     onChildrenLoaded () {
       if (this.catalog === null || !this.catalog.childrenLoaded) return
-        if (this.catalog.collections.length === 0 && this.catalog.catalogs.length > 0) {
-          this.activeTab = 'catalogs'
-        } else if (this.catalog.collections.length > 0 && this.catalog.catalogs.length === 0) {
-          this.activeTab = 'collections'
-        } else if (this.catalog.items.length > 0 && this.catalog.catalogs.length === 0) {
-          this.activeTab = 'items'
-        }    
+      if (this.catalog.collections.length === 0 && this.catalog.catalogs.length > 0) {
+        this.activeTab = 'catalogs'
+      } else if (this.catalog.collections.length > 0 && this.catalog.catalogs.length === 0) {
+        this.activeTab = 'collections'
+      } else if (this.catalog.items.length > 0 && this.catalog.catalogs.length === 0) {
+        this.activeTab = 'items'
+      }
     },
     async backToParentOrExternalCatalogs () {
       if (this.parentType !== null) {

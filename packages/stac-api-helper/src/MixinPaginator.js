@@ -4,53 +4,25 @@ import {Item} from './internal.js'
 export default class PaginatorMixin {
     initializer () {
         this._pageIndex = 0
-        this._itemsByPages = this._getDefaultItemsByPage()
+        this._itemsByPages = {}
         this.numberOfItems = null
         this._nextPageObj = null
         this._pageSize = 12
     }
 
-    get allItems () {
-        const out = []
-        Object.keys(this._itemsByPages).forEach(p => out.push(...this._itemsByPages[p]))
-        return out
-    }
-
-
-    _getDefaultItemsByPage () {
-        return {
-            temp: []
-        }
+    get numberOfPagesLoaded () {
+        return this._pageIndex
     }
 
     clearExistingItemPages () {
-        this._itemsByPages = this._getDefaultItemsByPage()
+        this._itemsByPages = {}
         this._pageIndex = 0
-    }
-
-    clearTempItems () {
-        this._itemsByPages.temp = []
-    }
-
-    addTempItem (item) {
-        this._itemsByPages.temp.push(item)
     }
 
     setPageSize (pageSize) {
         this._pageSize = pageSize
         this._nextPageObj = null
         return this
-    }
-
-    async _retrieveJson () {
-        let url = null
-        if (this._nextPageObj === null && this.collectionItemsUrl !== null) {
-            url = `${this._firstPageItemsUrl}?limit=${this._pageSize}`
-        } else if (this._nextPageObj !== null) url = this._nextPageObj.href
-
-        if (this._nextPageObj === undefined || !url) return null
-        const json = await getWithJsonResponse(url)
-        return json
     }
 
     async getNextPageOfCollectionItems () {
@@ -66,12 +38,23 @@ export default class PaginatorMixin {
         return this._itemsByPages[this._pageIndex]
     }
 
+    checkIfPageIndexAvailable (index) {
+        return index in this._itemsByPages
+    }
+
     getPageOfItemsByIndex (index) {
-        return this._itemsByPages[index]
+        if (this.checkIfPageIndexAvailable(index)) return this._itemsByPages[index]
+        return null
     }
 
     getItemById (id) {
-        return this.items.find(i => i.id === id)
+        let foundItem = null
+        Object.value(this._itemsByPages).forEach((pageArr) => {
+            if (pageArr.findIndex(item => item.id === id) > -1) {
+                foundItem = pageArr.find(item => item.id === id)
+            }
+        })
+        return foundItem
     }
 
     async checkTotalNumberOfItems () {
@@ -85,5 +68,16 @@ export default class PaginatorMixin {
             return this.numberOfItems
         }
         return null
+    }
+
+    async _retrieveJson () {
+        let url = null
+        if (this._nextPageObj === null && this.collectionItemsUrl !== null) {
+            url = `${this._firstPageItemsUrl}?limit=${this._pageSize}`
+        } else if (this._nextPageObj !== null) url = this._nextPageObj.href
+
+        if (this._nextPageObj === undefined || !url) return null
+        const json = await getWithJsonResponse(url)
+        return json
     }
 }

@@ -4,37 +4,38 @@
       <template #first-col-content>
         <CollectionOverview :collection="collection"/>
         <AButton
-          v-if="parent !== null"
+          v-if="parentOrRoot !== null"
           type="primary"
           ghost
           style="margin-top: 20px;"
-          @click="backToParent"
+          @click="backToParentOrRoot"
         >
           <template #icon><ArrowLeftOutlined /></template>
-          Back to {{parentType}}
+          Back to {{parentOrRootType}}
         </AButton>
         <AButton v-else disabled>
           <template #icon><ArrowLeftOutlined /></template>
-          NO PARENT FOUND
+          NO PARENT OR ROOT FOUND
         </AButton>
       </template>
 
       <template #second-col-content>
         <ATabs v-model:activeKey="activeTab" :animated="false">
-          <ATabPane key="items" tab="Items" class="cardStyleLight" :disabled="items.length === 0">
+          <ATabPane key="items" tab="Items" class="cardStyleLight" :disabled="!hasChildItems">
             <CollectionItems 
-              v-if="collection"
+              :collection-or-filtered-collection="collectionOrFilteredCollection"
               :items="items"
               :leaflet-map="leafletMap"
-              :loading-items="loadingChildren || !dataReady"
-              :page-index="pageResultsIndex"
+              :loading-items="loadingChildrenOrItems"
               :applying-filter="applyingFilter"
+              @item-mouse-over="highlightItem"
+              @item-mouse-out="removeHighlightItem"
+              @item-page-changed="onItemPageChange"
+              @set-item-data-loading="setDataReady"
               @set-selected-item="setSelectedItem"
-              @get-next-page="getNextPage"
-              @get-prev-page="getPrevPage"
               @set-page-size="setPageSize"
               @filter="filterCalled"
-              @clear-filter="filterCleared"
+              @filter-cleared="filterCleared"
               @start-rectangle-draw="drawing = true"
               @finish-rectangle-draw="drawing = false"
             />
@@ -56,11 +57,11 @@
             <Providers v-else :providers="collection.rawJson.providers"/>
           </ATabPane>
 
-          <ATabPane key="catalogs" tab="Catalogs" class="cardStyleLight" :disabled="collection.catalogs.length === 0">
+          <ATabPane key="catalogs" tab="Catalogs" class="cardStyleLight" :disabled="!hasChildCatalogs">
             <ListCatalogs :catalogs="collection.catalogs" @set-selected-catalog="selectCatalog"/>
           </ATabPane>
 
-          <ATabPane key="collections" tab="Collections" class="cardStyleLight" :disabled="collection.collections.length === 0">
+          <ATabPane key="collections" tab="Collections" class="cardStyleLight" :disabled="!hasChildCollections">
             <ListCollections :collections="collection.collections" @set-selected-collection="selectCollection"/>
           </ATabPane>
 
@@ -114,13 +115,43 @@ export default {
       applyingFilter: false,
       collectionIsEmpty: false,
       searchIsEmpty: false,
-      items: [],
       leafletMap: null,
       mapItemsAdded: false,
       pageSize: 12
     }
   },
   computed: {
+    items () {
+      if (this.collectionOrFilteredCollection === null) return []     
+
+      // Items could be from a static collection
+      if (this.collectionOrFilteredCollection.childrenLoaded && this.collectionOrFilteredCollection.hasSomeChildren) {
+        return this.collectionOrFilteredCollection.items
+      }
+      // If not let's check for API page results
+      if (this.collectionOrFilteredCollection.checkIfPageIndexAvailable(this.pageResultsIndex)) {
+        return this.collectionOrFilteredCollection.getPageOfItemsByIndex(this.pageResultsIndex)
+      }
+      return []
+    },
+    loadingChildrenOrItems () {
+      if (this.loadingChildren) return true
+      if (!this.dataReady) return true
+      return false
+    },
+    hasChildItems () {
+      if (this.loadingChildren) return false
+      if (this.items === null) return false
+      return this.items.length > 0
+    },
+    hasChildCollections () {
+      if (this.loadingChildren) return false
+      return this.collection.collections.length > 0
+    },
+    hasChildCatalogs () {
+      if (this.loadingChildren) return false
+      return this.collection.catalogs.length > 0
+    },
     pageResultsIndex () {
       return this.$store.state.pageResultsIndex
     },
@@ -131,13 +162,17 @@ export default {
       if (this.$store.getters.selectedStacType !== 'Collection') return null
       return this.$store.getters.selectedStac
     },
-    parent () {
+    parentOrRoot () {
       if (this.collection === null) return null
-      return this.collection.parent
+      if (this.collection.hasParent) return this.collection.parent
+      // Sometimes there seem to be weird circular references
+      // eg maxar collections sometimes point to a root of themselves
+      if (this.collection.hasRoot && !this.collection.isRoot) return this.$store.getters.stacReferenceUsingUrl(this.collection.linkToRoot)
+      return null
     },
-    parentType () {
-      if (this.parent === null) return null
-      return this.collection.parent.stacType
+    parentOrRootType () {
+      if (this.parentOrRoot === null) return null
+      return this.parentOrRoot.stacType
     },
     filteredCollection () {
       return this.$store.state.searchCollection
@@ -149,6 +184,7 @@ export default {
   watch: {
     // We watch the collection id in case we've navigated from 
     // one collection to another nested collection
+    // because we'll want to switch the active tab
     'collection.id': {
       handler () {
         this.onChildrenLoaded()
@@ -161,31 +197,22 @@ export default {
       }
     }
   },
-  async mounted () {  
-    // If we've only loaded a single item from a collection
-    // because that was our app entrypoint
-    if (this.collectionOrFilteredCollection.allItems.length < 2) {
-      this.collectionOrFilteredCollection.clearTempItems()
-      const items = await this.collectionOrFilteredCollection.getNextPageOfCollectionItems()
-      if (items !== null) this.items = items
-    } else if (this.collectionOrFilteredCollection.allItems.length > 1) {
-      const items = this.collectionOrFilteredCollection.getPageOfItemsByIndex(this.pageResultsIndex)
-      if (items !== null) this.items = items
-    }
-
-    if ((this.items === null || this.items.length === 0) && this.collectionOrFilteredCollection.items.length > 0) {
-      this.items = this.collectionOrFilteredCollection.items
-    }
-
-    if (!this.mapItemsAdded && this.leafletMap !== null) this.addCollectionThingsToMap()
-
-    this.dataReady = true
-
-  },
   methods: {
-    onChildrenLoaded () {
+    setDataReady (isLoading) {
+      this.dataReady = !isLoading
+    },
+    async onChildrenLoaded () {
       if (this.collection === null || !this.collection.childrenLoaded) return
-      this.items = this.collectionOrFilteredCollection.items
+
+      if (!this.collectionOrFilteredCollection.hasSomeChildren && this.collectionOrFilteredCollection.numberOfPagesLoaded === 0) {
+        await this.collectionOrFilteredCollection.getNextPageOfCollectionItems()
+      }
+
+      // Sometimes the map will be ready before the data
+      // In which case we add the data now
+      if (!this.mapItemsAdded && this.leafletMap !== null) this.addCollectionThingsToMap()
+      
+      this.dataReady = true
 
       if (this.collection.items.length === 0 && this.collection.catalogs.length > 0) {
         this.activeTab = 'catalogs'
@@ -205,56 +232,23 @@ export default {
     },
     async selectCollection (collection) {
       await this.$store.dispatch('addOrSelectStacReferenceInStore', collection)
-      this.items = []
       this.$store.commit('setSearchCollection', null)
       this.$store.commit('setPageResultsIndex', 1)
 
       this.$router.push(`/external/${collection.linkToSelf}`)
     },
-    async backToParent () {
-      const tmp = this.collection
+    async backToParentOrRoot () {
+      const tmp = this.parentOrRoot
       this.$store.commit('setPageResultsIndex', 1)
       this.$store.commit('setSearchCollection', null)
-
-      if (tmp.hasParent) {
-        this.$store.commit('setSelectedStacId', tmp.linkToParent)
-        this.$router.push(`/external/${tmp.linkToParent}`)
-        return
-      }
-      // Sometimes there seem to be weird circular references
-      // eg maxar collections sometimes point to themselves
-      if (tmp.hasRoot && !tmp.isRoot) {
-        this.$store.commit('setSelectedStacId', tmp.linkToRoot)
-        this.$router.push(`/external/${tmp.linkToRoot}`)
-      } else if (tmp.parent) {
-        this.$store.commit('setSelectedStacId', tmp.parent.url)
-        this.$router.push(`/external/${tmp.parent.url}`)
-      }
-    },
-    async getNextPage () {
-      this.$store.commit('setPageResultsIndex', this.pageResultsIndex + 1)
-      const existingItems = this.collectionOrFilteredCollection.getPageOfItemsByIndex(this.pageResultsIndex)
-      if (!existingItems) {
-        this.dataReady = false
-        this.items = await this.collectionOrFilteredCollection.getNextPageOfCollectionItems()
-        this.dataReady = true
-      } else {
-        this.items = existingItems
-      }
-
-      this.leafletMap.updateCollectionItems(this.items)
-    },
-    getPrevPage () {
-      this.$store.commit('setPageResultsIndex', this.pageResultsIndex - 1)
-      this.items = this.collectionOrFilteredCollection.getPageOfItemsByIndex(this.pageResultsIndex)
-      this.leafletMap.updateCollectionItems(this.items)
+      this.$store.commit('setSelectedStacId', tmp.linkToSelf)
+      this.$router.push(`/external/${tmp.linkToSelf}`)
     },
     mapIsReady (LeafletMap) {
       this.leafletMap = LeafletMap
-      if (this.collectionOrFilteredCollection !== undefined) {
-        if (this.collectionOrFilteredCollection.stacType === 'Collection' && this.collectionOrFilteredCollection.allItems.length > 0) this.addCollectionThingsToMap()
-        if (!this.collectionOrFilteredCollection.stacType && this.collectionOrFilteredCollection.allItems.length > 0) this.addCollectionThingsToMap()
-      }
+      // Sometimes the data will be ready before the map
+      // In which case we add the data now
+      if (!this.mapItemsAdded && this.dataReady) this.addCollectionThingsToMap()
     },
     addCollectionThingsToMap () {
       this.mapItemsAdded = true
@@ -266,6 +260,15 @@ export default {
         this.leafletMap.addFilterBoundingBoxLayerFromBounds(this.filteredCollection._params.bbox)
       }
     },
+    highlightItem (item) {
+      this.leafletMap.highlightCollectionItem(item.rawJson)
+    },
+    removeHighlightItem () {
+      this.leafletMap.clearHighlightLayer()
+    },
+    onItemPageChange () {
+      this.leafletMap.updateCollectionItems(this.items)
+    },
     async filterCalled (filter) {
       this.applyingFilter = true
       this.dataReady = false
@@ -276,18 +279,15 @@ export default {
       if (filter.datetime.length > 0) filteredCollection.between(filter.datetime[0].toISOString(), filter.datetime[1].toISOString())
       
       this.$store.commit('setPageResultsIndex', 1)
-      this.items = await filteredCollection.getNextPageOfCollectionItems()
+      await filteredCollection.getNextPageOfCollectionItems()
       await filteredCollection.checkNumberOfItems()
       this.$store.commit('setSearchCollection', filteredCollection)
       this.leafletMap.updateCollectionItems(this.items)
 
       this.dataReady = true
       this.applyingFilter = false
-
     },
     filterCleared () {
-      this.$store.commit('setSearchCollection', null)
-      this.items = this.collection.getPageOfItemsByIndex(1)
       this.leafletMap.updateCollectionItems(this.items)
     },
     async setPageSize (pageSize) {
@@ -299,12 +299,12 @@ export default {
         this.filteredCollection.clearExistingItemPages()
         this.filteredCollection.setPageSize(pageSize)
         this.dataReady = false
-        this.items = await this.filteredCollection.getNextPageOfCollectionItems()
+        await this.filteredCollection.getNextPageOfCollectionItems()
         await this.collection.getNextPageOfCollectionItems()
         this.dataReady = true
       } else {
         this.dataReady = false
-        this.items = await this.collection.getNextPageOfCollectionItems()
+        await this.collection.getNextPageOfCollectionItems()
         this.dataReady = true
     }
       this.leafletMap.updateCollectionItems(this.items)

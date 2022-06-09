@@ -10,6 +10,10 @@ export default class ChildrenMixin {
         this.numberOfStaticItems = 0
     }
 
+    get hasSomeChildren () {
+        return this.items.length > 0 || this.catalogs.length > 0 || this.collections.length > 0
+    }
+
     get childrenLinks () {
         let childs = this.rawJson.links.filter(l => l.rel === 'child')
         if (this.rawJson.links.findIndex(l => l.rel === 'children') > -1) childs = this.rawJson.links.filter(l => l.rel === 'children')

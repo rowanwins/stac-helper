@@ -12,9 +12,6 @@
     "parser": "babel-eslint"
   },
   "rules": {
-    "vue/no-v-html": "off",
-    "vue/no-v-model-argument": "off",
-    "no-unneeded-ternary": "off",
-    "no-new": "off"
+    "vue/no-v-html": "off"
   }
 }

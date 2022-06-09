@@ -1,4 +1,5 @@
 import { createStore } from 'vuex'
+import SearchFilter from '@/models/SearchFilter'
 
 export default createStore({
   state () {
@@ -7,7 +8,8 @@ export default createStore({
       stacItems: [],
       selectedStacId: null,
       pageResultsIndex: 1,
-      searchCollection: null
+      searchCollection: null,
+      searchFilter: new SearchFilter()
     }
   },
   mutations: {
@@ -22,7 +24,6 @@ export default createStore({
         id: payload.id,
         stacObj: payload.stacThing
       })
-      // state.stacItems[payload.id] = payload.stacThing
     },
     setSelectedStacId (state, id) {
       state.selectedStacId = id
@@ -69,6 +70,11 @@ export default createStore({
     stacReferenceIsInStore: (state) => (url) => {
       let selected = findWithOrWithoutTrailingSlash(url, state.stacItems) 
       return selected !== undefined
+    },
+    stacReferenceUsingUrl: (state) => (url) => {
+      let selected = findWithOrWithoutTrailingSlash(url, state.stacItems)
+      if (selected === undefined) return null 
+      return selected.stacObj
     },
     selectedStacType (state, getters) {
       if (getters.selectedStac === null || getters.selectedStac === undefined) return null

@@ -30,7 +30,7 @@
                 </AButton>
             </ARow>
             <ARow>
-              <ARangePicker v-model:value="standardFilters.datetime" style="width: 220px"/>
+              <ARangePicker v-model:value="searchFilter.standardFilter.datetime" style="width: 220px"/>
             </ARow>
          </ACol>
 
@@ -68,7 +68,6 @@
 <script>
 import {PlusCircleFilled,MinusCircleFilled, GatewayOutlined, SyncOutlined} from '@ant-design/icons-vue'
 import calcBbox from '@turf/bbox'
-import equal from 'deep-eql'
 
 export default {
   name: 'ItemsFilter',
@@ -81,11 +80,13 @@ export default {
   props: ['leafletMap', 'applyingFilter'],
   data () {
     return {
-      showFilter: false,
-      standardFilters: this.defaultFilter()
+      showFilter: false
     }
   },
   computed: {
+    searchFilter () {
+      return this.$store.state.searchFilter
+    },
     searchCollection () {
       return this.$store.state.searchCollection
     },
@@ -98,25 +99,14 @@ export default {
       return `${this.searchItemCount.toLocaleString()} items matched `
     },
     anyFilterPropertiesSet () {
-      return !equal(this.standardFilters, this.defaultFilter()) 
+      return this.searchFilter.anyFilterPropertiesSet
     },
     numberFilterPropertiesSet () {
-      const defaultFilter = this.defaultFilter()
-      let count = 0
-      for (const [key, value] of Object.entries(this.standardFilters)) {
-        if (!equal(value, defaultFilter[key])) count++
-      }
-      return count
+      return this.searchFilter.numberFilterPropertiesSet
     }
   },
-  emits: ['filter', 'clear-filter', 'start-rectangle-draw', 'finish-rectangle-draw'],
+  emits: ['filter', 'filter-cleared', 'start-rectangle-draw', 'finish-rectangle-draw'],
   methods: {
-    defaultFilter () {
-      return {
-        bbox: null,
-        datetime: []
-      }
-    },
     toggleShowFilter() {
       this.showFilter = !this.showFilter;
     },
@@ -125,16 +115,20 @@ export default {
       this.leafletMap.clearDrawnLayers()
       this.leafletMap.startRectangeDraw()
       const rectangleGeojson = await this.leafletMap.awaitDrawnRectangle()
-      this.standardFilters.bbox = calcBbox(rectangleGeojson)
+      this.searchFilter.standardFilter.bbox = calcBbox(rectangleGeojson)
       this.$emit('finish-rectangle-draw')
     },
     filter () {
-      this.$emit('filter', this.standardFilters)
+      this.$emit('filter', this.searchFilter.standardFilter)
     },
     reset () {
-      this.standardFilters = this.defaultFilter()
+      this.searchFilter.clearFilters()
       this.leafletMap.clearDrawnLayers()
-      if (this.searchCollection) this.$emit('clear-filter')
+      if (this.searchCollection) {
+        this.$store.commit('setSearchCollection', null)
+        this.$store.commit('setPageResultsIndex', 1)
+        this.$emit('filter-cleared')
+      }
     }
   }
 }
