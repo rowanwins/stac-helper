@@ -2,9 +2,9 @@ import bboxPolygon from '@turf/bbox-polygon'
 
 export default class ExtentMixin {
 
-  get isTimeEnabled () {
-    return this.rawJson.extent.temporal.interval[0] !== null
-}
+    get isTimeEnabled () {
+        return this.rawJson.extent.temporal.interval[0] !== null
+    }
 
     get hasMoreThanOneDate () {
         if (!this.isTimeEnabled) return null

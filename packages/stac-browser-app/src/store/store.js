@@ -40,7 +40,8 @@ export default createStore({
         stacThing
       })
       if (stacThing.stacType === 'Collection') await stacThing.checkTotalNumberOfItems()
-      
+      if (stacThing.stacType === 'Collection') stacThing.retrieveQueryables()
+
       // Ideally this would be in here but 
       // the Vue reactivity system doesn't seem to handle it nicely :(
       // Instead it's in the /pages/Stac.vue
@@ -85,6 +86,9 @@ export default createStore({
       let selected = findWithOrWithoutTrailingSlash(state.selectedStacId, state.stacItems)
       if (selected !== undefined) return selected.stacObj
       return null
+    },
+    collectionIsFiltered (state) {
+      return state.searchCollection !== null
     }
   }
 })

@@ -1,6 +1,8 @@
 <template>
   <div>
     <ItemsFilter
+      :original-collection="originalCollection"
+      :collection-or-filtered-collection="collectionOrFilteredCollection"
       :leaflet-map="leafletMap"
       :applying-filter="applyingFilter"
       @start-rectangle-draw="$emit('start-rectangle-draw')"
@@ -107,6 +109,10 @@ export default {
     },
     pageIndex () {
       return this.$store.state.pageResultsIndex
+    },
+    originalCollection () {
+      if (this.$store.getters.selectedStacType !== 'Collection') return null
+      return this.$store.getters.selectedStac
     }
   },
   emits: [

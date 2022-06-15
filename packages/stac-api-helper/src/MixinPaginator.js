@@ -1,4 +1,4 @@
-import {getNextObj, getWithJsonResponse} from './utils'
+import {getNextObj, getWithJsonResponse, postWithJsonResponse} from './utils'
 import {Item} from './internal.js'
 
 export default class PaginatorMixin {
@@ -27,7 +27,7 @@ export default class PaginatorMixin {
 
     async getNextPageOfCollectionItems () {
         this._pageIndex = this._pageIndex + 1
-        const json = await this._retrieveJson()
+        const json = await this._getNextPage()
         if (json === null) {
             this._nextItemsPageUrl = undefined
             return null
@@ -70,14 +70,18 @@ export default class PaginatorMixin {
         return null
     }
 
-    async _retrieveJson () {
-        let url = null
-        if (this._nextPageObj === null && this.collectionItemsUrl !== null) {
-            url = `${this._firstPageItemsUrl}?limit=${this._pageSize}`
-        } else if (this._nextPageObj !== null) url = this._nextPageObj.href
+    async _getNextPage () {
+        let json = null
 
-        if (this._nextPageObj === undefined || !url) return null
-        const json = await getWithJsonResponse(url)
+        if (this._nextPageObj === null && this.collectionItemsUrl !== null) {
+            const url = `${this._firstPageItemsUrl}?limit=${this._pageSize}`
+            json = await getWithJsonResponse(url)
+        } else if (this._nextPageObj !== null && 'method' in this._nextPageObj && this._nextPageObj.method === 'POST') {
+            json = await postWithJsonResponse(this._nextPageObj.href, this._nextPageObj.body)
+        } else if (this._nextPageObj !== null) {
+            json = await getWithJsonResponse(this._nextPageObj.href)
+        }
+
         return json
     }
 }

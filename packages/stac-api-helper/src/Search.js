@@ -1,7 +1,7 @@
 import aggregation from 'aggregation/es6'
 import PaginatorMixin from './MixinPaginator.js'
 import {EmptyClass} from './internal.js'
-import {postWithJsonResponse} from './utils'
+import {postWithJsonResponse, getWithJsonResponse} from './utils'
 
 export class Search extends aggregation(EmptyClass, PaginatorMixin) {
     constructor (root, parent = null) {
@@ -13,7 +13,7 @@ export class Search extends aggregation(EmptyClass, PaginatorMixin) {
             bbox: null,
             collections: null,
             datetime: null,
-            query: null,
+            filter: null,
             fields: {
                 include: [],
                 exclude: []
@@ -26,7 +26,7 @@ export class Search extends aggregation(EmptyClass, PaginatorMixin) {
     }
 
     get _usingAdvancedParams () {
-        return this._params.fields.include.length > 0 || this._params.query !== null
+        return this._params.fields.include.length > 0 || this._params.filter !== null
     }
 
     bbox (bbox) {
@@ -46,20 +46,11 @@ export class Search extends aggregation(EmptyClass, PaginatorMixin) {
         return this
     }
 
-    query (query) {
-        if (!this._catalog.supportsSearchQueryExtension) {
-            console.error('Query Extension not supported by this STAC service')
-            return this
-        }
-        this._params.query = query
-        return this
-    }
-
     filter (filter) {
-        if (!this._catalog.supportsSearchFilterExtension) {
-            console.error('Query Extension not supported by this STAC service')
-            return this
-        }
+        // if (!this._root.supportsSearchFilterExtension) {
+        //     console.error('Filter Extension not supported by this STAC service')
+        //     return this
+        // }
         this._params.filter = filter
         return this
     }
@@ -79,13 +70,17 @@ export class Search extends aggregation(EmptyClass, PaginatorMixin) {
 
     get _clonedParamsWithNullsRemoved () {
         const temp = Object.assign({}, this._params)
+
         for (const [key, value] of Object.entries(temp)) {
+            if (key === 'filter') continue
             if (value === null) delete temp[key]
         }
-        if (!this._usingAdvancedParams) {
-            delete temp.fields
-            delete temp.query
+        delete temp.filter
+        if (this._params.filter !== null && Object.keys(this._params.filter).length > 0) {
+            Object.assign(temp, this._params.filter)
         }
+        delete temp.fields
+
         temp.limit = this._pageSize
         return temp
     }
@@ -105,12 +100,17 @@ export class Search extends aggregation(EmptyClass, PaginatorMixin) {
         return number
     }
 
-    async _retrieveJson () {
-        let body = null
-        if (this._nextPageObj === null) body = this._clonedParamsWithNullsRemoved
-        else body = this._nextPageObj.body
+    async _getNextPage () {
+        let json = null
 
-        const json = await postWithJsonResponse(this.searchUrl, body)
+        if (this._nextPageObj === null) {
+            json = await postWithJsonResponse(this.searchUrl, this._clonedParamsWithNullsRemoved)
+        } else if (this._nextPageObj !== null && 'method' in this._nextPageObj && this._nextPageObj.method === 'POST') {
+            json = await postWithJsonResponse(this._nextPageObj.href, this._nextPageObj.body)
+        } else if (this._nextPageObj !== null) {
+            json = await getWithJsonResponse(this._nextPageObj.href)
+        }
+
         return json
     }
 }

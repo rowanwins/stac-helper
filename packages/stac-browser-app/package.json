@@ -8,6 +8,7 @@
     "@turf/bbox": "^6.5.0",
     "@turf/bbox-polygon": "^6.5.0",
     "@turf/turf": "^6.5.0",
+    "@vueuse/core": "^8.6.0",
     "ant-design-vue": "^3.2.3",
     "commonmark": "^0.30.0",
     "dayjs": "^1.11.2",

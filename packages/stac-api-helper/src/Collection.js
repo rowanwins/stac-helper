@@ -4,8 +4,9 @@ import {StacThing, Search} from './internal.js'
 import ChildrenMixin from './MixinChildren.js'
 import ExtentMixin from './MixinExtent.js'
 import PaginatorMixin from './MixinPaginator.js'
+import QueryablesMixin from './MixinQueryables.js'
 
-export class Collection extends aggregation(StacThing, ChildrenMixin, ExtentMixin, PaginatorMixin) {
+export class Collection extends aggregation(StacThing, ChildrenMixin, ExtentMixin, PaginatorMixin, QueryablesMixin) {
     get stacType () {
         return 'Collection'
     }

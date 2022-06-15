@@ -3,7 +3,8 @@ import equal from 'deep-eql'
 function createDefaultFilter () {
   return {
     bbox: null,
-    datetime: []
+    datetime: [],
+    filters: []
   }
 }
 
@@ -29,6 +30,31 @@ export default class SearchFilter {
     this.standardFilter = createDefaultFilter()
   }
 
+  populateStacApiHelperSearchClass (searchClass, pageSize) {
+    searchClass.setPageSize(pageSize)
 
+    if (this.standardFilter.bbox !== null) searchClass.bbox(this.standardFilter.bbox)
+
+    if (this.standardFilter.datetime.length > 0) {
+      searchClass.between(this.standardFilter.datetime[0].toISOString(), this.standardFilter.datetime[1].toISOString())
+    }
+
+    if (this.standardFilter.filters.length > 0) {
+      const composedFilter = {
+        "filter-lang": "cql2-json",
+        "filter": {
+          "op": 'and',
+          "args": this.standardFilter.filters.map(q => {
+            return {
+              op: q.operator,
+              args: [{"property": q.queryable.id }, q.value ]
+            }
+          })
+        }
+      }
+      searchClass.filter(composedFilter)
+    }
+
+  }
 
 }

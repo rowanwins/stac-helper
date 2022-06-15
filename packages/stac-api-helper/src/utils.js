@@ -30,6 +30,17 @@ export async function postWithJsonResponse (pageUrl, body) {
     return json
 }
 
+export function getValueFromObjectUsingPath (object, path) {
+    if (object === null || typeof object !== 'object') {
+        return null
+    }
+    object = object[path[0]]
+    if (typeof object !== 'undefined' && path.length > 1) {
+        return getValueFromObjectUsingPath(object, path.slice(1))
+    }
+    return object
+}
+
 // export async function paginateThroughResults (nextUrl, callback) {
 //     while (nextUrl !== null) {
 //         const response = await fetch(nextUrl, {

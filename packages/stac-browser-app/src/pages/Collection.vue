@@ -179,6 +179,9 @@ export default {
     },
     collectionOrFilteredCollection () {
       return this.filteredCollection === null ? this.collection : this.filteredCollection
+    },
+    searchFilter () {
+      return this.$store.state.searchFilter
     }
   },
   watch: {
@@ -269,14 +272,12 @@ export default {
     onItemPageChange () {
       this.leafletMap.updateCollectionItems(this.items)
     },
-    async filterCalled (filter) {
+    async filterCalled () {
       this.applyingFilter = true
       this.dataReady = false
       
       const filteredCollection = await this.collection.createSearch()
-      filteredCollection.setPageSize(this.pageSize)
-      if (filter.bbox !== null) filteredCollection.bbox(filter.bbox)
-      if (filter.datetime.length > 0) filteredCollection.between(filter.datetime[0].toISOString(), filter.datetime[1].toISOString())
+      this.searchFilter.populateStacApiHelperSearchClass(filteredCollection, this.pageSize)
       
       this.$store.commit('setPageResultsIndex', 1)
       await filteredCollection.getNextPageOfCollectionItems()

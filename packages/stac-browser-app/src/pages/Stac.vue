@@ -87,6 +87,7 @@ export default {
         } else {
           await this.$store.dispatch('addOrSelectStacReferenceInStore', stacThing)
           this.loadChildren()
+          if (stacThing.stacType == 'Collection') stacThing.retrieveQueryables()
         }
       } catch {
         this.throwNotificationError('STAC url could not be loaded, redirecting to home.')
