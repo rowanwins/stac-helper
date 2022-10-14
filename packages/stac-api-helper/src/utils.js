@@ -1,7 +1,31 @@
-import {Catalog, Collection, Item} from './internal.js'
+import {Catalog, Collection, Item, ItemCollection} from './internal.js'
 
-export function getNextObj (page) {
-    return page.links.find(l => l.rel === 'next')
+/**
+ * Returns a StacLink, or null based on a rel type
+ */
+export function getLinkByRelType (json, rel) {
+    if (!json.links) return null
+    const link = json.links.find(l => l.rel === rel)
+    if (link) return link
+    return null
+}
+
+/**
+ * Returns the "next" rel StacLink, or null
+ */
+export function getNextLinkObj (json) {
+    return getLinkByRelType(json, 'next')
+}
+
+/**
+ * Returns the "prev" or "previous" rel StacLink, or null
+ */
+export function getPrevLinkObj (json) {
+    const previous = getLinkByRelType(json, 'previous')
+    if (previous !== null) return previous
+    const prev = getLinkByRelType(json, 'prev')
+    if (prev !== null) return prev
+    return null
 }
 
 export async function getWithJsonResponse (pageUrl) {
@@ -34,45 +58,12 @@ export function getValueFromObjectUsingPath (object, path) {
     if (object === null || typeof object !== 'object') {
         return null
     }
-    object = object[path[0]]
+    object = object[path[0]] // @ts-ignore
     if (typeof object !== 'undefined' && path.length > 1) {
         return getValueFromObjectUsingPath(object, path.slice(1))
     }
     return object
 }
-
-// export async function paginateThroughResults (nextUrl, callback) {
-//     while (nextUrl !== null) {
-//         const response = await fetch(nextUrl, {
-//             method: 'GET',
-//             headers: {
-//                 'Content-Type': 'application/json'
-//             }
-//         })
-//         if (!response.ok) {
-//             callback({
-//                 msg: `Error calling ${nextUrl}`,
-//                 data: null
-//             })
-//             nextUrl = null
-//         }
-//         const nextPageJson = await response.json()
-//         callback({
-//             msg: 'Progress',
-//             data: nextPageJson
-//         })
-//         const nextNext = getNextObj(nextPageJson)
-//         if (nextNext === undefined) {
-//             callback({
-//                 msg: 'Done',
-//                 data: null
-//             })
-//             nextUrl = null
-//         } else {
-//             nextUrl = nextNext.href
-//         }
-//     }
-// }
 
 export function sniffStacType (data) {
     if (typeof data.type === 'string') {
@@ -103,6 +94,25 @@ export function createStacItemFromDataAndType (data, stacType, url, parent) {
         return new Collection(data, url, parent)
     } else if (stacType === 'Item') {
         return new Item(data, url, parent)
+    } else if (stacType === 'Items') {
+        return new ItemCollection(data, parent, null, null)
     }
     return null
+}
+
+export async function loadLink (link) {
+    let json = null
+    if ('method' in link && link.method === 'POST') {
+        json = await postWithJsonResponse(link.href, link.body)
+    } else {
+        json = await getWithJsonResponse(link.href)
+    }
+    return json
+}
+
+export async function loadLinkAndCreateStacThing (link, parent) {
+    const data = await loadLink(link)
+    if (data === null) return null
+    const stacType = sniffStacType(data)
+    return createStacItemFromDataAndType(data, stacType, link.href, parent)
 }

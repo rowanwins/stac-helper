@@ -81,27 +81,24 @@ export default {
   },
   data () {
     return {
-      pageSize: 12,
       pageSizeOptions: [{label: '12', value: 12}, {label: '24', value: 24}, {label: '48', value: 48}]
     }
   },
   computed: {
+    pageSize () {
+      return this.$store.state.pageResultSize
+    },
     maxNumberOfAvailableItems () {
       if (this.loadingItems) return null
       return this.collectionOrFilteredCollection.numberOfItems
     },
     prevPageUnavailable () {
       if (this.loadingItems) return true
-      if (this.pageIndex === 1) return true
-      return false
+      return !this.collectionOrFilteredCollection.activeItemsCollectionPage.hasPrevLink
     },
     nextPageUnavailable () {
       if (this.loadingItems) return true
-      if (this.maxNumberOfAvailableItems !== null) {
-        if ((this.pageSize * this.pageIndex) >= this.maxNumberOfAvailableItems) return true
-      }
-      if (this.itemsLength < this.pageSize) return true
-      return false
+      return !this.collectionOrFilteredCollection.activeItemsCollectionPage.hasNextLink
     },
     itemsLength () {
       if (this.items === null) return 0
@@ -132,24 +129,19 @@ export default {
       return dayjs(d).utc().format('DD MMM YYYY HH:mm:ss')
     },
     setPageSize (pageSize) {
-      this.pageSize = pageSize
+      this.$store.commit('setPageSize', pageSize)
       this.$emit('set-page-size', pageSize)
     },
     async getNextPage () {
-      const newPageIndex = this.pageIndex + 1
-      const existingItems = this.collectionOrFilteredCollection.getPageOfItemsByIndex(newPageIndex)
-      if (!existingItems) {
-        this.$emit('set-item-data-loading',true)
-        await this.collectionOrFilteredCollection.getNextPageOfCollectionItems()
-        this.$emit('set-item-data-loading', false)
-      }
-      this.$store.commit('setPageResultsIndex', newPageIndex)
+      this.$emit('set-item-data-loading', true)
+      await this.collectionOrFilteredCollection.activeItemsCollectionPage.loadNextPage()
+      this.$emit('set-item-data-loading', false)
       this.$emit('item-page-changed')
     },
-    getPrevPage () {
-      this.$store.commit('setPageResultsIndex', this.pageIndex - 1)
+    async getPrevPage () {
+      await this.collectionOrFilteredCollection.activeItemsCollectionPage.loadPrevPage()
       this.$emit('item-page-changed')
-    },
+    }
   }
 }
 </script>

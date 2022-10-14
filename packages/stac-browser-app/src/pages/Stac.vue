@@ -46,7 +46,9 @@ export default {
       
       // If someone loaded the app using an external STAC reference
       if (from.name === undefined) {
+
         await vm.loadNewItem(window.location.pathname.split('/external/')[1])
+
       } else if (from.name === 'external-catalogs') {
         // If someone came to the page via the external catalogs page
         vm.loadChildren()
@@ -89,7 +91,8 @@ export default {
           this.loadChildren()
           if (stacThing.stacType == 'Collection') stacThing.retrieveQueryables()
         }
-      } catch {
+      } catch (err) {
+        console.log(err)
         this.throwNotificationError('STAC url could not be loaded, redirecting to home.')
         this.headHome()
       }
@@ -98,7 +101,12 @@ export default {
       if (this.stacType !== 'Item') {
         if (!this.selectedStac.childrenLoaded) {
           this.loadingChildren = true
-          this.selectedStac.loadChildren()
+          const promises = []
+          promises.push(this.selectedStac.loadChildren())
+          if ('activeItemsCollectionPage' in this.selectedStac) {
+            promises.push(this.selectedStac.loadActiveItemCollection())
+          }
+          Promise.allSettled(promises)
           .then(() => {
             this.loadingChildren = false
           })

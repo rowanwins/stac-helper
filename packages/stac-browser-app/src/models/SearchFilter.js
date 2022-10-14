@@ -31,7 +31,7 @@ export default class SearchFilter {
   }
 
   populateStacApiHelperSearchClass (searchClass, pageSize) {
-    searchClass.setPageSize(pageSize)
+    searchClass.setPageSizeLimit(pageSize)
 
     if (this.standardFilter.bbox !== null) searchClass.bbox(this.standardFilter.bbox)
 

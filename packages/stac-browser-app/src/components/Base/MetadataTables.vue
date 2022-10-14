@@ -15,7 +15,7 @@
         <template #bodyCell="{ column, record }">
 
           <template v-if="column.key === 'label'">
-            <div v-html="record.label" style="font-weight: 500;"></div>
+            <div v-html="record.label" class="metadataLabel"></div>
           </template>
           <template v-if="column.key === 'formattedValue'">
             <div v-html="record.formatted"></div>
@@ -95,6 +95,12 @@ export default {
   td {
     vertical-align: top;
   }
+  
+  .metadataLabel {
+    font-weight: 500;
+    line-break: normal;
+  }
+  
   ol, ul {
     padding-left: 16px;
   }

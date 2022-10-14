@@ -1,15 +1,15 @@
 import {Parser, HtmlRenderer} from 'commonmark'
-import {sniffStacType, getWithJsonResponse, createStacItemFromDataAndType} from './utils.js'
+import {sniffStacType, getWithJsonResponse, createStacItemFromDataAndType, getLinkByRelType} from './utils.js'
 import {createValidFetchUrl, isRelativeUrl, isValidHttpUrl} from './urlUtils.js'
 import resolveRelative from 'resolve-relative-url'
-
 
 const reader = new Parser()
 const writer = new HtmlRenderer({safe: true, smart: true})
 
+
 // This is the parent class for Stac Catalog, Stac Collection or Stac Items
 // It contains functionality that are common across all
-export class StacThing {
+export class StacEntity {
 
     constructor (json, url = null, parent = null) {
         this.id = json.id
@@ -24,23 +24,32 @@ export class StacThing {
         return ''
     }
 
+    /**
+     * Returns a string of either the title, or if not present, the id
+     */
     get titleOrId () {
         return this.rawJson.title ? this.rawJson.title : this.rawJson.id
     }
 
+    /**
+     * Returns a description as rendered html using commonmark, or null
+     */
     get descriptionAsHtml () {
         if (!('description' in this.rawJson)) return null
         return writer.render(reader.parse(this.rawJson.description))
     }
 
+    /**
+    * Returns a description as rendered html using commonmark, or null
+    */
     get linkToSelf () {
         if (this.url !== null) return this.url
-        if (this.rawJson.links.findIndex(i => i.rel === 'self') !== -1) {
-            const selfUrl = this.rawJson.links.find(i => i.rel === 'self').href
-            if (isRelativeUrl(selfUrl)) {
-                return resolveRelative(selfUrl, this.url)
+        const selfLink = getLinkByRelType(this.rawJson, 'self')
+        if (selfLink !== null) {
+            if (isRelativeUrl(selfLink.href)) {
+                return resolveRelative(selfLink.href, this.url)
             }
-            return selfUrl
+            return selfLink.href
         }
 
         // Try navigate up the tree if StacThing doesn't have a self link
@@ -84,8 +93,8 @@ export class StacThing {
     get isRoot () {
         if (this.linkToRoot !== null) {
             if (this.url === this.linkToRoot) return true
-            if (this.url === this.linkToRoot + '/') return true
-            if (this.url + '/' === this.linkToRoot) return true
+            if (this.url === `${this.linkToRoot}/`) return true
+            if (`${this.url}/` === this.linkToRoot) return true
             return false
         }
         return null

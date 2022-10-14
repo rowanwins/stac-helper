@@ -1,28 +1,34 @@
 import aggregation from 'aggregation/es6'
-import {StacThing} from './internal.js'
+import {StacEntity} from './internal.js'
 import calcBbox from '@turf/bbox'
+import {getLinkByRelType} from './utils'
 
-export class Item extends aggregation(StacThing) {
+export class Item extends aggregation(StacEntity) {
+
     get stacType () {
         return 'Item'
     }
 
     get collectionUrl () {
-        return this.rawJson.links.find(i => i.rel === 'collection').href
+        if (this.rawJson.links === undefined) return null
+        const r = getLinkByRelType(this.rawJson, 'collection')
+        if (r === null) return null
+        return r.href
     }
 
-    get collectionId () {
-        return this.rawJson.collection
-    }
+    // get collectionId (): string {
+    //     return this.rawJson.collection
+    // }
 
     get hasAssets () {
         return 'assets' in this.rawJson
     }
 
     get datetime () {
-        if ('datetime' in this.rawJson.properties && this.rawJson.properties.datetime !== null) return this.rawJson.properties.datetime
-        if ('created' in this.rawJson.properties) return this.rawJson.properties.created
-        if ('date' in this.rawJson.properties) return this.rawJson.properties.date
+        const se = this
+        if ('datetime' in se.rawJson.properties && se.rawJson.properties.datetime !== null) return se.rawJson.properties.datetime
+        if ('created' in se.rawJson.properties) return se.rawJson.properties.created
+        if ('date' in se.rawJson.properties) return se.rawJson.properties.date
         return null
     }
 

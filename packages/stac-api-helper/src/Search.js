@@ -1,9 +1,10 @@
 import aggregation from 'aggregation/es6'
-import PaginatorMixin from './MixinPaginator.js'
-import {EmptyClass} from './internal.js'
-import {postWithJsonResponse, getWithJsonResponse} from './utils'
+import ItemCollectionsMixin from './MixinItemCollections'
+import {EmptyClass} from './EmptyClass'
+import {getLinkByRelType} from './utils.js'
 
-export class Search extends aggregation(EmptyClass, PaginatorMixin) {
+export class Search extends aggregation(EmptyClass, ItemCollectionsMixin) {
+
     constructor (root, parent = null) {
         super()
         this._root = root
@@ -22,7 +23,9 @@ export class Search extends aggregation(EmptyClass, PaginatorMixin) {
     }
 
     get searchUrl () {
-        return this._root.rawJson.links.find(l => l.rel === 'search').href
+        const searchLink = getLinkByRelType(this._root.rawJson, 'search')
+        if (searchLink === null) return null
+        return searchLink.href
     }
 
     get _usingAdvancedParams () {
@@ -64,9 +67,6 @@ export class Search extends aggregation(EmptyClass, PaginatorMixin) {
         return this
     }
 
-    _clearPreviousResults () {
-        this.results = []
-    }
 
     get _clonedParamsWithNullsRemoved () {
         const temp = Object.assign({}, this._params)
@@ -85,32 +85,11 @@ export class Search extends aggregation(EmptyClass, PaginatorMixin) {
         return temp
     }
 
-    async checkNumberOfItems () {
-        if (this.numberOfItems !== null) return this.numberOfItems
-
-        const body = this._clonedParamsWithNullsRemoved
-        body.limit = 1
-        const json = await postWithJsonResponse(this.searchUrl, body)
-        let number = null
-        if (json.numberMatched) number = json.numberMatched
-        if (json.context && json.context.matched) {
-            number = json.context.matched
+    get entrySearchResultsLink () {
+        return {
+            method: 'POST',
+            href: this.searchUrl,
+            body: this._clonedParamsWithNullsRemoved
         }
-        this.numberOfItems = number
-        return number
-    }
-
-    async _getNextPage () {
-        let json = null
-
-        if (this._nextPageObj === null) {
-            json = await postWithJsonResponse(this.searchUrl, this._clonedParamsWithNullsRemoved)
-        } else if (this._nextPageObj !== null && 'method' in this._nextPageObj && this._nextPageObj.method === 'POST') {
-            json = await postWithJsonResponse(this._nextPageObj.href, this._nextPageObj.body)
-        } else if (this._nextPageObj !== null) {
-            json = await getWithJsonResponse(this._nextPageObj.href)
-        }
-
-        return json
     }
 }

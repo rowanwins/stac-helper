@@ -8,6 +8,7 @@ export default createStore({
       stacItems: [],
       selectedStacId: null,
       pageResultsIndex: 1,
+      pageResultSize: 12,
       searchCollection: null,
       searchFilter: new SearchFilter()
     }
@@ -30,6 +31,9 @@ export default createStore({
     },
     setSearchCollection (state, searchCollection) {
       state.searchCollection = searchCollection
+    },
+    setPageSize (state, size) {
+      state.pageResultSize = size
     }
   },
   actions: {
@@ -47,7 +51,7 @@ export default createStore({
       // Instead it's in the /pages/Stac.vue
       // if (stacThing.stacType !== 'Item' && !stacThing.childrenLoaded) stacThing.loadChildren()
     },
-    async addOrSelectStacReferenceInStore ({ commit, dispatch, getters }, stacThing) {
+    async addOrSelectStacReferenceInStore ({ state, commit, dispatch, getters }, stacThing) {
 
       if (!getters.stacReferenceIsInStore(stacThing.linkToSelf)) {
         await dispatch('addThingToStore', stacThing)
@@ -62,6 +66,12 @@ export default createStore({
         .then(root => {
           dispatch('addThingToStore', root)
         })
+      }
+
+      if ('_pageSize' in stacThing) {
+        if (stacThing._pageSize !== state.pageResultSize) {
+          stacThing.setPageSize(state.pageResultSize)
+        }
       }
 
       commit('setSelectedStacId', stacThing.linkToSelf)

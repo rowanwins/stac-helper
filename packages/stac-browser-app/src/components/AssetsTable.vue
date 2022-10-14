@@ -4,7 +4,7 @@
     :columns="columns"
     rowKey="id"
     size="small"
-    class="ant-table-striped"
+    class="ant-table-striped assetTable"
     :row-class-name="(_record, index) => (index % 2 === 1 ? 'table-striped' : null)"
     :pagination="false"
     :showHeader="false"
@@ -12,7 +12,7 @@
     <template #bodyCell="{ column, record }">
 
       <template v-if="column.key === 'title'">
-        <span>{{record.title ? record.title : record.key}}</span>
+        <span class="assetTitle">{{record.title ? record.title : record.key}}</span>
       </template>
 
       <template v-if="column.key === 'operation'">
@@ -102,3 +102,11 @@ export default {
   }
 }
 </script>
+
+<style lang="less">
+.assetTable {
+  .assetTitle {
+    line-break: normal;
+  }
+}
+</style>

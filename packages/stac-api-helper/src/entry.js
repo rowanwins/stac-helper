@@ -2,15 +2,15 @@ export * from './internal.js'
 import {getWithJsonResponse, sniffStacType, createStacItemFromDataAndType} from './utils'
 
 export async function initialiseFromUrl (url) {
-    let childData = null
+    let jsonData = null
     try {
-        childData = await getWithJsonResponse(url)
+        jsonData = await getWithJsonResponse(url)
     } catch (e) {
         throw new Error(`Could not retrieve json from ${url}`)
     }
-    if (childData !== null) {
-        const stacType = sniffStacType(childData)
-        return createStacItemFromDataAndType(childData, stacType, url, null)
+    if (jsonData !== null) {
+        const stacType = sniffStacType(jsonData)
+        return createStacItemFromDataAndType(jsonData, stacType, url, null)
     }
 
     return null

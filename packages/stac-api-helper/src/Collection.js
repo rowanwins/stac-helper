@@ -1,36 +1,36 @@
 import aggregation from 'aggregation/es6'
 
-import {StacThing, Search} from './internal.js'
+import {StacEntity, Search} from './internal.js'
 import ChildrenMixin from './MixinChildren.js'
 import ExtentMixin from './MixinExtent.js'
-import PaginatorMixin from './MixinPaginator.js'
 import QueryablesMixin from './MixinQueryables.js'
+import ItemCollectionsMixin from './MixinItemCollections'
+import {getLinkByRelType} from './utils.js'
 
-export class Collection extends aggregation(StacThing, ChildrenMixin, ExtentMixin, PaginatorMixin, QueryablesMixin) {
+export class Collection extends aggregation(StacEntity, ChildrenMixin, ItemCollectionsMixin, ExtentMixin, QueryablesMixin) {
+
     get stacType () {
         return 'Collection'
     }
 
-    get collectionItemsUrl () {
-        const items = this.rawJson.links.find(i => i.rel === 'items')
-        if (items) return items.href
-        return null
-    }
-
-    get _firstPageItemsUrl () {
-        if (this.collectionItemsUrl === null) return null
-        return `${this.collectionItemsUrl}`
+    get collectionItemsLink () {
+        const itemsLink = getLinkByRelType(this.rawJson, 'items')
+        if (itemsLink === null) return null
+        return itemsLink
     }
 
     get numberOfProviders () {
-        if ('providers' in this.rawJson) return this.rawJson.providers.length
+        if (this.rawJson.providers) return this.rawJson.providers.length
         return null
     }
 
     async createSearch () {
-        const root = await this.loadRoot()
-        const search = new Search(root, this)
-        search.collections([this.id])
+        const se = this
+        const root = await se.loadRoot()
+        const search = new Search(root, se)
+        search.collections([se.id])
         return search
     }
+
+
 }

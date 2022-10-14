@@ -2,18 +2,20 @@ import {getWithJsonResponse} from './utils'
 import {Queryable} from './Queryable'
 
 export default class MixinQueryables {
+
     initializer () {
         this.queryablesLoaded = false
         this.queryablesJson = {}
         this.queryablesArray = []
     }
 
-    get numberOfPagesLoaded () {
-        return this._pageIndex
-    }
+    // get numberOfPagesLoaded () {
+    //     return this._pageIndex
+    // }
 
     get queryablesLink () {
-        return `${this.linkToSelf}/queryables`
+        const se = this
+        return `${se.linkToSelf}/queryables`
     }
 
     async retrieveQueryables () {

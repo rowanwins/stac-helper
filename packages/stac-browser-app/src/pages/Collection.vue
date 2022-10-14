@@ -20,6 +20,11 @@
       </template>
 
       <template #second-col-content>
+        <ARow>
+          <ACol :span="24">
+            <ShareAndSource :stac-thing="collection" :page-state="pageState"/>
+          </ACol>
+        </ARow>
         <ATabs v-model:activeKey="activeTab" :animated="false">
           <ATabPane key="items" tab="Items" class="cardStyleLight" :disabled="!hasChildItems">
             <CollectionItems 
@@ -66,7 +71,6 @@
           </ATabPane>
 
         </ATabs>
-
       </template>
 
       <template #third-col-content>
@@ -82,6 +86,7 @@ import MainLayout from '@/layouts/MainLayout.vue'
 import CollectionOverview from '@/components/CollectionOverview.vue'
 import CollectionItems from '@/components/CollectionItems.vue'
 import LeafletMap from '@/components/LeafletMap.vue'
+import ShareAndSource from '@/components/ShareAndSource.vue'
 import { ArrowLeftOutlined } from '@ant-design/icons-vue'
 import CollectionMetadata from '@/components/CollectionMetadata.vue'
 import ListCatalogs from '@/components/ListCatalogs.vue'
@@ -96,6 +101,7 @@ export default {
     CollectionItems,
     LeafletMap,
     ArrowLeftOutlined,
+    ShareAndSource,
     CollectionMetadata,
     ListCatalogs,
     Providers,
@@ -121,6 +127,13 @@ export default {
     }
   },
   computed: {
+    pageState () {
+      return {
+        tab: this.activeTab,
+        pageSize: this.pageSize,
+        page: this.pageResultsIndex
+      }
+    },
     items () {
       if (this.collectionOrFilteredCollection === null) return []     
 
@@ -128,10 +141,11 @@ export default {
       if (this.collectionOrFilteredCollection.childrenLoaded && this.collectionOrFilteredCollection.hasSomeChildren) {
         return this.collectionOrFilteredCollection.items
       }
-      // If not let's check for API page results
-      if (this.collectionOrFilteredCollection.checkIfPageIndexAvailable(this.pageResultsIndex)) {
-        return this.collectionOrFilteredCollection.getPageOfItemsByIndex(this.pageResultsIndex)
+
+      if (this.collectionOrFilteredCollection.activeItemsCollectionPage !== null) {
+        return this.collectionOrFilteredCollection.activeItemsCollectionPage.pageItems
       }
+
       return []
     },
     loadingChildrenOrItems () {
@@ -207,10 +221,6 @@ export default {
     async onChildrenLoaded () {
       if (this.collection === null || !this.collection.childrenLoaded) return
 
-      if (!this.collectionOrFilteredCollection.hasSomeChildren && this.collectionOrFilteredCollection.numberOfPagesLoaded === 0) {
-        await this.collectionOrFilteredCollection.getNextPageOfCollectionItems()
-      }
-
       // Sometimes the map will be ready before the data
       // In which case we add the data now
       if (!this.mapItemsAdded && this.leafletMap !== null) this.addCollectionThingsToMap()
@@ -278,10 +288,8 @@ export default {
       
       const filteredCollection = await this.collection.createSearch()
       this.searchFilter.populateStacApiHelperSearchClass(filteredCollection, this.pageSize)
-      
-      this.$store.commit('setPageResultsIndex', 1)
-      await filteredCollection.getNextPageOfCollectionItems()
-      await filteredCollection.checkNumberOfItems()
+      await filteredCollection.loadActiveItemCollection()
+      await filteredCollection.checkTotalNumberOfItems()
       this.$store.commit('setSearchCollection', filteredCollection)
       this.leafletMap.updateCollectionItems(this.items)
 
@@ -293,22 +301,16 @@ export default {
     },
     async setPageSize (pageSize) {
       this.pageSize = pageSize
-      this.$store.commit('setPageResultsIndex', 1)
-      this.collection.clearExistingItemPages()
-      this.collection.setPageSize(pageSize)
+
       if (this.filteredCollection !== null) {
-        this.filteredCollection.clearExistingItemPages()
-        this.filteredCollection.setPageSize(pageSize)
-        this.dataReady = false
-        await this.filteredCollection.getNextPageOfCollectionItems()
-        await this.collection.getNextPageOfCollectionItems()
-        this.dataReady = true
+        await this.filterCalled()
       } else {
         this.dataReady = false
-        await this.collection.getNextPageOfCollectionItems()
+        this.collection.setPageSizeLimit(pageSize)
+        await this.collection.loadActiveItemCollection()
+        this.leafletMap.updateCollectionItems(this.items)
         this.dataReady = true
-    }
-      this.leafletMap.updateCollectionItems(this.items)
+      }
     }
   }
 }

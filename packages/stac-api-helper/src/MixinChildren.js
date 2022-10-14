@@ -2,6 +2,7 @@ import {sniffStacType, getWithJsonResponse, createStacItemFromDataAndType} from 
 import {createValidFetchUrl} from './urlUtils.js'
 
 export default class ChildrenMixin {
+
     initializer () {
         this.childrenLoaded = false
         this.items = []
@@ -46,22 +47,23 @@ export default class ChildrenMixin {
                             }
                             resolve()
                         }
-                        reject()
+                        reject(new Error('Could not retrieve child'))
                     })
                     .catch(() => {
-                        reject()
+                        reject(new Error('Could not retrieve child'))
                     })
 
             } catch (e) {
-                reject()
+                reject(new Error('Could not retrieve child'))
             }
         })
     }
 
     async loadChildren () {
         if (this.childrenLoaded) return Promise.resolve()
+
         return new Promise((resolve) => {
-            if (!this.childrenLinks.length === 0) resolve()
+
             let part1Done = false
             let part2Done = false
 

@@ -154,6 +154,7 @@ export default {
       return this.$store.getters.selectedStac
     },
     searchItemCount () {
+      if (!this.collectionIsFiltered) return null
       if (this.originalCollection) return this.collectionOrFilteredCollection.numberOfItems
       return null
     },

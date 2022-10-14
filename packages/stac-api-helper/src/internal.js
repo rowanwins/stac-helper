@@ -2,9 +2,9 @@
 // The technique comes from the guy who wrote mobx
 // See https://medium.com/visual-development/how-to-fix-nasty-circular-dependency-issues-once-and-for-all-in-javascript-typescript-a04c987cf0de
 
-export * from './StacThing.js'
-export * from './EmptyClass.js'
-export * from './Collection.js'
-export * from './Catalog.js'
-export * from './Item.js'
-export * from './Search.js'
+export * from './StacEntity'
+export * from './Collection'
+export * from './Catalog'
+export * from './Item'
+export * from './Search'
+export * from './ItemCollection'
