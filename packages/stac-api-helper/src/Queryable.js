@@ -1,5 +1,6 @@
 import URI from 'urijs'
-import {getWithJsonResponse, getValueFromObjectUsingPath} from './utils'
+
+import {getWithJsonResponse, getValueFromObjectUsingPath} from './utils.js'
 
 export class Queryable {
     constructor (id, json) {

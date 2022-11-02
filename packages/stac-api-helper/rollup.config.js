@@ -3,7 +3,7 @@ import json from '@rollup/plugin-json'
 import {terser} from 'rollup-plugin-terser'
 
 const output = (file, plugins) => ({
-    input: './src/entry.ts',
+    input: './src/entry.js',
     output: {
         name: 'stacHelper',
         file,

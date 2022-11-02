@@ -2,6 +2,7 @@ import {Catalog, Collection, Item, ItemCollection} from './internal.js'
 
 /**
  * Returns a StacLink, or null based on a rel type
+ * @private
  */
 export function getLinkByRelType (json, rel) {
     if (!json.links) return null
@@ -12,6 +13,7 @@ export function getLinkByRelType (json, rel) {
 
 /**
  * Returns the "next" rel StacLink, or null
+ * @private
  */
 export function getNextLinkObj (json) {
     return getLinkByRelType(json, 'next')
@@ -19,6 +21,7 @@ export function getNextLinkObj (json) {
 
 /**
  * Returns the "prev" or "previous" rel StacLink, or null
+ * @private
  */
 export function getPrevLinkObj (json) {
     const previous = getLinkByRelType(json, 'previous')
@@ -58,7 +61,7 @@ export function getValueFromObjectUsingPath (object, path) {
     if (object === null || typeof object !== 'object') {
         return null
     }
-    object = object[path[0]] // @ts-ignore
+    object = object[path[0]]
     if (typeof object !== 'undefined' && path.length > 1) {
         return getValueFromObjectUsingPath(object, path.slice(1))
     }
@@ -75,27 +78,27 @@ export function sniffStacType (data) {
         } else if (dataType === 'FEATURE') {
             return 'Item'
         } else if (dataType === 'FEATURECOLLECTION') {
-            return 'Items'
+            return 'ItemCollection'
         }
     }
     if ('collections' in data) {
         return 'CatalogCollections'
     } else if ('license' in data && 'extent' in data) {
         return 'Collection'
-    } else {
-        return 'Catalog'
     }
+
+    return null
 }
 
-export function createStacItemFromDataAndType (data, stacType, url, parent) {
+export function createStacItemFromDataAndType (data, stacType, url, parent, linkThatCreatedThis) {
     if (stacType === 'Catalog') {
-        return new Catalog(data, url, parent)
+        return new Catalog(data, url, parent, linkThatCreatedThis)
     } else if (stacType === 'Collection') {
-        return new Collection(data, url, parent)
+        return new Collection(data, url, parent, linkThatCreatedThis)
     } else if (stacType === 'Item') {
-        return new Item(data, url, parent)
-    } else if (stacType === 'Items') {
-        return new ItemCollection(data, parent, null, null)
+        return new Item(data, url, parent, linkThatCreatedThis)
+    } else if (stacType === 'ItemCollection') {
+        return new ItemCollection(data, parent, null, null, linkThatCreatedThis)
     }
     return null
 }
@@ -114,5 +117,6 @@ export async function loadLinkAndCreateStacThing (link, parent) {
     const data = await loadLink(link)
     if (data === null) return null
     const stacType = sniffStacType(data)
-    return createStacItemFromDataAndType(data, stacType, link.href, parent)
+    if (stacType === null) return null
+    return createStacItemFromDataAndType(data, stacType, link.href, parent, link)
 }

@@ -1,6 +1,11 @@
-import {getWithJsonResponse} from './utils'
-import {Queryable} from './Queryable'
+import {getWithJsonResponse} from './utils.js'
+import {Queryable} from './Queryable.js'
 
+/**
+ * This provides properties and methods for working with STAC Queryables,
+ * it is not used directly.
+ * @mixin
+ */
 export default class MixinQueryables {
 
     initializer () {
@@ -9,20 +14,14 @@ export default class MixinQueryables {
         this.queryablesArray = []
     }
 
-    // get numberOfPagesLoaded () {
-    //     return this._pageIndex
-    // }
-
     get queryablesLink () {
-        const se = this
-        return `${se.linkToSelf}/queryables`
+        return `${this.linkToSelf}/queryables`
     }
 
     async retrieveQueryables () {
         if (Object.keys(this.queryablesJson).length > 0) return this.queryablesJson
 
         const json = await getWithJsonResponse(this.queryablesLink)
-        this.queryablesLoaded = true
         if (json === null) return json
 
         Object.assign(this.queryablesJson, json.properties)
@@ -33,6 +32,11 @@ export default class MixinQueryables {
             await q.getReference()
             this.queryablesArray.push(q)
         }
+        this.queryablesLoaded = true
         return json
+    }
+
+    getQueryableById (id) {
+        return this.queryablesArray.find(q => q.id === id)
     }
 }

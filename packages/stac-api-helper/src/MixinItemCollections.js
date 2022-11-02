@@ -1,11 +1,38 @@
-import {loadLink, loadLinkAndCreateStacThing} from './utils'
 import objectAssignDeep from 'object-assign-deep'
 
+import {loadLink, loadLinkAndCreateStacThing} from './utils.js'
+
+/**
+ * This provides properties and methods for working with STAC Collections and Searches
+ * that provide ItemCollection responses, it is not used directly.
+ * @mixin
+ */
 export default class ItemCollectionsMixin {
 
     initializer () {
+        /**
+         * The total number of items present in the collection or search results.
+         * Requires `checkTotalNumberOfItems` to be called to be called.
+         * Note: some STAC API's implementations do not return this information.
+         * @type {number|null}
+         * @public
+         */
         this.numberOfItems = null
+
+        /**
+         * The most recent ItemCollection that has been loaded
+         * @type {ItemCollection|null}
+         * @public
+         */
         this.activeItemsCollectionPage = null
+
+        /**
+         * The total number of items present in the collection or search results.
+         * Requires `checkTotalNumberOfItems` to be called to be called.
+         * Note: some STAC API's implementations do not return this information.
+         * @type {number|null}
+         * @public
+         */
         this._pageSizeLimit = 12
     }
 
@@ -15,16 +42,30 @@ export default class ItemCollectionsMixin {
         return null
     }
 
-    setPageSizeLimit (limit) {
+    /**
+     * Sets the `limit` parameter for how many items will be included in the response.
+     * @param {number} limit - A number indicating how many items to include in the response.
+     * @return {this}
+     */
+    limit (limit) {
         this._pageSizeLimit = limit
+        return this
     }
 
+    /**
+     * Sends a request to check the total number of items present in the collection or search results
+     * by limiting the result count to 1 and using the `numberMatched` field in the response.
+     * Note: some STAC API's implementations do not return the `numberMatched` information.
+     * TODO: Extend to also use {@link https://github.com/stac-api-extensions/context|Context Extension} where present.
+     * @return {Promise<number | null>}
+     */
     async checkTotalNumberOfItems () {
         if (this.numberOfItems !== null) return this.numberOfItems
+        if (this.itemCollectionEntryLink === null) return null
         const limitedSearch = objectAssignDeep.noMutate({}, this.itemCollectionEntryLink)
         if (limitedSearch.method === 'POST') {
             limitedSearch.body.limit = 1
-        } else {
+        } else if (limitedSearch.href.indexOf('limit=') === -1) {
             limitedSearch.href = `${limitedSearch.href}?limit=1`
         }
 
@@ -38,18 +79,29 @@ export default class ItemCollectionsMixin {
         return null
     }
 
+    /**
+     * Loads a page of results, returning an ItemCollection.
+     * @param {json|null} link - A link object to load (eg a next or prev link). If null then users the entry point for the collection items or search.
+     * @return {Promise<ItemCollection | null>}
+     */
     async loadActiveItemCollection (link = null) {
-        if (link === null) link = this.itemCollectionEntryLink
+        let linkWasNull = false
+        if (link === null) {
+            link = this.itemCollectionEntryLink
+            linkWasNull = true
+        }
 
         const sizeLimitedLink = objectAssignDeep.noMutate({}, link)
-
-        if (sizeLimitedLink.method === 'POST') {
-            sizeLimitedLink.body.limit = this._pageSizeLimit
-        } else {
-            sizeLimitedLink.href = `${sizeLimitedLink.href}?limit=${this._pageSizeLimit}`
+        if (linkWasNull) {
+            if (sizeLimitedLink.method === 'POST') {
+                sizeLimitedLink.body.limit = this._pageSizeLimit
+            } else if (sizeLimitedLink.href.indexOf('limit=') === -1) {
+                sizeLimitedLink.href = `${sizeLimitedLink.href}?limit=${this._pageSizeLimit}`
+            }
         }
 
         this.activeItemsCollectionPage = await loadLinkAndCreateStacThing(sizeLimitedLink, this)
+        return this.activeItemsCollectionPage
     }
 
 }

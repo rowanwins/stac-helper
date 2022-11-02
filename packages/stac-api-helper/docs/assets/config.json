@@ -1,0 +1,1272 @@
+[
+	{
+		"name": "Catalog",
+		"description": "A Class for working with a  STAC Catalog object",
+		"snippet": false,
+		"methods": [
+			{
+				"name": "loadParent",
+				"returns": "Promise <(StacEntity|null)>",
+				"description": "Loads (if required) and returns the parent as it's StacEntity Class."
+			},
+			{
+				"name": "loadRoot",
+				"returns": "Promise <(StacEntity|null)>",
+				"description": "Loads (if required) and returns the root entity as it's StacEntity Class."
+			},
+			{
+				"name": "getChildById",
+				"returns": "(StacEntity|null)",
+				"description": "Returns a STAC Entity from the children"
+			}
+		],
+		"properties": [
+			{
+				"name": "stacType",
+				"returns": "string",
+				"description": "Gets the Stac Type of 'Catalog'"
+			},
+			{
+				"name": "id",
+				"returns": "string",
+				"description": "The id of the stac entity"
+			},
+			{
+				"name": "rawJson",
+				"returns": "json",
+				"description": "The json of the stac entity as originally retrieved. This object is\n frozen  to prevent modification."
+			},
+			{
+				"name": "url",
+				"returns": "(string|null)",
+				"description": "The base url of the stac entity (similar to linkToSelf)"
+			},
+			{
+				"name": "parent",
+				"returns": "(StacEntity|null)",
+				"description": "The parent stac entity class"
+			},
+			{
+				"name": "linkThatCreatedThis",
+				"returns": "",
+				"description": "The json link object that was used to create this stac entity"
+			},
+			{
+				"name": "stacType",
+				"returns": "string",
+				"description": "Gets the type of stac entity. One of either 'Catalog', 'Collection' or 'Item'."
+			},
+			{
+				"name": "titleOrId",
+				"returns": "string",
+				"description": "Gets a string of either the title, or if not present, the id"
+			},
+			{
+				"name": "title",
+				"returns": "(string|null)",
+				"description": "Get' a string of either the title, or if not present null"
+			},
+			{
+				"name": "descriptionAsHtml",
+				"returns": "(string|null)",
+				"description": "Gets a description as rendered html using commonmark, or null"
+			},
+			{
+				"name": "linkToSelf",
+				"returns": "(string|null)",
+				"description": "Gets this stac entity's url"
+			},
+			{
+				"name": "hasParent",
+				"returns": "boolean",
+				"description": "A boolean indicating if a parent link is found in the raw json"
+			},
+			{
+				"name": "linkToParent",
+				"returns": "(string|null)",
+				"description": "If present the parent's link url, or null"
+			},
+			{
+				"name": "isRoot",
+				"returns": "boolean",
+				"description": "A boolean indicating if this entity represents the root entity"
+			},
+			{
+				"name": "hasRoot",
+				"returns": "boolean",
+				"description": "A boolean indicating if this entity has a root entity"
+			},
+			{
+				"name": "linkToRoot",
+				"returns": "(string|null)",
+				"description": "If present the parent's root url, or null"
+			},
+			{
+				"name": "parentIsRoot",
+				"returns": "boolean",
+				"description": "A boolean indicating if the parent entity is the root entity"
+			},
+			{
+				"name": "hasAssets",
+				"returns": "boolean",
+				"description": "A boolean indicating if entity has assets"
+			},
+			{
+				"name": "numberOfAssets",
+				"returns": "number",
+				"description": "The number of assets present. If none then 0 is returned"
+			},
+			{
+				"name": "thumbnailUrl",
+				"returns": "string",
+				"description": "The url of the thumbnail asset"
+			},
+			{
+				"name": "overviewUrl",
+				"returns": "string",
+				"description": "The url of the overview asset"
+			},
+			{
+				"name": "validHttpThumbnailUrl",
+				"returns": "(string|null)",
+				"description": "A valid http url for the thumbnail asset, if it exists."
+			},
+			{
+				"name": "validHttpOverviewUrl",
+				"returns": "(string|null)",
+				"description": "A valid http url for the overview asset, if it exists."
+			},
+			{
+				"name": "parentType",
+				"returns": "(string|null)",
+				"description": "Gets the type of parent stac entity. One of either 'Catalog', 'Collection' or 'Item'."
+			},
+			{
+				"name": "supportsFilterExtension",
+				"returns": "boolean",
+				"description": "A boolean indicating if entity supports the filter extension for searching."
+			},
+			{
+				"name": "loadParent",
+				"returns": "Promise <(StacEntity|null)>",
+				"description": "Loads (if required) and returns the parent as it's StacEntity Class."
+			},
+			{
+				"name": "loadRoot",
+				"returns": "Promise <(StacEntity|null)>",
+				"description": "Loads (if required) and returns the root entity as it's StacEntity Class."
+			},
+			{
+				"name": "hasSomeChildren",
+				"returns": "boolean",
+				"description": "Returns a boolean indicating that children exist"
+			},
+			{
+				"name": "numberOfChildren",
+				"returns": "number",
+				"description": "Returns the number of child links found in the raw JSON"
+			},
+			{
+				"name": "childrenItemLinks",
+				"returns": "Array <JSON>",
+				"description": "Returns an array of links to Item's"
+			},
+			{
+				"name": "getChildById",
+				"returns": "(StacEntity|null)",
+				"description": "Returns a STAC Entity from the children"
+			}
+		],
+		"example": false,
+		"returns": "",
+		"params": [
+			{
+				"name": "json",
+				"type": "json",
+				"description": "The raw json of the stac entity"
+			},
+			{
+				"name": "url",
+				"type": "(string|null)",
+				"default": "null",
+				"description": "The url of the stac entity"
+			},
+			{
+				"name": "parent",
+				"type": "(StacEntity|null)",
+				"default": "null",
+				"description": "The parent class that created this stac entity"
+			},
+			{
+				"name": "linkThatCreatedThis",
+				"type": "(json|null)",
+				"default": "null",
+				"description": "The entire link object that loaded the json"
+			}
+		],
+		"options": null,
+		"throws": []
+	},
+	{
+		"name": "Collection",
+		"description": "A Class for working with a  STAC Collection object",
+		"snippet": false,
+		"methods": [
+			{
+				"name": "createSearch",
+				"returns": "Search",
+				"description": "Creates a new Search Class pre-populated to search this collection."
+			},
+			{
+				"name": "loadParent",
+				"returns": "Promise <(StacEntity|null)>",
+				"description": "Loads (if required) and returns the parent as it's StacEntity Class."
+			},
+			{
+				"name": "loadRoot",
+				"returns": "Promise <(StacEntity|null)>",
+				"description": "Loads (if required) and returns the root entity as it's StacEntity Class."
+			},
+			{
+				"name": "getChildById",
+				"returns": "(StacEntity|null)",
+				"description": "Returns a STAC Entity from the children"
+			},
+			{
+				"name": "limit",
+				"returns": "this",
+				"description": "Sets the  limit  parameter for how many items will be included in the response."
+			},
+			{
+				"name": "checkTotalNumberOfItems",
+				"returns": "Promise <(number|null)>",
+				"description": "Sends a request to check the total number of items present in the collection or search results\nby limiting the result count to 1 and using the  numberMatched  field in the response.\nNote: some STAC API's implementations do not return the  numberMatched  information.\nTODO: Extend to also use  Context Extension  where present."
+			},
+			{
+				"name": "loadActiveItemCollection",
+				"returns": "Promise <(ItemCollection|null)>",
+				"description": "Loads a page of results, returning an ItemCollection."
+			}
+		],
+		"properties": [
+			{
+				"name": "stacType",
+				"returns": "string",
+				"description": "Gets the Stac Type of 'Collection'"
+			},
+			{
+				"name": "collectionItemsLink",
+				"returns": "JSON",
+				"description": "Gets the Link object to the collections items using the  items  relationship."
+			},
+			{
+				"name": "numberOfProviders",
+				"returns": "number",
+				"description": "Gets the number of providers"
+			},
+			{
+				"name": "createSearch",
+				"returns": "Search",
+				"description": "Creates a new Search Class pre-populated to search this collection."
+			},
+			{
+				"name": "id",
+				"returns": "string",
+				"description": "The id of the stac entity"
+			},
+			{
+				"name": "rawJson",
+				"returns": "json",
+				"description": "The json of the stac entity as originally retrieved. This object is\n frozen  to prevent modification."
+			},
+			{
+				"name": "url",
+				"returns": "(string|null)",
+				"description": "The base url of the stac entity (similar to linkToSelf)"
+			},
+			{
+				"name": "parent",
+				"returns": "(StacEntity|null)",
+				"description": "The parent stac entity class"
+			},
+			{
+				"name": "linkThatCreatedThis",
+				"returns": "",
+				"description": "The json link object that was used to create this stac entity"
+			},
+			{
+				"name": "stacType",
+				"returns": "string",
+				"description": "Gets the type of stac entity. One of either 'Catalog', 'Collection' or 'Item'."
+			},
+			{
+				"name": "titleOrId",
+				"returns": "string",
+				"description": "Gets a string of either the title, or if not present, the id"
+			},
+			{
+				"name": "title",
+				"returns": "(string|null)",
+				"description": "Get' a string of either the title, or if not present null"
+			},
+			{
+				"name": "descriptionAsHtml",
+				"returns": "(string|null)",
+				"description": "Gets a description as rendered html using commonmark, or null"
+			},
+			{
+				"name": "linkToSelf",
+				"returns": "(string|null)",
+				"description": "Gets this stac entity's url"
+			},
+			{
+				"name": "hasParent",
+				"returns": "boolean",
+				"description": "A boolean indicating if a parent link is found in the raw json"
+			},
+			{
+				"name": "linkToParent",
+				"returns": "(string|null)",
+				"description": "If present the parent's link url, or null"
+			},
+			{
+				"name": "isRoot",
+				"returns": "boolean",
+				"description": "A boolean indicating if this entity represents the root entity"
+			},
+			{
+				"name": "hasRoot",
+				"returns": "boolean",
+				"description": "A boolean indicating if this entity has a root entity"
+			},
+			{
+				"name": "linkToRoot",
+				"returns": "(string|null)",
+				"description": "If present the parent's root url, or null"
+			},
+			{
+				"name": "parentIsRoot",
+				"returns": "boolean",
+				"description": "A boolean indicating if the parent entity is the root entity"
+			},
+			{
+				"name": "hasAssets",
+				"returns": "boolean",
+				"description": "A boolean indicating if entity has assets"
+			},
+			{
+				"name": "numberOfAssets",
+				"returns": "number",
+				"description": "The number of assets present. If none then 0 is returned"
+			},
+			{
+				"name": "thumbnailUrl",
+				"returns": "string",
+				"description": "The url of the thumbnail asset"
+			},
+			{
+				"name": "overviewUrl",
+				"returns": "string",
+				"description": "The url of the overview asset"
+			},
+			{
+				"name": "validHttpThumbnailUrl",
+				"returns": "(string|null)",
+				"description": "A valid http url for the thumbnail asset, if it exists."
+			},
+			{
+				"name": "validHttpOverviewUrl",
+				"returns": "(string|null)",
+				"description": "A valid http url for the overview asset, if it exists."
+			},
+			{
+				"name": "parentType",
+				"returns": "(string|null)",
+				"description": "Gets the type of parent stac entity. One of either 'Catalog', 'Collection' or 'Item'."
+			},
+			{
+				"name": "supportsFilterExtension",
+				"returns": "boolean",
+				"description": "A boolean indicating if entity supports the filter extension for searching."
+			},
+			{
+				"name": "loadParent",
+				"returns": "Promise <(StacEntity|null)>",
+				"description": "Loads (if required) and returns the parent as it's StacEntity Class."
+			},
+			{
+				"name": "loadRoot",
+				"returns": "Promise <(StacEntity|null)>",
+				"description": "Loads (if required) and returns the root entity as it's StacEntity Class."
+			},
+			{
+				"name": "hasSomeChildren",
+				"returns": "boolean",
+				"description": "Returns a boolean indicating that children exist"
+			},
+			{
+				"name": "numberOfChildren",
+				"returns": "number",
+				"description": "Returns the number of child links found in the raw JSON"
+			},
+			{
+				"name": "childrenItemLinks",
+				"returns": "Array <JSON>",
+				"description": "Returns an array of links to Item's"
+			},
+			{
+				"name": "getChildById",
+				"returns": "(StacEntity|null)",
+				"description": "Returns a STAC Entity from the children"
+			},
+			{
+				"name": "numberOfItems",
+				"returns": "",
+				"description": "The total number of items present in the collection or search results.\nRequires  checkTotalNumberOfItems  to be called to be called.\nNote: some STAC API's implementations do not return this information."
+			},
+			{
+				"name": "activeItemsCollectionPage",
+				"returns": "",
+				"description": "The most recent ItemCollection that has been loaded"
+			},
+			{
+				"name": "_pageSizeLimit",
+				"returns": "",
+				"description": "The total number of items present in the collection or search results.\nRequires  checkTotalNumberOfItems  to be called to be called.\nNote: some STAC API's implementations do not return this information."
+			},
+			{
+				"name": "limit",
+				"returns": "this",
+				"description": "Sets the  limit  parameter for how many items will be included in the response."
+			},
+			{
+				"name": "checkTotalNumberOfItems",
+				"returns": "Promise <(number|null)>",
+				"description": "Sends a request to check the total number of items present in the collection or search results\nby limiting the result count to 1 and using the  numberMatched  field in the response.\nNote: some STAC API's implementations do not return the  numberMatched  information.\nTODO: Extend to also use  Context Extension  where present."
+			},
+			{
+				"name": "loadActiveItemCollection",
+				"returns": "Promise <(ItemCollection|null)>",
+				"description": "Loads a page of results, returning an ItemCollection."
+			},
+			{
+				"name": "bbox",
+				"returns": "Array <number>",
+				"description": "Gets the first  bbox  property of the ExtentObject."
+			},
+			{
+				"name": "bboxAsGeojsonFeature",
+				"returns": "JSON",
+				"description": "Gets the bbox as a GeoJSON Polygon object"
+			}
+		],
+		"example": false,
+		"returns": "",
+		"params": [
+			{
+				"name": "json",
+				"type": "json",
+				"description": "The raw json of the stac entity"
+			},
+			{
+				"name": "url",
+				"type": "(string|null)",
+				"default": "null",
+				"description": "The url of the stac entity"
+			},
+			{
+				"name": "parent",
+				"type": "(StacEntity|null)",
+				"default": "null",
+				"description": "The parent class that created this stac entity"
+			},
+			{
+				"name": "linkThatCreatedThis",
+				"type": "(json|null)",
+				"default": "null",
+				"description": "The entire link object that loaded the json"
+			}
+		],
+		"options": null,
+		"throws": []
+	},
+	{
+		"name": "Item",
+		"description": "A Class for working with a  STAC Item object",
+		"snippet": false,
+		"methods": [
+			{
+				"name": "loadParent",
+				"returns": "Promise <(StacEntity|null)>",
+				"description": "Loads (if required) and returns the parent as it's StacEntity Class."
+			},
+			{
+				"name": "loadRoot",
+				"returns": "Promise <(StacEntity|null)>",
+				"description": "Loads (if required) and returns the root entity as it's StacEntity Class."
+			}
+		],
+		"properties": [
+			{
+				"name": "stacType",
+				"returns": "string",
+				"description": "Gets the Stac Type of 'Item'"
+			},
+			{
+				"name": "collectionUrl",
+				"returns": "(string|null)",
+				"description": "Returns the collection url that the item belongs to, or null."
+			},
+			{
+				"name": "hasAssets",
+				"returns": "boolean",
+				"description": "Returns a boolean indicating if the Item has assets"
+			},
+			{
+				"name": "datetime",
+				"returns": "(string|null)",
+				"description": "Gets the mandatory datetime property of the 'Item'. Also provides some fallbacks for bad implementations."
+			},
+			{
+				"name": "datetimeRange",
+				"returns": "(Array <string>|null)",
+				"description": "Gets the  start_datetime  and  end_datetime  property of the 'Item' if present, otherwise returns null."
+			},
+			{
+				"name": "bbox",
+				"returns": "Array <number>",
+				"description": "Gets the  bbox  property of the Item. If a  bbox  property is not present, even though it should be,\nthe bbox is calculated from the  geometry."
+			},
+			{
+				"name": "bboxAsGeojsonFeature",
+				"returns": "JSON",
+				"description": "Gets the bbox as a GeoJSON Polygon object"
+			},
+			{
+				"name": "id",
+				"returns": "string",
+				"description": "The id of the stac entity"
+			},
+			{
+				"name": "rawJson",
+				"returns": "json",
+				"description": "The json of the stac entity as originally retrieved. This object is\n frozen  to prevent modification."
+			},
+			{
+				"name": "url",
+				"returns": "(string|null)",
+				"description": "The base url of the stac entity (similar to linkToSelf)"
+			},
+			{
+				"name": "parent",
+				"returns": "(StacEntity|null)",
+				"description": "The parent stac entity class"
+			},
+			{
+				"name": "linkThatCreatedThis",
+				"returns": "",
+				"description": "The json link object that was used to create this stac entity"
+			},
+			{
+				"name": "stacType",
+				"returns": "string",
+				"description": "Gets the type of stac entity. One of either 'Catalog', 'Collection' or 'Item'."
+			},
+			{
+				"name": "titleOrId",
+				"returns": "string",
+				"description": "Gets a string of either the title, or if not present, the id"
+			},
+			{
+				"name": "title",
+				"returns": "(string|null)",
+				"description": "Get' a string of either the title, or if not present null"
+			},
+			{
+				"name": "descriptionAsHtml",
+				"returns": "(string|null)",
+				"description": "Gets a description as rendered html using commonmark, or null"
+			},
+			{
+				"name": "linkToSelf",
+				"returns": "(string|null)",
+				"description": "Gets this stac entity's url"
+			},
+			{
+				"name": "hasParent",
+				"returns": "boolean",
+				"description": "A boolean indicating if a parent link is found in the raw json"
+			},
+			{
+				"name": "linkToParent",
+				"returns": "(string|null)",
+				"description": "If present the parent's link url, or null"
+			},
+			{
+				"name": "isRoot",
+				"returns": "boolean",
+				"description": "A boolean indicating if this entity represents the root entity"
+			},
+			{
+				"name": "hasRoot",
+				"returns": "boolean",
+				"description": "A boolean indicating if this entity has a root entity"
+			},
+			{
+				"name": "linkToRoot",
+				"returns": "(string|null)",
+				"description": "If present the parent's root url, or null"
+			},
+			{
+				"name": "parentIsRoot",
+				"returns": "boolean",
+				"description": "A boolean indicating if the parent entity is the root entity"
+			},
+			{
+				"name": "hasAssets",
+				"returns": "boolean",
+				"description": "A boolean indicating if entity has assets"
+			},
+			{
+				"name": "numberOfAssets",
+				"returns": "number",
+				"description": "The number of assets present. If none then 0 is returned"
+			},
+			{
+				"name": "thumbnailUrl",
+				"returns": "string",
+				"description": "The url of the thumbnail asset"
+			},
+			{
+				"name": "overviewUrl",
+				"returns": "string",
+				"description": "The url of the overview asset"
+			},
+			{
+				"name": "validHttpThumbnailUrl",
+				"returns": "(string|null)",
+				"description": "A valid http url for the thumbnail asset, if it exists."
+			},
+			{
+				"name": "validHttpOverviewUrl",
+				"returns": "(string|null)",
+				"description": "A valid http url for the overview asset, if it exists."
+			},
+			{
+				"name": "parentType",
+				"returns": "(string|null)",
+				"description": "Gets the type of parent stac entity. One of either 'Catalog', 'Collection' or 'Item'."
+			},
+			{
+				"name": "supportsFilterExtension",
+				"returns": "boolean",
+				"description": "A boolean indicating if entity supports the filter extension for searching."
+			},
+			{
+				"name": "loadParent",
+				"returns": "Promise <(StacEntity|null)>",
+				"description": "Loads (if required) and returns the parent as it's StacEntity Class."
+			},
+			{
+				"name": "loadRoot",
+				"returns": "Promise <(StacEntity|null)>",
+				"description": "Loads (if required) and returns the root entity as it's StacEntity Class."
+			}
+		],
+		"example": false,
+		"returns": "",
+		"params": [
+			{
+				"name": "json",
+				"type": "json",
+				"description": "The raw json of the stac entity"
+			},
+			{
+				"name": "url",
+				"type": "(string|null)",
+				"default": "null",
+				"description": "The url of the stac entity"
+			},
+			{
+				"name": "parent",
+				"type": "(StacEntity|null)",
+				"default": "null",
+				"description": "The parent class that created this stac entity"
+			},
+			{
+				"name": "linkThatCreatedThis",
+				"type": "(json|null)",
+				"default": "null",
+				"description": "The entire link object that loaded the json"
+			}
+		],
+		"options": null,
+		"throws": []
+	},
+	{
+		"name": "ItemCollection",
+		"description": "Works with a  STAC Item Collection ,\noften returned from searches or when paginating a collections items.",
+		"snippet": false,
+		"methods": [
+			{
+				"name": "loadPrevPage",
+				"returns": "Promise <(ItemCollection|null)>",
+				"description": "Loads (if required) and returns the previous page of the ItemCollection from the same parent."
+			},
+			{
+				"name": "loadNextPage",
+				"returns": "Promise <(ItemCollection|null)>",
+				"description": "Loads (if required) and returns the next page of ItemCollection from the same parent"
+			}
+		],
+		"properties": [
+			{
+				"name": "rawJson",
+				"returns": "",
+				"description": "The json of the stac entity"
+			},
+			{
+				"name": "parent",
+				"returns": "",
+				"description": "The parent stac entity class"
+			},
+			{
+				"name": "pageItems",
+				"returns": "",
+				"description": "An array of Item objects created from the STAC Items"
+			},
+			{
+				"name": "linkThatCreatedThis",
+				"returns": "",
+				"description": "The JSON Link Object that was used to retrieve the data for this ItemCollection.\nThis will often be the  next  or  prev  link from another page."
+			},
+			{
+				"name": "stacType",
+				"returns": "string",
+				"description": "Get's a string of the stac type as 'ItemCollection'"
+			},
+			{
+				"name": "prevLink",
+				"returns": "JSON",
+				"description": "Returns the \"prev\" or \"previous\" rel StacLink if it exists, or null"
+			},
+			{
+				"name": "hasPrevLink",
+				"returns": "boolean",
+				"description": "Returns a boolean indicating if the ItemCollection has a previous page link"
+			},
+			{
+				"name": "nextLink",
+				"returns": "JSON",
+				"description": "Returns the \"next\" rel StacLink if it exists, or null"
+			},
+			{
+				"name": "hasNextLink",
+				"returns": "boolean",
+				"description": "Returns a boolean indicating if the ItemCollection has a next page link"
+			},
+			{
+				"name": "loadPrevPage",
+				"returns": "Promise <(ItemCollection|null)>",
+				"description": "Loads (if required) and returns the previous page of the ItemCollection from the same parent."
+			},
+			{
+				"name": "loadNextPage",
+				"returns": "Promise <(ItemCollection|null)>",
+				"description": "Loads (if required) and returns the next page of ItemCollection from the same parent"
+			}
+		],
+		"example": false,
+		"returns": "",
+		"params": [
+			{
+				"name": "json",
+				"type": "json",
+				"description": "The raw json of the stac item"
+			},
+			{
+				"name": "parent",
+				"type": "(Collection|Search|null)",
+				"default": "null",
+				"description": "The parent class that created this, either a Collection or a Search."
+			},
+			{
+				"name": "prevItemCollection",
+				"type": "(ItemCollection|null)",
+				"default": "null",
+				"description": "The previous Item Collection from the same parent"
+			},
+			{
+				"name": "nextItemCollection",
+				"type": "(ItemCollection|null)",
+				"default": "null",
+				"description": "The next Item Collection from the same parent"
+			},
+			{
+				"name": "linkThatCreatedThis",
+				"type": "(json|null)",
+				"default": "null",
+				"description": "The link object that was used to retrieve the json for this item collection."
+			}
+		],
+		"options": null,
+		"throws": []
+	},
+	{
+		"name": "ChildrenMixin",
+		"description": "This provides methods used for child stac items, it is not used directly.",
+		"snippet": false,
+		"methods": [
+			{
+				"name": "getChildById",
+				"returns": "(StacEntity|null)",
+				"description": "Returns a STAC Entity from the children"
+			}
+		],
+		"properties": [
+			{
+				"name": "hasSomeChildren",
+				"returns": "boolean",
+				"description": "Returns a boolean indicating that children exist"
+			},
+			{
+				"name": "numberOfChildren",
+				"returns": "number",
+				"description": "Returns the number of child links found in the raw JSON"
+			},
+			{
+				"name": "childrenItemLinks",
+				"returns": "Array <JSON>",
+				"description": "Returns an array of links to Item's"
+			},
+			{
+				"name": "getChildById",
+				"returns": "(StacEntity|null)",
+				"description": "Returns a STAC Entity from the children"
+			}
+		],
+		"example": false,
+		"returns": "",
+		"params": [],
+		"options": null,
+		"throws": []
+	},
+	{
+		"name": "ExtentMixin",
+		"description": "This provides methods used for Extent Objects, found on Collections, it is not used directly.",
+		"snippet": false,
+		"methods": [],
+		"properties": [
+			{
+				"name": "bbox",
+				"returns": "Array <number>",
+				"description": "Gets the first  bbox  property of the ExtentObject."
+			},
+			{
+				"name": "bboxAsGeojsonFeature",
+				"returns": "JSON",
+				"description": "Gets the bbox as a GeoJSON Polygon object"
+			}
+		],
+		"example": false,
+		"returns": "",
+		"params": [],
+		"options": null,
+		"throws": []
+	},
+	{
+		"name": "ItemCollectionsMixin",
+		"description": "This provides properties and methods for working with STAC Collections and Searches\nthat provide ItemCollection responses, it is not used directly.",
+		"snippet": false,
+		"methods": [
+			{
+				"name": "limit",
+				"returns": "this",
+				"description": "Sets the  limit  parameter for how many items will be included in the response."
+			},
+			{
+				"name": "checkTotalNumberOfItems",
+				"returns": "Promise <(number|null)>",
+				"description": "Sends a request to check the total number of items present in the collection or search results\nby limiting the result count to 1 and using the  numberMatched  field in the response.\nNote: some STAC API's implementations do not return the  numberMatched  information.\nTODO: Extend to also use  Context Extension  where present."
+			},
+			{
+				"name": "loadActiveItemCollection",
+				"returns": "Promise <(ItemCollection|null)>",
+				"description": "Loads a page of results, returning an ItemCollection."
+			}
+		],
+		"properties": [
+			{
+				"name": "numberOfItems",
+				"returns": "",
+				"description": "The total number of items present in the collection or search results.\nRequires  checkTotalNumberOfItems  to be called to be called.\nNote: some STAC API's implementations do not return this information."
+			},
+			{
+				"name": "activeItemsCollectionPage",
+				"returns": "",
+				"description": "The most recent ItemCollection that has been loaded"
+			},
+			{
+				"name": "_pageSizeLimit",
+				"returns": "",
+				"description": "The total number of items present in the collection or search results.\nRequires  checkTotalNumberOfItems  to be called to be called.\nNote: some STAC API's implementations do not return this information."
+			},
+			{
+				"name": "limit",
+				"returns": "this",
+				"description": "Sets the  limit  parameter for how many items will be included in the response."
+			},
+			{
+				"name": "checkTotalNumberOfItems",
+				"returns": "Promise <(number|null)>",
+				"description": "Sends a request to check the total number of items present in the collection or search results\nby limiting the result count to 1 and using the  numberMatched  field in the response.\nNote: some STAC API's implementations do not return the  numberMatched  information.\nTODO: Extend to also use  Context Extension  where present."
+			},
+			{
+				"name": "loadActiveItemCollection",
+				"returns": "Promise <(ItemCollection|null)>",
+				"description": "Loads a page of results, returning an ItemCollection."
+			}
+		],
+		"example": false,
+		"returns": "",
+		"params": [],
+		"options": null,
+		"throws": []
+	},
+	{
+		"name": "MixinQueryables",
+		"description": "This provides properties and methods for working with STAC Queryables,\nit is not used directly.",
+		"snippet": false,
+		"methods": [],
+		"properties": [],
+		"example": false,
+		"returns": "",
+		"params": [],
+		"options": null,
+		"throws": []
+	},
+	{
+		"name": "Search",
+		"description": "Works with a  STAC Item Collection ,\noften returned from searches or when paginating a collections items.",
+		"snippet": false,
+		"methods": [
+			{
+				"name": "ids",
+				"returns": "this",
+				"description": "Sets the  id  search parameter"
+			},
+			{
+				"name": "bbox",
+				"returns": "this",
+				"description": "Sets the  bbox  search parameter"
+			},
+			{
+				"name": "collections",
+				"returns": "this",
+				"description": "Sets the  collections  search parameter"
+			},
+			{
+				"name": "datetime",
+				"returns": "this",
+				"description": "Sets the  datetime  search parameter for a single date"
+			},
+			{
+				"name": "between",
+				"returns": "this",
+				"description": "Sets the  datetime  search parameter to a daterange."
+			},
+			{
+				"name": "limit",
+				"returns": "this",
+				"description": "Sets the  limit  parameter for how many items will be included in the response."
+			},
+			{
+				"name": "checkTotalNumberOfItems",
+				"returns": "Promise <(number|null)>",
+				"description": "Sends a request to check the total number of items present in the collection or search results\nby limiting the result count to 1 and using the  numberMatched  field in the response.\nNote: some STAC API's implementations do not return the  numberMatched  information.\nTODO: Extend to also use  Context Extension  where present."
+			},
+			{
+				"name": "loadActiveItemCollection",
+				"returns": "Promise <(ItemCollection|null)>",
+				"description": "Loads a page of results, returning an ItemCollection."
+			}
+		],
+		"properties": [
+			{
+				"name": "_root",
+				"returns": "",
+				"description": "The root STAC Catalog"
+			},
+			{
+				"name": "parent",
+				"returns": "",
+				"description": "The parent class that created this search class"
+			},
+			{
+				"name": "searchUrl",
+				"returns": "(string|null)",
+				"description": "Gets the base search url"
+			},
+			{
+				"name": "supportsGetRequests",
+				"returns": "boolean",
+				"description": "Gets a boolean indicating that the server supports GET search requests\nGET support is mandatory according to the STAC spec."
+			},
+			{
+				"name": "supportsPostRequests",
+				"returns": "boolean",
+				"description": "Gets a boolean indicating that the server supports POST search requests.\nPOST support is optional according to the STAC spec."
+			},
+			{
+				"name": "ids",
+				"returns": "this",
+				"description": "Sets the  id  search parameter"
+			},
+			{
+				"name": "bbox",
+				"returns": "this",
+				"description": "Sets the  bbox  search parameter"
+			},
+			{
+				"name": "collections",
+				"returns": "this",
+				"description": "Sets the  collections  search parameter"
+			},
+			{
+				"name": "datetime",
+				"returns": "this",
+				"description": "Sets the  datetime  search parameter for a single date"
+			},
+			{
+				"name": "between",
+				"returns": "this",
+				"description": "Sets the  datetime  search parameter to a daterange."
+			},
+			{
+				"name": "numberOfItems",
+				"returns": "",
+				"description": "The total number of items present in the collection or search results.\nRequires  checkTotalNumberOfItems  to be called to be called.\nNote: some STAC API's implementations do not return this information."
+			},
+			{
+				"name": "activeItemsCollectionPage",
+				"returns": "",
+				"description": "The most recent ItemCollection that has been loaded"
+			},
+			{
+				"name": "_pageSizeLimit",
+				"returns": "",
+				"description": "The total number of items present in the collection or search results.\nRequires  checkTotalNumberOfItems  to be called to be called.\nNote: some STAC API's implementations do not return this information."
+			},
+			{
+				"name": "limit",
+				"returns": "this",
+				"description": "Sets the  limit  parameter for how many items will be included in the response."
+			},
+			{
+				"name": "checkTotalNumberOfItems",
+				"returns": "Promise <(number|null)>",
+				"description": "Sends a request to check the total number of items present in the collection or search results\nby limiting the result count to 1 and using the  numberMatched  field in the response.\nNote: some STAC API's implementations do not return the  numberMatched  information.\nTODO: Extend to also use  Context Extension  where present."
+			},
+			{
+				"name": "loadActiveItemCollection",
+				"returns": "Promise <(ItemCollection|null)>",
+				"description": "Loads a page of results, returning an ItemCollection."
+			}
+		],
+		"example": false,
+		"returns": "",
+		"params": [
+			{
+				"name": "root",
+				"type": "Catalog",
+				"description": "The root Catalog class"
+			},
+			{
+				"name": "parent",
+				"type": "StacEntity",
+				"default": "null",
+				"description": "The class that created this search. Could be a root Catalog, or Collection for a limited search."
+			}
+		],
+		"options": null,
+		"throws": []
+	},
+	{
+		"name": "StacEntity",
+		"description": "This is the parent class for Stac Catalog, Stac Collection or Stac Items.\nIt contains functionality that are common across all",
+		"snippet": false,
+		"methods": [
+			{
+				"name": "loadParent",
+				"returns": "Promise <(StacEntity|null)>",
+				"description": "Loads (if required) and returns the parent as it's StacEntity Class."
+			},
+			{
+				"name": "loadRoot",
+				"returns": "Promise <(StacEntity|null)>",
+				"description": "Loads (if required) and returns the root entity as it's StacEntity Class."
+			}
+		],
+		"properties": [
+			{
+				"name": "id",
+				"returns": "string",
+				"description": "The id of the stac entity"
+			},
+			{
+				"name": "rawJson",
+				"returns": "json",
+				"description": "The json of the stac entity as originally retrieved. This object is\n frozen  to prevent modification."
+			},
+			{
+				"name": "url",
+				"returns": "(string|null)",
+				"description": "The base url of the stac entity (similar to linkToSelf)"
+			},
+			{
+				"name": "parent",
+				"returns": "(StacEntity|null)",
+				"description": "The parent stac entity class"
+			},
+			{
+				"name": "linkThatCreatedThis",
+				"returns": "",
+				"description": "The json link object that was used to create this stac entity"
+			},
+			{
+				"name": "stacType",
+				"returns": "string",
+				"description": "Gets the type of stac entity. One of either 'Catalog', 'Collection' or 'Item'."
+			},
+			{
+				"name": "titleOrId",
+				"returns": "string",
+				"description": "Gets a string of either the title, or if not present, the id"
+			},
+			{
+				"name": "title",
+				"returns": "(string|null)",
+				"description": "Get' a string of either the title, or if not present null"
+			},
+			{
+				"name": "descriptionAsHtml",
+				"returns": "(string|null)",
+				"description": "Gets a description as rendered html using commonmark, or null"
+			},
+			{
+				"name": "linkToSelf",
+				"returns": "(string|null)",
+				"description": "Gets this stac entity's url"
+			},
+			{
+				"name": "hasParent",
+				"returns": "boolean",
+				"description": "A boolean indicating if a parent link is found in the raw json"
+			},
+			{
+				"name": "linkToParent",
+				"returns": "(string|null)",
+				"description": "If present the parent's link url, or null"
+			},
+			{
+				"name": "isRoot",
+				"returns": "boolean",
+				"description": "A boolean indicating if this entity represents the root entity"
+			},
+			{
+				"name": "hasRoot",
+				"returns": "boolean",
+				"description": "A boolean indicating if this entity has a root entity"
+			},
+			{
+				"name": "linkToRoot",
+				"returns": "(string|null)",
+				"description": "If present the parent's root url, or null"
+			},
+			{
+				"name": "parentIsRoot",
+				"returns": "boolean",
+				"description": "A boolean indicating if the parent entity is the root entity"
+			},
+			{
+				"name": "hasAssets",
+				"returns": "boolean",
+				"description": "A boolean indicating if entity has assets"
+			},
+			{
+				"name": "numberOfAssets",
+				"returns": "number",
+				"description": "The number of assets present. If none then 0 is returned"
+			},
+			{
+				"name": "thumbnailUrl",
+				"returns": "string",
+				"description": "The url of the thumbnail asset"
+			},
+			{
+				"name": "overviewUrl",
+				"returns": "string",
+				"description": "The url of the overview asset"
+			},
+			{
+				"name": "validHttpThumbnailUrl",
+				"returns": "(string|null)",
+				"description": "A valid http url for the thumbnail asset, if it exists."
+			},
+			{
+				"name": "validHttpOverviewUrl",
+				"returns": "(string|null)",
+				"description": "A valid http url for the overview asset, if it exists."
+			},
+			{
+				"name": "parentType",
+				"returns": "(string|null)",
+				"description": "Gets the type of parent stac entity. One of either 'Catalog', 'Collection' or 'Item'."
+			},
+			{
+				"name": "supportsFilterExtension",
+				"returns": "boolean",
+				"description": "A boolean indicating if entity supports the filter extension for searching."
+			},
+			{
+				"name": "loadParent",
+				"returns": "Promise <(StacEntity|null)>",
+				"description": "Loads (if required) and returns the parent as it's StacEntity Class."
+			},
+			{
+				"name": "loadRoot",
+				"returns": "Promise <(StacEntity|null)>",
+				"description": "Loads (if required) and returns the root entity as it's StacEntity Class."
+			}
+		],
+		"example": false,
+		"returns": "",
+		"params": [
+			{
+				"name": "json",
+				"type": "json",
+				"description": "The raw json of the stac entity"
+			},
+			{
+				"name": "url",
+				"type": "(string|null)",
+				"default": "null",
+				"description": "The url of the stac entity"
+			},
+			{
+				"name": "parent",
+				"type": "(StacEntity|null)",
+				"default": "null",
+				"description": "The parent class that created this stac entity"
+			},
+			{
+				"name": "linkThatCreatedThis",
+				"type": "(json|null)",
+				"default": "null",
+				"description": "The entire link object that loaded the json"
+			}
+		],
+		"options": null,
+		"throws": []
+	}
+]

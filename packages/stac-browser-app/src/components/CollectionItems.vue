@@ -81,7 +81,11 @@ export default {
   },
   data () {
     return {
-      pageSizeOptions: [{label: '12', value: 12}, {label: '24', value: 24}, {label: '48', value: 48}]
+      pageSizeOptions: [
+        {label: '12', value: 12},
+        {label: '24', value: 24},
+        {label: '48', value: 48}
+      ]
     }
   },
   computed: {
@@ -94,10 +98,12 @@ export default {
     },
     prevPageUnavailable () {
       if (this.loadingItems) return true
+      if (this.collectionOrFilteredCollection.activeItemsCollectionPage === null) return true
       return !this.collectionOrFilteredCollection.activeItemsCollectionPage.hasPrevLink
     },
     nextPageUnavailable () {
       if (this.loadingItems) return true
+      if (this.collectionOrFilteredCollection.activeItemsCollectionPage === null) return true
       return !this.collectionOrFilteredCollection.activeItemsCollectionPage.hasNextLink
     },
     itemsLength () {

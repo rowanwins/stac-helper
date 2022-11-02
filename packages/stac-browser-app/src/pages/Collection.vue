@@ -22,7 +22,7 @@
       <template #second-col-content>
         <ARow>
           <ACol :span="24">
-            <ShareAndSource :stac-thing="collection" :page-state="pageState"/>
+            <ShareAndSource :stac-entity="collection" :page-state="pageState"/>
           </ACol>
         </ARow>
         <ATabs v-model:activeKey="activeTab" :animated="false">
@@ -92,7 +92,7 @@ import CollectionMetadata from '@/components/CollectionMetadata.vue'
 import ListCatalogs from '@/components/ListCatalogs.vue'
 import MapAlert from '@/components/MapAlert.vue'
 import Providers from '@/components/Providers.vue'
-
+import { stringify } from 'qs'
 export default {
   name: 'CollectionPage',
   components: {
@@ -111,6 +111,12 @@ export default {
     loadingChildren: {
       type: Boolean,
       default: false
+    },
+    shareData: {
+      type: Object,
+      default () {
+        return null
+      }
     }
   },
   data () {
@@ -123,27 +129,54 @@ export default {
       searchIsEmpty: false,
       leafletMap: null,
       mapItemsAdded: false,
-      pageSize: 12
+    }
+  },
+  mounted () {
+    if (this.shareData !== null) {
+      this.activeTab = this.shareData.tab
+      this.$store.commit('setPageSize', this.shareData.pageSize)
+
+      setTimeout(() => {
+        const unwatch = this.$watch('collection.queryablesLoaded', (queryablesLoaded) => {
+            if (queryablesLoaded !== false) {
+              this.searchFilter.populateFromSerialisedJson(this.shareData.filter, this.collection)
+              setTimeout(() => unwatch(), 100)
+            }
+          }, {
+            immediate: true,
+            deep: true
+          })      
+        }, 300)
+
     }
   },
   computed: {
+    pageSize () {
+      return this.$store.state.pageResultSize
+    },
     pageState () {
-      return {
+      const state = {
         tab: this.activeTab,
-        pageSize: this.pageSize,
-        page: this.pageResultsIndex
+        pageSize: this.pageSize
       }
+      if (this.collectionOrFilteredCollection !== null && this.collectionOrFilteredCollection.activeItemsCollectionPage) {
+        state.page = this.collectionOrFilteredCollection.activeItemsCollectionPage.linkThatCreatedThis
+      }
+      if (this.searchFilter.anyFilterPropertiesSet) {
+        state.filter = this.searchFilter.asSerialisableJson
+        if (this.leafletMap !== null) this.leafletMap.addFilterBoundingBoxLayerFromBounds(this.searchFilter.standardFilter.bbox)
+      }      
+      return state
     },
     items () {
       if (this.collectionOrFilteredCollection === null) return []     
+      if (this.collectionOrFilteredCollection.activeItemsCollectionPage !== null) {
+        return this.collectionOrFilteredCollection.activeItemsCollectionPage.pageItems
+      }
 
       // Items could be from a static collection
       if (this.collectionOrFilteredCollection.childrenLoaded && this.collectionOrFilteredCollection.hasSomeChildren) {
         return this.collectionOrFilteredCollection.items
-      }
-
-      if (this.collectionOrFilteredCollection.activeItemsCollectionPage !== null) {
-        return this.collectionOrFilteredCollection.activeItemsCollectionPage.pageItems
       }
 
       return []
@@ -212,6 +245,11 @@ export default {
       handler () {
         this.onChildrenLoaded()
       }
+    },
+    loadingChildrenOrItems: {
+      handler (value) {
+        if (!value && !this.mapItemsAdded && this.leafletMap !== null) this.addCollectionThingsToMap()
+      }
     }
   },
   methods: {
@@ -220,11 +258,7 @@ export default {
     },
     async onChildrenLoaded () {
       if (this.collection === null || !this.collection.childrenLoaded) return
-
-      // Sometimes the map will be ready before the data
-      // In which case we add the data now
-      if (!this.mapItemsAdded && this.leafletMap !== null) this.addCollectionThingsToMap()
-      
+     
       this.dataReady = true
 
       if (this.collection.items.length === 0 && this.collection.catalogs.length > 0) {

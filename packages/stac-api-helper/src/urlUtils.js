@@ -4,6 +4,7 @@ import resolveRelative from 'resolve-relative-url'
 /**
  * Returns a boolean indicating whether a url is a valid http url
  * For example a string beginning with "s3://"" is invalid
+ * @private
  */
 export function isValidHttpUrl (url) {
     if (url === null) return false
@@ -13,13 +14,17 @@ export function isValidHttpUrl (url) {
 
 /**
  * Returns a boolean indicating whether a url a relative
+ * @private
  */
 export function isRelativeUrl (href) {
     const uri = new URI(href)
     return uri.is('relative')
 }
 
-
+/**
+ * Returns a boolean indicating whether a url a relative
+ * @private
+ */
 export function createValidFetchUrl (link, parent) {
     const url = typeof link === 'string' ? link : link.href
     const isRelative = isRelativeUrl(url)

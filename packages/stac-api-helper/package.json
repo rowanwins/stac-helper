@@ -17,14 +17,23 @@
   "devDependencies": {
     "@rollup/plugin-commonjs": "^23.0.0",
     "@rollup/plugin-json": "^5.0.0",
+    "ant-design-vue": "^3.2.13",
+    "documentation": "^14.0.0",
     "eslint": "^8.7.0",
     "eslint-config-mourner": "^3.0.0",
     "esm": "^3.2.25",
     "node-fetch": "^3.2.0",
+    "nuxt": "3.0.0-rc.12",
     "rollup": "^2.66.1",
-    "rollup-plugin-terser": "^7.0.2"
+    "rollup-plugin-terser": "^7.0.2",
+    "unplugin-vue-components": "^0.22.9",
+    "write-json-file": "^5.0.0"
   },
   "scripts": {
+    "build:documentation": "documentation build src/** -w -f json -o docs/assets/config.json",
+    "build:docs": "nuxt build docs",
+    "dev:docs": "nuxt dev docs",
+    "generate": "nuxt generate docs",
     "build": "rollup -c",
     "test": "echo \"Error: no test specified\" && exit 1"
   },

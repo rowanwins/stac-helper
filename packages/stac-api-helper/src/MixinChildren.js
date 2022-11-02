@@ -1,6 +1,10 @@
 import {sniffStacType, getWithJsonResponse, createStacItemFromDataAndType} from './utils.js'
 import {createValidFetchUrl} from './urlUtils.js'
 
+/**
+ * This provides methods used for child stac items, it is not used directly.
+ * @mixin
+ */
 export default class ChildrenMixin {
 
     initializer () {
@@ -11,8 +15,20 @@ export default class ChildrenMixin {
         this.numberOfStaticItems = 0
     }
 
+    /**
+     * Returns a boolean indicating that children exist
+     * @return {boolean}
+     */
     get hasSomeChildren () {
         return this.items.length > 0 || this.catalogs.length > 0 || this.collections.length > 0
+    }
+
+    /**
+     * Returns the number of child links found in the raw JSON
+     * @return {number}
+     */
+    get numberOfChildren () {
+        return this.childrenLinks.length && this.childrenItemLinks.length
     }
 
     get childrenLinks () {
@@ -23,6 +39,10 @@ export default class ChildrenMixin {
         return childs
     }
 
+    /**
+     * Returns an array of links to Item's
+     * @return {JSON[]}
+     */
     get childrenItemLinks () {
         return this.rawJson.links.filter(l => l.rel === 'item')
     }
@@ -87,6 +107,11 @@ export default class ChildrenMixin {
         })
     }
 
+    /**
+     * Returns a STAC Entity from the children
+     * @param {string} id - The id to search for
+     * @return {StacEntity | null}
+     */
     getChildById (id) {
         if (this.items.findIndex(i => i.id === id) > -1) return this.items.find(i => i.id === id)
         if (this.catalogs.findIndex(i => i.id === id) > -1) return this.catalogs.find(c => c.id === id)

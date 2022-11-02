@@ -70,7 +70,7 @@ export default createStore({
 
       if ('_pageSize' in stacThing) {
         if (stacThing._pageSize !== state.pageResultSize) {
-          stacThing.setPageSize(state.pageResultSize)
+          stacThing.limit(state.pageResultSize)
         }
       }
 

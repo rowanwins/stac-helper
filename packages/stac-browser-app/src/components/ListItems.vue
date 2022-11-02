@@ -6,7 +6,7 @@
     @mouseout="$emit('item-mouse-out')"
     class="cardStyle"
     type="flex"
-    style="flex-wrap: nowrap; margin-bottom: 10px;"
+    style="flex-wrap: nowrap; margin-bottom: 10px; overflow:hidden;"
   >
     <ACol
       flex="0 0 80px"
@@ -61,3 +61,10 @@ export default {
   }
 }
 </script>
+
+<style>
+.ant-image-img {
+  max-width: fit-content;
+  max-height: 100%;
+}
+</style>

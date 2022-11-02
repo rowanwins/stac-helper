@@ -95,6 +95,9 @@
             </ATag>
           </a-popover>
         </ARow>
+        <ARow style="width: 100%; margin-top: 8px;" v-else>
+          <span style="color: #ccc;">No additional queryables available for filtering.</span>
+        </ARow>
       </div>
     </ACol>
   </ARow>

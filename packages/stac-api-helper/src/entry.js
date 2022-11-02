@@ -1,5 +1,5 @@
 export * from './internal.js'
-import {getWithJsonResponse, sniffStacType, createStacItemFromDataAndType} from './utils'
+import {getWithJsonResponse, sniffStacType, createStacItemFromDataAndType} from './utils.js'
 
 export async function initialiseFromUrl (url) {
     let jsonData = null
