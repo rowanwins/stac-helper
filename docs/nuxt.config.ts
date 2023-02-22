@@ -18,6 +18,9 @@ export default defineNuxtConfig({
       ],
     }
   },
+  experimental: {
+    payloadExtraction: false
+  },
   vite: {
     plugins: [
       Components({
@@ -43,6 +46,6 @@ export default defineNuxtConfig({
     },
     ssr: {
       noExternal: ['ant-design-vue'],
-    },
-  },
+    }
+  }
 })
