@@ -1,0 +1,98 @@
+{
+  "stac_version": "1.0.0",
+  "type": "Feature",
+  "id": "170a3181-9971-45b7-9c19-02d95c9a0562",
+  "properties": {
+    "title": "SD54_AlOH_Group_Composition",
+    "created": "2012-01-01T00:00:00Z",
+    "proj:epsg": 4326,
+    "datetime": "2004-03-02T00:00:00.500000Z",
+    "cubedash:region_code": null
+  },
+  "geometry": {
+    "type": "Polygon",
+    "coordinates": [
+      [
+        [
+          141.3597762249145,
+          -16.000103182734
+        ],
+        [
+          141.3597762249145,
+          -10.2856586
+        ],
+        [
+          145.485054102524,
+          -10.2856586
+        ],
+        [
+          145.485054102524,
+          -16.000103182734
+        ],
+        [
+          141.3597762249145,
+          -16.000103182734
+        ]
+      ]
+    ]
+  },
+  "links": [
+    {
+      "rel": "self",
+      "href": "https://explorer.sandbox.dea.ga.gov.au/stac/collections/aster_aloh_group_composition/items/170a3181-9971-45b7-9c19-02d95c9a0562",
+      "type": "application/json"
+    },
+    {
+      "rel": "odc_yaml",
+      "href": "https://explorer.sandbox.dea.ga.gov.au/dataset/170a3181-9971-45b7-9c19-02d95c9a0562.odc-metadata.yaml",
+      "type": "text/yaml",
+      "title": "ODC Dataset YAML"
+    },
+    {
+      "rel": "collection",
+      "href": "https://explorer.sandbox.dea.ga.gov.au/stac/collections/aster_aloh_group_composition"
+    },
+    {
+      "rel": "product_overview",
+      "href": "https://explorer.sandbox.dea.ga.gov.au/product/aster_aloh_group_composition",
+      "type": "text/html",
+      "title": "ODC Product Overview"
+    },
+    {
+      "rel": "alternative",
+      "href": "https://explorer.sandbox.dea.ga.gov.au/dataset/170a3181-9971-45b7-9c19-02d95c9a0562",
+      "type": "text/html",
+      "title": "ODC Dataset Overview"
+    },
+    {
+      "rel": "root",
+      "href": "https://explorer.sandbox.dea.ga.gov.au/stac"
+    }
+  ],
+  "assets": {
+    "Band_1": {
+      "href": "s3://dea-public-data/ASTER_Geoscience_Map_of_Australia/AlOH_Group_Composition/SD54_AlOH_Group_Composition_Band1.tif",
+      "type": "image/tiff; application=geotiff; profile=cloud-optimized",
+      "title": "Band_1",
+      "eo:bands": [
+        {
+          "name": "Band_1"
+        }
+      ],
+      "roles": [
+        "data"
+      ]
+    }
+  },
+  "bbox": [
+    141.3597762249145,
+    -16.000103182734,
+    145.485054102524,
+    -10.2856586
+  ],
+  "stac_extensions": [
+    "https://stac-extensions.github.io/eo/v1.0.0/schema.json",
+    "https://stac-extensions.github.io/projection/v1.0.0/schema.json"
+  ],
+  "collection": "aster_aloh_group_composition"
+}

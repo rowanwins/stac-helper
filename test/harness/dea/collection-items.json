@@ -1,0 +1,1918 @@
+{
+  "stac_version": "1.0.0",
+  "type": "FeatureCollection",
+  "features": [
+    {
+      "type": "Feature",
+      "stac_version": "1.0.0",
+      "id": "170a3181-9971-45b7-9c19-02d95c9a0562",
+      "properties": {
+        "title": "SD54_AlOH_Group_Composition",
+        "created": "2012-01-01T00:00:00Z",
+        "proj:epsg": 4326,
+        "datetime": "2004-03-02T00:00:00.500000Z",
+        "cubedash:region_code": null
+      },
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              141.3597762249145,
+              -16.000103182734
+            ],
+            [
+              141.3597762249145,
+              -10.2856586
+            ],
+            [
+              145.485054102524,
+              -10.2856586
+            ],
+            [
+              145.485054102524,
+              -16.000103182734
+            ],
+            [
+              141.3597762249145,
+              -16.000103182734
+            ]
+          ]
+        ]
+      },
+      "links": [
+        {
+          "rel": "self",
+          "href": "https://explorer.sandbox.dea.ga.gov.au/stac/collections/aster_aloh_group_composition/items/170a3181-9971-45b7-9c19-02d95c9a0562",
+          "type": "application/json"
+        },
+        {
+          "rel": "odc_yaml",
+          "href": "https://explorer.sandbox.dea.ga.gov.au/dataset/170a3181-9971-45b7-9c19-02d95c9a0562.odc-metadata.yaml",
+          "type": "text/yaml",
+          "title": "ODC Dataset YAML"
+        },
+        {
+          "rel": "collection",
+          "href": "https://explorer.sandbox.dea.ga.gov.au/stac/collections/aster_aloh_group_composition"
+        },
+        {
+          "rel": "product_overview",
+          "href": "https://explorer.sandbox.dea.ga.gov.au/product/aster_aloh_group_composition",
+          "type": "text/html",
+          "title": "ODC Product Overview"
+        },
+        {
+          "rel": "alternative",
+          "href": "https://explorer.sandbox.dea.ga.gov.au/dataset/170a3181-9971-45b7-9c19-02d95c9a0562",
+          "type": "text/html",
+          "title": "ODC Dataset Overview"
+        }
+      ],
+      "assets": {
+        "Band_1": {
+          "href": "s3://dea-public-data/ASTER_Geoscience_Map_of_Australia/AlOH_Group_Composition/SD54_AlOH_Group_Composition_Band1.tif",
+          "type": "image/tiff; application=geotiff; profile=cloud-optimized",
+          "title": "Band_1",
+          "eo:bands": [
+            {
+              "name": "Band_1"
+            }
+          ],
+          "roles": [
+            "data"
+          ]
+        }
+      },
+      "bbox": [
+        141.3597762249145,
+        -16.000103182734,
+        145.485054102524,
+        -10.2856586
+      ],
+      "stac_extensions": [
+        "https://stac-extensions.github.io/eo/v1.0.0/schema.json",
+        "https://stac-extensions.github.io/projection/v1.0.0/schema.json"
+      ],
+      "collection": "aster_aloh_group_composition"
+    },
+    {
+      "type": "Feature",
+      "stac_version": "1.0.0",
+      "id": "1c1e1aae-129e-478a-a130-bebe29ec8bf2",
+      "properties": {
+        "title": "SI51_AlOH_Group_Composition",
+        "created": "2012-01-01T00:00:00Z",
+        "proj:epsg": 4326,
+        "datetime": "2004-03-02T00:00:00.500000Z",
+        "cubedash:region_code": null
+      },
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              119.9997757080025,
+              -34.4826036300105
+            ],
+            [
+              119.9997757080025,
+              -31.9998257921495
+            ],
+            [
+              126.000053630987,
+              -31.9998257921495
+            ],
+            [
+              126.000053630987,
+              -34.4826036300105
+            ],
+            [
+              119.9997757080025,
+              -34.4826036300105
+            ]
+          ]
+        ]
+      },
+      "links": [
+        {
+          "rel": "self",
+          "href": "https://explorer.sandbox.dea.ga.gov.au/stac/collections/aster_aloh_group_composition/items/1c1e1aae-129e-478a-a130-bebe29ec8bf2",
+          "type": "application/json"
+        },
+        {
+          "rel": "odc_yaml",
+          "href": "https://explorer.sandbox.dea.ga.gov.au/dataset/1c1e1aae-129e-478a-a130-bebe29ec8bf2.odc-metadata.yaml",
+          "type": "text/yaml",
+          "title": "ODC Dataset YAML"
+        },
+        {
+          "rel": "collection",
+          "href": "https://explorer.sandbox.dea.ga.gov.au/stac/collections/aster_aloh_group_composition"
+        },
+        {
+          "rel": "product_overview",
+          "href": "https://explorer.sandbox.dea.ga.gov.au/product/aster_aloh_group_composition",
+          "type": "text/html",
+          "title": "ODC Product Overview"
+        },
+        {
+          "rel": "alternative",
+          "href": "https://explorer.sandbox.dea.ga.gov.au/dataset/1c1e1aae-129e-478a-a130-bebe29ec8bf2",
+          "type": "text/html",
+          "title": "ODC Dataset Overview"
+        }
+      ],
+      "assets": {
+        "Band_1": {
+          "href": "s3://dea-public-data/ASTER_Geoscience_Map_of_Australia/AlOH_Group_Composition/SI51_AlOH_Group_Composition_Band1.tif",
+          "type": "image/tiff; application=geotiff; profile=cloud-optimized",
+          "title": "Band_1",
+          "eo:bands": [
+            {
+              "name": "Band_1"
+            }
+          ],
+          "roles": [
+            "data"
+          ]
+        }
+      },
+      "bbox": [
+        119.9997757080025,
+        -34.4826036300105,
+        126.000053630987,
+        -31.9998257921495
+      ],
+      "stac_extensions": [
+        "https://stac-extensions.github.io/eo/v1.0.0/schema.json",
+        "https://stac-extensions.github.io/projection/v1.0.0/schema.json"
+      ],
+      "collection": "aster_aloh_group_composition"
+    },
+    {
+      "type": "Feature",
+      "stac_version": "1.0.0",
+      "id": "1fb9638e-3f9a-4eb6-804d-3ad6b66f64e1",
+      "properties": {
+        "title": "SE51_AlOH_Group_Composition",
+        "created": "2012-01-01T00:00:00Z",
+        "proj:epsg": 4326,
+        "datetime": "2004-03-02T00:00:00.500000Z",
+        "cubedash:region_code": null
+      },
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              119.9997757080025,
+              -20.000103279534002
+            ],
+            [
+              119.9997757080025,
+              -13.9198253546135
+            ],
+            [
+              126.000053630987,
+              -13.9198253546135
+            ],
+            [
+              126.000053630987,
+              -20.000103279534002
+            ],
+            [
+              119.9997757080025,
+              -20.000103279534002
+            ]
+          ]
+        ]
+      },
+      "links": [
+        {
+          "rel": "self",
+          "href": "https://explorer.sandbox.dea.ga.gov.au/stac/collections/aster_aloh_group_composition/items/1fb9638e-3f9a-4eb6-804d-3ad6b66f64e1",
+          "type": "application/json"
+        },
+        {
+          "rel": "odc_yaml",
+          "href": "https://explorer.sandbox.dea.ga.gov.au/dataset/1fb9638e-3f9a-4eb6-804d-3ad6b66f64e1.odc-metadata.yaml",
+          "type": "text/yaml",
+          "title": "ODC Dataset YAML"
+        },
+        {
+          "rel": "collection",
+          "href": "https://explorer.sandbox.dea.ga.gov.au/stac/collections/aster_aloh_group_composition"
+        },
+        {
+          "rel": "product_overview",
+          "href": "https://explorer.sandbox.dea.ga.gov.au/product/aster_aloh_group_composition",
+          "type": "text/html",
+          "title": "ODC Product Overview"
+        },
+        {
+          "rel": "alternative",
+          "href": "https://explorer.sandbox.dea.ga.gov.au/dataset/1fb9638e-3f9a-4eb6-804d-3ad6b66f64e1",
+          "type": "text/html",
+          "title": "ODC Dataset Overview"
+        }
+      ],
+      "assets": {
+        "Band_1": {
+          "href": "s3://dea-public-data/ASTER_Geoscience_Map_of_Australia/AlOH_Group_Composition/SE51_AlOH_Group_Composition_Band1.tif",
+          "type": "image/tiff; application=geotiff; profile=cloud-optimized",
+          "title": "Band_1",
+          "eo:bands": [
+            {
+              "name": "Band_1"
+            }
+          ],
+          "roles": [
+            "data"
+          ]
+        }
+      },
+      "bbox": [
+        119.9997757080025,
+        -20.000103279534002,
+        126.000053630987,
+        -13.9198253546135
+      ],
+      "stac_extensions": [
+        "https://stac-extensions.github.io/eo/v1.0.0/schema.json",
+        "https://stac-extensions.github.io/projection/v1.0.0/schema.json"
+      ],
+      "collection": "aster_aloh_group_composition"
+    },
+    {
+      "type": "Feature",
+      "stac_version": "1.0.0",
+      "id": "2069ccf5-3c0b-42e4-a060-4ce4ba1baf3b",
+      "properties": {
+        "title": "SH55_AlOH_Group_Composition",
+        "created": "2012-01-01T00:00:00Z",
+        "proj:epsg": 4326,
+        "datetime": "2004-03-02T00:00:00.500000Z",
+        "cubedash:region_code": null
+      },
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              143.9997762888025,
+              -32.000103569934
+            ],
+            [
+              143.9997762888025,
+              -27.9998256953495
+            ],
+            [
+              150.00005421178702,
+              -27.9998256953495
+            ],
+            [
+              150.00005421178702,
+              -32.000103569934
+            ],
+            [
+              143.9997762888025,
+              -32.000103569934
+            ]
+          ]
+        ]
+      },
+      "links": [
+        {
+          "rel": "self",
+          "href": "https://explorer.sandbox.dea.ga.gov.au/stac/collections/aster_aloh_group_composition/items/2069ccf5-3c0b-42e4-a060-4ce4ba1baf3b",
+          "type": "application/json"
+        },
+        {
+          "rel": "odc_yaml",
+          "href": "https://explorer.sandbox.dea.ga.gov.au/dataset/2069ccf5-3c0b-42e4-a060-4ce4ba1baf3b.odc-metadata.yaml",
+          "type": "text/yaml",
+          "title": "ODC Dataset YAML"
+        },
+        {
+          "rel": "collection",
+          "href": "https://explorer.sandbox.dea.ga.gov.au/stac/collections/aster_aloh_group_composition"
+        },
+        {
+          "rel": "product_overview",
+          "href": "https://explorer.sandbox.dea.ga.gov.au/product/aster_aloh_group_composition",
+          "type": "text/html",
+          "title": "ODC Product Overview"
+        },
+        {
+          "rel": "alternative",
+          "href": "https://explorer.sandbox.dea.ga.gov.au/dataset/2069ccf5-3c0b-42e4-a060-4ce4ba1baf3b",
+          "type": "text/html",
+          "title": "ODC Dataset Overview"
+        }
+      ],
+      "assets": {
+        "Band_1": {
+          "href": "s3://dea-public-data/ASTER_Geoscience_Map_of_Australia/AlOH_Group_Composition/SH55_AlOH_Group_Composition_Band1.tif",
+          "type": "image/tiff; application=geotiff; profile=cloud-optimized",
+          "title": "Band_1",
+          "eo:bands": [
+            {
+              "name": "Band_1"
+            }
+          ],
+          "roles": [
+            "data"
+          ]
+        }
+      },
+      "bbox": [
+        143.9997762888025,
+        -32.000103569934,
+        150.00005421178702,
+        -27.9998256953495
+      ],
+      "stac_extensions": [
+        "https://stac-extensions.github.io/eo/v1.0.0/schema.json",
+        "https://stac-extensions.github.io/projection/v1.0.0/schema.json"
+      ],
+      "collection": "aster_aloh_group_composition"
+    },
+    {
+      "type": "Feature",
+      "stac_version": "1.0.0",
+      "id": "3fdf8e9f-e15b-46e9-a526-92742b92e3ec",
+      "properties": {
+        "title": "SD53_AlOH_Group_Composition",
+        "created": "2012-01-01T00:00:00Z",
+        "proj:epsg": 4326,
+        "datetime": "2004-03-02T00:00:00.500000Z",
+        "cubedash:region_code": null
+      },
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              131.9997759984025,
+              -16.000103182734
+            ],
+            [
+              131.9997759984025,
+              -10.2856586
+            ],
+            [
+              137.280053903963,
+              -10.2856586
+            ],
+            [
+              137.280053903963,
+              -16.000103182734
+            ],
+            [
+              131.9997759984025,
+              -16.000103182734
+            ]
+          ]
+        ]
+      },
+      "links": [
+        {
+          "rel": "self",
+          "href": "https://explorer.sandbox.dea.ga.gov.au/stac/collections/aster_aloh_group_composition/items/3fdf8e9f-e15b-46e9-a526-92742b92e3ec",
+          "type": "application/json"
+        },
+        {
+          "rel": "odc_yaml",
+          "href": "https://explorer.sandbox.dea.ga.gov.au/dataset/3fdf8e9f-e15b-46e9-a526-92742b92e3ec.odc-metadata.yaml",
+          "type": "text/yaml",
+          "title": "ODC Dataset YAML"
+        },
+        {
+          "rel": "collection",
+          "href": "https://explorer.sandbox.dea.ga.gov.au/stac/collections/aster_aloh_group_composition"
+        },
+        {
+          "rel": "product_overview",
+          "href": "https://explorer.sandbox.dea.ga.gov.au/product/aster_aloh_group_composition",
+          "type": "text/html",
+          "title": "ODC Product Overview"
+        },
+        {
+          "rel": "alternative",
+          "href": "https://explorer.sandbox.dea.ga.gov.au/dataset/3fdf8e9f-e15b-46e9-a526-92742b92e3ec",
+          "type": "text/html",
+          "title": "ODC Dataset Overview"
+        }
+      ],
+      "assets": {
+        "Band_1": {
+          "href": "s3://dea-public-data/ASTER_Geoscience_Map_of_Australia/AlOH_Group_Composition/SD53_AlOH_Group_Composition_Band1.tif",
+          "type": "image/tiff; application=geotiff; profile=cloud-optimized",
+          "title": "Band_1",
+          "eo:bands": [
+            {
+              "name": "Band_1"
+            }
+          ],
+          "roles": [
+            "data"
+          ]
+        }
+      },
+      "bbox": [
+        131.9997759984025,
+        -16.000103182734,
+        137.280053903963,
+        -10.2856586
+      ],
+      "stac_extensions": [
+        "https://stac-extensions.github.io/eo/v1.0.0/schema.json",
+        "https://stac-extensions.github.io/projection/v1.0.0/schema.json"
+      ],
+      "collection": "aster_aloh_group_composition"
+    },
+    {
+      "type": "Feature",
+      "stac_version": "1.0.0",
+      "id": "4282dd86-60aa-47fa-9ff7-4429dac615a7",
+      "properties": {
+        "title": "SD52_AlOH_Group_Composition",
+        "created": "2012-01-01T00:00:00Z",
+        "proj:epsg": 4326,
+        "datetime": "2004-03-02T00:00:00.500000Z",
+        "cubedash:region_code": null
+      },
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              125.99977585320251,
+              -16.000103182733998
+            ],
+            [
+              125.99977585320251,
+              -11.094825286248499
+            ],
+            [
+              132.000053776187,
+              -11.094825286248499
+            ],
+            [
+              132.000053776187,
+              -16.000103182733998
+            ],
+            [
+              125.99977585320251,
+              -16.000103182733998
+            ]
+          ]
+        ]
+      },
+      "links": [
+        {
+          "rel": "self",
+          "href": "https://explorer.sandbox.dea.ga.gov.au/stac/collections/aster_aloh_group_composition/items/4282dd86-60aa-47fa-9ff7-4429dac615a7",
+          "type": "application/json"
+        },
+        {
+          "rel": "odc_yaml",
+          "href": "https://explorer.sandbox.dea.ga.gov.au/dataset/4282dd86-60aa-47fa-9ff7-4429dac615a7.odc-metadata.yaml",
+          "type": "text/yaml",
+          "title": "ODC Dataset YAML"
+        },
+        {
+          "rel": "collection",
+          "href": "https://explorer.sandbox.dea.ga.gov.au/stac/collections/aster_aloh_group_composition"
+        },
+        {
+          "rel": "product_overview",
+          "href": "https://explorer.sandbox.dea.ga.gov.au/product/aster_aloh_group_composition",
+          "type": "text/html",
+          "title": "ODC Product Overview"
+        },
+        {
+          "rel": "alternative",
+          "href": "https://explorer.sandbox.dea.ga.gov.au/dataset/4282dd86-60aa-47fa-9ff7-4429dac615a7",
+          "type": "text/html",
+          "title": "ODC Dataset Overview"
+        }
+      ],
+      "assets": {
+        "Band_1": {
+          "href": "s3://dea-public-data/ASTER_Geoscience_Map_of_Australia/AlOH_Group_Composition/SD52_AlOH_Group_Composition_Band1.tif",
+          "type": "image/tiff; application=geotiff; profile=cloud-optimized",
+          "title": "Band_1",
+          "eo:bands": [
+            {
+              "name": "Band_1"
+            }
+          ],
+          "roles": [
+            "data"
+          ]
+        }
+      },
+      "bbox": [
+        125.99977585320251,
+        -16.000103182733998,
+        132.000053776187,
+        -11.094825286248499
+      ],
+      "stac_extensions": [
+        "https://stac-extensions.github.io/eo/v1.0.0/schema.json",
+        "https://stac-extensions.github.io/projection/v1.0.0/schema.json"
+      ],
+      "collection": "aster_aloh_group_composition"
+    },
+    {
+      "type": "Feature",
+      "stac_version": "1.0.0",
+      "id": "44149bb4-9e80-499f-8155-8b08154aa859",
+      "properties": {
+        "title": "SH50_AlOH_Group_Composition",
+        "created": "2012-01-01T00:00:00Z",
+        "proj:epsg": 4326,
+        "datetime": "2004-03-02T00:00:00.500000Z",
+        "cubedash:region_code": null
+      },
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              113.5797755526385,
+              -32.000103569934
+            ],
+            [
+              113.5797755526385,
+              -27.9998256953495
+            ],
+            [
+              120.00005348578699,
+              -27.9998256953495
+            ],
+            [
+              120.00005348578699,
+              -32.000103569934
+            ],
+            [
+              113.5797755526385,
+              -32.000103569934
+            ]
+          ]
+        ]
+      },
+      "links": [
+        {
+          "rel": "self",
+          "href": "https://explorer.sandbox.dea.ga.gov.au/stac/collections/aster_aloh_group_composition/items/44149bb4-9e80-499f-8155-8b08154aa859",
+          "type": "application/json"
+        },
+        {
+          "rel": "odc_yaml",
+          "href": "https://explorer.sandbox.dea.ga.gov.au/dataset/44149bb4-9e80-499f-8155-8b08154aa859.odc-metadata.yaml",
+          "type": "text/yaml",
+          "title": "ODC Dataset YAML"
+        },
+        {
+          "rel": "collection",
+          "href": "https://explorer.sandbox.dea.ga.gov.au/stac/collections/aster_aloh_group_composition"
+        },
+        {
+          "rel": "product_overview",
+          "href": "https://explorer.sandbox.dea.ga.gov.au/product/aster_aloh_group_composition",
+          "type": "text/html",
+          "title": "ODC Product Overview"
+        },
+        {
+          "rel": "alternative",
+          "href": "https://explorer.sandbox.dea.ga.gov.au/dataset/44149bb4-9e80-499f-8155-8b08154aa859",
+          "type": "text/html",
+          "title": "ODC Dataset Overview"
+        }
+      ],
+      "assets": {
+        "Band_1": {
+          "href": "s3://dea-public-data/ASTER_Geoscience_Map_of_Australia/AlOH_Group_Composition/SH50_AlOH_Group_Composition_Band1.tif",
+          "type": "image/tiff; application=geotiff; profile=cloud-optimized",
+          "title": "Band_1",
+          "eo:bands": [
+            {
+              "name": "Band_1"
+            }
+          ],
+          "roles": [
+            "data"
+          ]
+        }
+      },
+      "bbox": [
+        113.5797755526385,
+        -32.000103569934,
+        120.00005348578699,
+        -27.9998256953495
+      ],
+      "stac_extensions": [
+        "https://stac-extensions.github.io/eo/v1.0.0/schema.json",
+        "https://stac-extensions.github.io/projection/v1.0.0/schema.json"
+      ],
+      "collection": "aster_aloh_group_composition"
+    },
+    {
+      "type": "Feature",
+      "stac_version": "1.0.0",
+      "id": "5523b49b-16ac-4fc1-b47b-5f5ad82c17cc",
+      "properties": {
+        "title": "SI56_AlOH_Group_Composition",
+        "created": "2012-01-01T00:00:00Z",
+        "proj:epsg": 4326,
+        "datetime": "2004-03-02T00:00:00.500000Z",
+        "cubedash:region_code": null
+      },
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              148.4997763977025,
+              -36.000103666734
+            ],
+            [
+              148.4997763977025,
+              -31.9998257921495
+            ],
+            [
+              152.610054274949,
+              -31.9998257921495
+            ],
+            [
+              152.610054274949,
+              -36.000103666734
+            ],
+            [
+              148.4997763977025,
+              -36.000103666734
+            ]
+          ]
+        ]
+      },
+      "links": [
+        {
+          "rel": "self",
+          "href": "https://explorer.sandbox.dea.ga.gov.au/stac/collections/aster_aloh_group_composition/items/5523b49b-16ac-4fc1-b47b-5f5ad82c17cc",
+          "type": "application/json"
+        },
+        {
+          "rel": "odc_yaml",
+          "href": "https://explorer.sandbox.dea.ga.gov.au/dataset/5523b49b-16ac-4fc1-b47b-5f5ad82c17cc.odc-metadata.yaml",
+          "type": "text/yaml",
+          "title": "ODC Dataset YAML"
+        },
+        {
+          "rel": "collection",
+          "href": "https://explorer.sandbox.dea.ga.gov.au/stac/collections/aster_aloh_group_composition"
+        },
+        {
+          "rel": "product_overview",
+          "href": "https://explorer.sandbox.dea.ga.gov.au/product/aster_aloh_group_composition",
+          "type": "text/html",
+          "title": "ODC Product Overview"
+        },
+        {
+          "rel": "alternative",
+          "href": "https://explorer.sandbox.dea.ga.gov.au/dataset/5523b49b-16ac-4fc1-b47b-5f5ad82c17cc",
+          "type": "text/html",
+          "title": "ODC Dataset Overview"
+        }
+      ],
+      "assets": {
+        "Band_1": {
+          "href": "s3://dea-public-data/ASTER_Geoscience_Map_of_Australia/AlOH_Group_Composition/SI56_AlOH_Group_Composition_Band1.tif",
+          "type": "image/tiff; application=geotiff; profile=cloud-optimized",
+          "title": "Band_1",
+          "eo:bands": [
+            {
+              "name": "Band_1"
+            }
+          ],
+          "roles": [
+            "data"
+          ]
+        }
+      },
+      "bbox": [
+        148.4997763977025,
+        -36.000103666734,
+        152.610054274949,
+        -31.9998257921495
+      ],
+      "stac_extensions": [
+        "https://stac-extensions.github.io/eo/v1.0.0/schema.json",
+        "https://stac-extensions.github.io/projection/v1.0.0/schema.json"
+      ],
+      "collection": "aster_aloh_group_composition"
+    },
+    {
+      "type": "Feature",
+      "stac_version": "1.0.0",
+      "id": "5a3caea4-58f8-4f95-9e2e-9a52f0a9c1f1",
+      "properties": {
+        "title": "SG54_AlOH_Group_Composition",
+        "created": "2012-01-01T00:00:00Z",
+        "proj:epsg": 4326,
+        "datetime": "2004-03-02T00:00:00.500000Z",
+        "cubedash:region_code": null
+      },
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              137.9997761436025,
+              -28.000103473134
+            ],
+            [
+              137.9997761436025,
+              -23.9998255985495
+            ],
+            [
+              144.000054066587,
+              -23.9998255985495
+            ],
+            [
+              144.000054066587,
+              -28.000103473134
+            ],
+            [
+              137.9997761436025,
+              -28.000103473134
+            ]
+          ]
+        ]
+      },
+      "links": [
+        {
+          "rel": "self",
+          "href": "https://explorer.sandbox.dea.ga.gov.au/stac/collections/aster_aloh_group_composition/items/5a3caea4-58f8-4f95-9e2e-9a52f0a9c1f1",
+          "type": "application/json"
+        },
+        {
+          "rel": "odc_yaml",
+          "href": "https://explorer.sandbox.dea.ga.gov.au/dataset/5a3caea4-58f8-4f95-9e2e-9a52f0a9c1f1.odc-metadata.yaml",
+          "type": "text/yaml",
+          "title": "ODC Dataset YAML"
+        },
+        {
+          "rel": "collection",
+          "href": "https://explorer.sandbox.dea.ga.gov.au/stac/collections/aster_aloh_group_composition"
+        },
+        {
+          "rel": "product_overview",
+          "href": "https://explorer.sandbox.dea.ga.gov.au/product/aster_aloh_group_composition",
+          "type": "text/html",
+          "title": "ODC Product Overview"
+        },
+        {
+          "rel": "alternative",
+          "href": "https://explorer.sandbox.dea.ga.gov.au/dataset/5a3caea4-58f8-4f95-9e2e-9a52f0a9c1f1",
+          "type": "text/html",
+          "title": "ODC Dataset Overview"
+        }
+      ],
+      "assets": {
+        "Band_1": {
+          "href": "s3://dea-public-data/ASTER_Geoscience_Map_of_Australia/AlOH_Group_Composition/SG54_AlOH_Group_Composition_Band1.tif",
+          "type": "image/tiff; application=geotiff; profile=cloud-optimized",
+          "title": "Band_1",
+          "eo:bands": [
+            {
+              "name": "Band_1"
+            }
+          ],
+          "roles": [
+            "data"
+          ]
+        }
+      },
+      "bbox": [
+        137.9997761436025,
+        -28.000103473134,
+        144.000054066587,
+        -23.9998255985495
+      ],
+      "stac_extensions": [
+        "https://stac-extensions.github.io/eo/v1.0.0/schema.json",
+        "https://stac-extensions.github.io/projection/v1.0.0/schema.json"
+      ],
+      "collection": "aster_aloh_group_composition"
+    },
+    {
+      "type": "Feature",
+      "stac_version": "1.0.0",
+      "id": "64bc4ea9-74f6-4ab8-920b-02733f6e408a",
+      "properties": {
+        "title": "SH54_AlOH_Group_Composition",
+        "created": "2012-01-01T00:00:00Z",
+        "proj:epsg": 4326,
+        "datetime": "2004-03-02T00:00:00.500000Z",
+        "cubedash:region_code": null
+      },
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              137.9997761436025,
+              -32.000103569934
+            ],
+            [
+              137.9997761436025,
+              -27.9998256953495
+            ],
+            [
+              144.000054066587,
+              -27.9998256953495
+            ],
+            [
+              144.000054066587,
+              -32.000103569934
+            ],
+            [
+              137.9997761436025,
+              -32.000103569934
+            ]
+          ]
+        ]
+      },
+      "links": [
+        {
+          "rel": "self",
+          "href": "https://explorer.sandbox.dea.ga.gov.au/stac/collections/aster_aloh_group_composition/items/64bc4ea9-74f6-4ab8-920b-02733f6e408a",
+          "type": "application/json"
+        },
+        {
+          "rel": "odc_yaml",
+          "href": "https://explorer.sandbox.dea.ga.gov.au/dataset/64bc4ea9-74f6-4ab8-920b-02733f6e408a.odc-metadata.yaml",
+          "type": "text/yaml",
+          "title": "ODC Dataset YAML"
+        },
+        {
+          "rel": "collection",
+          "href": "https://explorer.sandbox.dea.ga.gov.au/stac/collections/aster_aloh_group_composition"
+        },
+        {
+          "rel": "product_overview",
+          "href": "https://explorer.sandbox.dea.ga.gov.au/product/aster_aloh_group_composition",
+          "type": "text/html",
+          "title": "ODC Product Overview"
+        },
+        {
+          "rel": "alternative",
+          "href": "https://explorer.sandbox.dea.ga.gov.au/dataset/64bc4ea9-74f6-4ab8-920b-02733f6e408a",
+          "type": "text/html",
+          "title": "ODC Dataset Overview"
+        }
+      ],
+      "assets": {
+        "Band_1": {
+          "href": "s3://dea-public-data/ASTER_Geoscience_Map_of_Australia/AlOH_Group_Composition/SH54_AlOH_Group_Composition_Band1.tif",
+          "type": "image/tiff; application=geotiff; profile=cloud-optimized",
+          "title": "Band_1",
+          "eo:bands": [
+            {
+              "name": "Band_1"
+            }
+          ],
+          "roles": [
+            "data"
+          ]
+        }
+      },
+      "bbox": [
+        137.9997761436025,
+        -32.000103569934,
+        144.000054066587,
+        -27.9998256953495
+      ],
+      "stac_extensions": [
+        "https://stac-extensions.github.io/eo/v1.0.0/schema.json",
+        "https://stac-extensions.github.io/projection/v1.0.0/schema.json"
+      ],
+      "collection": "aster_aloh_group_composition"
+    },
+    {
+      "type": "Feature",
+      "stac_version": "1.0.0",
+      "id": "65ed6e1a-6ef3-492e-bee8-a63b7d6af5a1",
+      "properties": {
+        "title": "SI53_AlOH_Group_Composition",
+        "created": "2012-01-01T00:00:00Z",
+        "proj:epsg": 4326,
+        "datetime": "2004-03-02T00:00:00.500000Z",
+        "cubedash:region_code": null
+      },
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              131.9997759984025,
+              -36.08010366867
+            ],
+            [
+              131.9997759984025,
+              -31.9998257921495
+            ],
+            [
+              138.000053921387,
+              -31.9998257921495
+            ],
+            [
+              138.000053921387,
+              -36.08010366867
+            ],
+            [
+              131.9997759984025,
+              -36.08010366867
+            ]
+          ]
+        ]
+      },
+      "links": [
+        {
+          "rel": "self",
+          "href": "https://explorer.sandbox.dea.ga.gov.au/stac/collections/aster_aloh_group_composition/items/65ed6e1a-6ef3-492e-bee8-a63b7d6af5a1",
+          "type": "application/json"
+        },
+        {
+          "rel": "odc_yaml",
+          "href": "https://explorer.sandbox.dea.ga.gov.au/dataset/65ed6e1a-6ef3-492e-bee8-a63b7d6af5a1.odc-metadata.yaml",
+          "type": "text/yaml",
+          "title": "ODC Dataset YAML"
+        },
+        {
+          "rel": "collection",
+          "href": "https://explorer.sandbox.dea.ga.gov.au/stac/collections/aster_aloh_group_composition"
+        },
+        {
+          "rel": "product_overview",
+          "href": "https://explorer.sandbox.dea.ga.gov.au/product/aster_aloh_group_composition",
+          "type": "text/html",
+          "title": "ODC Product Overview"
+        },
+        {
+          "rel": "alternative",
+          "href": "https://explorer.sandbox.dea.ga.gov.au/dataset/65ed6e1a-6ef3-492e-bee8-a63b7d6af5a1",
+          "type": "text/html",
+          "title": "ODC Dataset Overview"
+        }
+      ],
+      "assets": {
+        "Band_1": {
+          "href": "s3://dea-public-data/ASTER_Geoscience_Map_of_Australia/AlOH_Group_Composition/SI53_AlOH_Group_Composition_Band1.tif",
+          "type": "image/tiff; application=geotiff; profile=cloud-optimized",
+          "title": "Band_1",
+          "eo:bands": [
+            {
+              "name": "Band_1"
+            }
+          ],
+          "roles": [
+            "data"
+          ]
+        }
+      },
+      "bbox": [
+        131.9997759984025,
+        -36.08010366867,
+        138.000053921387,
+        -31.9998257921495
+      ],
+      "stac_extensions": [
+        "https://stac-extensions.github.io/eo/v1.0.0/schema.json",
+        "https://stac-extensions.github.io/projection/v1.0.0/schema.json"
+      ],
+      "collection": "aster_aloh_group_composition"
+    },
+    {
+      "type": "Feature",
+      "stac_version": "1.0.0",
+      "id": "6c163fc0-3abd-4925-a384-6b0ab6727ec5",
+      "properties": {
+        "title": "SF52_AlOH_Group_Composition",
+        "created": "2012-01-01T00:00:00Z",
+        "proj:epsg": 4326,
+        "datetime": "2004-03-02T00:00:00.500000Z",
+        "cubedash:region_code": null
+      },
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              125.99977585320251,
+              -24.000103376334
+            ],
+            [
+              125.99977585320251,
+              -19.9998255017495
+            ],
+            [
+              132.000053776187,
+              -19.9998255017495
+            ],
+            [
+              132.000053776187,
+              -24.000103376334
+            ],
+            [
+              125.99977585320251,
+              -24.000103376334
+            ]
+          ]
+        ]
+      },
+      "links": [
+        {
+          "rel": "self",
+          "href": "https://explorer.sandbox.dea.ga.gov.au/stac/collections/aster_aloh_group_composition/items/6c163fc0-3abd-4925-a384-6b0ab6727ec5",
+          "type": "application/json"
+        },
+        {
+          "rel": "odc_yaml",
+          "href": "https://explorer.sandbox.dea.ga.gov.au/dataset/6c163fc0-3abd-4925-a384-6b0ab6727ec5.odc-metadata.yaml",
+          "type": "text/yaml",
+          "title": "ODC Dataset YAML"
+        },
+        {
+          "rel": "collection",
+          "href": "https://explorer.sandbox.dea.ga.gov.au/stac/collections/aster_aloh_group_composition"
+        },
+        {
+          "rel": "product_overview",
+          "href": "https://explorer.sandbox.dea.ga.gov.au/product/aster_aloh_group_composition",
+          "type": "text/html",
+          "title": "ODC Product Overview"
+        },
+        {
+          "rel": "alternative",
+          "href": "https://explorer.sandbox.dea.ga.gov.au/dataset/6c163fc0-3abd-4925-a384-6b0ab6727ec5",
+          "type": "text/html",
+          "title": "ODC Dataset Overview"
+        }
+      ],
+      "assets": {
+        "Band_1": {
+          "href": "s3://dea-public-data/ASTER_Geoscience_Map_of_Australia/AlOH_Group_Composition/SF52_AlOH_Group_Composition_Band1.tif",
+          "type": "image/tiff; application=geotiff; profile=cloud-optimized",
+          "title": "Band_1",
+          "eo:bands": [
+            {
+              "name": "Band_1"
+            }
+          ],
+          "roles": [
+            "data"
+          ]
+        }
+      },
+      "bbox": [
+        125.99977585320251,
+        -24.000103376334,
+        132.000053776187,
+        -19.9998255017495
+      ],
+      "stac_extensions": [
+        "https://stac-extensions.github.io/eo/v1.0.0/schema.json",
+        "https://stac-extensions.github.io/projection/v1.0.0/schema.json"
+      ],
+      "collection": "aster_aloh_group_composition"
+    },
+    {
+      "type": "Feature",
+      "stac_version": "1.0.0",
+      "id": "6c2c750a-635d-417a-a648-009637d00ab8",
+      "properties": {
+        "title": "SG53_AlOH_Group_Composition",
+        "created": "2012-01-01T00:00:00Z",
+        "proj:epsg": 4326,
+        "datetime": "2004-03-02T00:00:00.500000Z",
+        "cubedash:region_code": null
+      },
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              131.9997759984025,
+              -28.000103473134
+            ],
+            [
+              131.9997759984025,
+              -23.9998255985495
+            ],
+            [
+              138.000053921387,
+              -23.9998255985495
+            ],
+            [
+              138.000053921387,
+              -28.000103473134
+            ],
+            [
+              131.9997759984025,
+              -28.000103473134
+            ]
+          ]
+        ]
+      },
+      "links": [
+        {
+          "rel": "self",
+          "href": "https://explorer.sandbox.dea.ga.gov.au/stac/collections/aster_aloh_group_composition/items/6c2c750a-635d-417a-a648-009637d00ab8",
+          "type": "application/json"
+        },
+        {
+          "rel": "odc_yaml",
+          "href": "https://explorer.sandbox.dea.ga.gov.au/dataset/6c2c750a-635d-417a-a648-009637d00ab8.odc-metadata.yaml",
+          "type": "text/yaml",
+          "title": "ODC Dataset YAML"
+        },
+        {
+          "rel": "collection",
+          "href": "https://explorer.sandbox.dea.ga.gov.au/stac/collections/aster_aloh_group_composition"
+        },
+        {
+          "rel": "product_overview",
+          "href": "https://explorer.sandbox.dea.ga.gov.au/product/aster_aloh_group_composition",
+          "type": "text/html",
+          "title": "ODC Product Overview"
+        },
+        {
+          "rel": "alternative",
+          "href": "https://explorer.sandbox.dea.ga.gov.au/dataset/6c2c750a-635d-417a-a648-009637d00ab8",
+          "type": "text/html",
+          "title": "ODC Dataset Overview"
+        }
+      ],
+      "assets": {
+        "Band_1": {
+          "href": "s3://dea-public-data/ASTER_Geoscience_Map_of_Australia/AlOH_Group_Composition/SG53_AlOH_Group_Composition_Band1.tif",
+          "type": "image/tiff; application=geotiff; profile=cloud-optimized",
+          "title": "Band_1",
+          "eo:bands": [
+            {
+              "name": "Band_1"
+            }
+          ],
+          "roles": [
+            "data"
+          ]
+        }
+      },
+      "bbox": [
+        131.9997759984025,
+        -28.000103473134,
+        138.000053921387,
+        -23.9998255985495
+      ],
+      "stac_extensions": [
+        "https://stac-extensions.github.io/eo/v1.0.0/schema.json",
+        "https://stac-extensions.github.io/projection/v1.0.0/schema.json"
+      ],
+      "collection": "aster_aloh_group_composition"
+    },
+    {
+      "type": "Feature",
+      "stac_version": "1.0.0",
+      "id": "6e1b863d-ece6-459f-9934-c92742a693e5",
+      "properties": {
+        "title": "SG51_AlOH_Group_Composition",
+        "created": "2012-01-01T00:00:00Z",
+        "proj:epsg": 4326,
+        "datetime": "2004-03-02T00:00:00.500000Z",
+        "cubedash:region_code": null
+      },
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              119.9997757080025,
+              -28.000103473134
+            ],
+            [
+              119.9997757080025,
+              -23.9998255985495
+            ],
+            [
+              126.000053630987,
+              -23.9998255985495
+            ],
+            [
+              126.000053630987,
+              -28.000103473134
+            ],
+            [
+              119.9997757080025,
+              -28.000103473134
+            ]
+          ]
+        ]
+      },
+      "links": [
+        {
+          "rel": "self",
+          "href": "https://explorer.sandbox.dea.ga.gov.au/stac/collections/aster_aloh_group_composition/items/6e1b863d-ece6-459f-9934-c92742a693e5",
+          "type": "application/json"
+        },
+        {
+          "rel": "odc_yaml",
+          "href": "https://explorer.sandbox.dea.ga.gov.au/dataset/6e1b863d-ece6-459f-9934-c92742a693e5.odc-metadata.yaml",
+          "type": "text/yaml",
+          "title": "ODC Dataset YAML"
+        },
+        {
+          "rel": "collection",
+          "href": "https://explorer.sandbox.dea.ga.gov.au/stac/collections/aster_aloh_group_composition"
+        },
+        {
+          "rel": "product_overview",
+          "href": "https://explorer.sandbox.dea.ga.gov.au/product/aster_aloh_group_composition",
+          "type": "text/html",
+          "title": "ODC Product Overview"
+        },
+        {
+          "rel": "alternative",
+          "href": "https://explorer.sandbox.dea.ga.gov.au/dataset/6e1b863d-ece6-459f-9934-c92742a693e5",
+          "type": "text/html",
+          "title": "ODC Dataset Overview"
+        }
+      ],
+      "assets": {
+        "Band_1": {
+          "href": "s3://dea-public-data/ASTER_Geoscience_Map_of_Australia/AlOH_Group_Composition/SG51_AlOH_Group_Composition_Band1.tif",
+          "type": "image/tiff; application=geotiff; profile=cloud-optimized",
+          "title": "Band_1",
+          "eo:bands": [
+            {
+              "name": "Band_1"
+            }
+          ],
+          "roles": [
+            "data"
+          ]
+        }
+      },
+      "bbox": [
+        119.9997757080025,
+        -28.000103473134,
+        126.000053630987,
+        -23.9998255985495
+      ],
+      "stac_extensions": [
+        "https://stac-extensions.github.io/eo/v1.0.0/schema.json",
+        "https://stac-extensions.github.io/projection/v1.0.0/schema.json"
+      ],
+      "collection": "aster_aloh_group_composition"
+    },
+    {
+      "type": "Feature",
+      "stac_version": "1.0.0",
+      "id": "70c11ce6-56fb-4273-b87b-4da980940a77",
+      "properties": {
+        "title": "SF55_AlOH_Group_Composition",
+        "created": "2012-01-01T00:00:00Z",
+        "proj:epsg": 4326,
+        "datetime": "2004-03-02T00:00:00.500000Z",
+        "cubedash:region_code": null
+      },
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              143.9997762888025,
+              -24.000103376334
+            ],
+            [
+              143.9997762888025,
+              -19.9998255017495
+            ],
+            [
+              152.400054269867,
+              -19.9998255017495
+            ],
+            [
+              152.400054269867,
+              -24.000103376334
+            ],
+            [
+              143.9997762888025,
+              -24.000103376334
+            ]
+          ]
+        ]
+      },
+      "links": [
+        {
+          "rel": "self",
+          "href": "https://explorer.sandbox.dea.ga.gov.au/stac/collections/aster_aloh_group_composition/items/70c11ce6-56fb-4273-b87b-4da980940a77",
+          "type": "application/json"
+        },
+        {
+          "rel": "odc_yaml",
+          "href": "https://explorer.sandbox.dea.ga.gov.au/dataset/70c11ce6-56fb-4273-b87b-4da980940a77.odc-metadata.yaml",
+          "type": "text/yaml",
+          "title": "ODC Dataset YAML"
+        },
+        {
+          "rel": "collection",
+          "href": "https://explorer.sandbox.dea.ga.gov.au/stac/collections/aster_aloh_group_composition"
+        },
+        {
+          "rel": "product_overview",
+          "href": "https://explorer.sandbox.dea.ga.gov.au/product/aster_aloh_group_composition",
+          "type": "text/html",
+          "title": "ODC Product Overview"
+        },
+        {
+          "rel": "alternative",
+          "href": "https://explorer.sandbox.dea.ga.gov.au/dataset/70c11ce6-56fb-4273-b87b-4da980940a77",
+          "type": "text/html",
+          "title": "ODC Dataset Overview"
+        }
+      ],
+      "assets": {
+        "Band_1": {
+          "href": "s3://dea-public-data/ASTER_Geoscience_Map_of_Australia/AlOH_Group_Composition/SF55_AlOH_Group_Composition_Band1.tif",
+          "type": "image/tiff; application=geotiff; profile=cloud-optimized",
+          "title": "Band_1",
+          "eo:bands": [
+            {
+              "name": "Band_1"
+            }
+          ],
+          "roles": [
+            "data"
+          ]
+        }
+      },
+      "bbox": [
+        143.9997762888025,
+        -24.000103376334,
+        152.400054269867,
+        -19.9998255017495
+      ],
+      "stac_extensions": [
+        "https://stac-extensions.github.io/eo/v1.0.0/schema.json",
+        "https://stac-extensions.github.io/projection/v1.0.0/schema.json"
+      ],
+      "collection": "aster_aloh_group_composition"
+    },
+    {
+      "type": "Feature",
+      "stac_version": "1.0.0",
+      "id": "827a50ee-aef9-4b6a-b0fd-cfc11515e5d6",
+      "properties": {
+        "title": "SI54_AlOH_Group_Composition",
+        "created": "2012-01-01T00:00:00Z",
+        "proj:epsg": 4326,
+        "datetime": "2004-03-02T00:00:00.500000Z",
+        "cubedash:region_code": null
+      },
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              137.9997761436025,
+              -36.000103666734
+            ],
+            [
+              137.9997761436025,
+              -31.9998257921495
+            ],
+            [
+              144.000054066587,
+              -31.9998257921495
+            ],
+            [
+              144.000054066587,
+              -36.000103666734
+            ],
+            [
+              137.9997761436025,
+              -36.000103666734
+            ]
+          ]
+        ]
+      },
+      "links": [
+        {
+          "rel": "self",
+          "href": "https://explorer.sandbox.dea.ga.gov.au/stac/collections/aster_aloh_group_composition/items/827a50ee-aef9-4b6a-b0fd-cfc11515e5d6",
+          "type": "application/json"
+        },
+        {
+          "rel": "odc_yaml",
+          "href": "https://explorer.sandbox.dea.ga.gov.au/dataset/827a50ee-aef9-4b6a-b0fd-cfc11515e5d6.odc-metadata.yaml",
+          "type": "text/yaml",
+          "title": "ODC Dataset YAML"
+        },
+        {
+          "rel": "collection",
+          "href": "https://explorer.sandbox.dea.ga.gov.au/stac/collections/aster_aloh_group_composition"
+        },
+        {
+          "rel": "product_overview",
+          "href": "https://explorer.sandbox.dea.ga.gov.au/product/aster_aloh_group_composition",
+          "type": "text/html",
+          "title": "ODC Product Overview"
+        },
+        {
+          "rel": "alternative",
+          "href": "https://explorer.sandbox.dea.ga.gov.au/dataset/827a50ee-aef9-4b6a-b0fd-cfc11515e5d6",
+          "type": "text/html",
+          "title": "ODC Dataset Overview"
+        }
+      ],
+      "assets": {
+        "Band_1": {
+          "href": "s3://dea-public-data/ASTER_Geoscience_Map_of_Australia/AlOH_Group_Composition/SI54_AlOH_Group_Composition_Band1.tif",
+          "type": "image/tiff; application=geotiff; profile=cloud-optimized",
+          "title": "Band_1",
+          "eo:bands": [
+            {
+              "name": "Band_1"
+            }
+          ],
+          "roles": [
+            "data"
+          ]
+        }
+      },
+      "bbox": [
+        137.9997761436025,
+        -36.000103666734,
+        144.000054066587,
+        -31.9998257921495
+      ],
+      "stac_extensions": [
+        "https://stac-extensions.github.io/eo/v1.0.0/schema.json",
+        "https://stac-extensions.github.io/projection/v1.0.0/schema.json"
+      ],
+      "collection": "aster_aloh_group_composition"
+    },
+    {
+      "type": "Feature",
+      "stac_version": "1.0.0",
+      "id": "86c13a7e-caa6-4cc7-a495-4db79f6944f7",
+      "properties": {
+        "title": "SE52_AlOH_Group_Composition",
+        "created": "2012-01-01T00:00:00Z",
+        "proj:epsg": 4326,
+        "datetime": "2004-03-02T00:00:00.500000Z",
+        "cubedash:region_code": null
+      },
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              125.99977585320251,
+              -20.000103279534002
+            ],
+            [
+              125.99977585320251,
+              -15.999825404949501
+            ],
+            [
+              132.000053776187,
+              -15.999825404949501
+            ],
+            [
+              132.000053776187,
+              -20.000103279534002
+            ],
+            [
+              125.99977585320251,
+              -20.000103279534002
+            ]
+          ]
+        ]
+      },
+      "links": [
+        {
+          "rel": "self",
+          "href": "https://explorer.sandbox.dea.ga.gov.au/stac/collections/aster_aloh_group_composition/items/86c13a7e-caa6-4cc7-a495-4db79f6944f7",
+          "type": "application/json"
+        },
+        {
+          "rel": "odc_yaml",
+          "href": "https://explorer.sandbox.dea.ga.gov.au/dataset/86c13a7e-caa6-4cc7-a495-4db79f6944f7.odc-metadata.yaml",
+          "type": "text/yaml",
+          "title": "ODC Dataset YAML"
+        },
+        {
+          "rel": "collection",
+          "href": "https://explorer.sandbox.dea.ga.gov.au/stac/collections/aster_aloh_group_composition"
+        },
+        {
+          "rel": "product_overview",
+          "href": "https://explorer.sandbox.dea.ga.gov.au/product/aster_aloh_group_composition",
+          "type": "text/html",
+          "title": "ODC Product Overview"
+        },
+        {
+          "rel": "alternative",
+          "href": "https://explorer.sandbox.dea.ga.gov.au/dataset/86c13a7e-caa6-4cc7-a495-4db79f6944f7",
+          "type": "text/html",
+          "title": "ODC Dataset Overview"
+        }
+      ],
+      "assets": {
+        "Band_1": {
+          "href": "s3://dea-public-data/ASTER_Geoscience_Map_of_Australia/AlOH_Group_Composition/SE52_AlOH_Group_Composition_Band1.tif",
+          "type": "image/tiff; application=geotiff; profile=cloud-optimized",
+          "title": "Band_1",
+          "eo:bands": [
+            {
+              "name": "Band_1"
+            }
+          ],
+          "roles": [
+            "data"
+          ]
+        }
+      },
+      "bbox": [
+        125.99977585320251,
+        -20.000103279534002,
+        132.000053776187,
+        -15.999825404949501
+      ],
+      "stac_extensions": [
+        "https://stac-extensions.github.io/eo/v1.0.0/schema.json",
+        "https://stac-extensions.github.io/projection/v1.0.0/schema.json"
+      ],
+      "collection": "aster_aloh_group_composition"
+    },
+    {
+      "type": "Feature",
+      "stac_version": "1.0.0",
+      "id": "9425483c-0f29-4084-a9fd-07c86b451b97",
+      "properties": {
+        "title": "SG56_AlOH_Group_Composition",
+        "created": "2012-01-01T00:00:00Z",
+        "proj:epsg": 4326,
+        "datetime": "2004-03-02T00:00:00.500000Z",
+        "cubedash:region_code": null
+      },
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              149.9997764340025,
+              -28.000103473134
+            ],
+            [
+              149.9997764340025,
+              -23.9998255985495
+            ],
+            [
+              153.5475542976365,
+              -23.9998255985495
+            ],
+            [
+              153.5475542976365,
+              -28.000103473134
+            ],
+            [
+              149.9997764340025,
+              -28.000103473134
+            ]
+          ]
+        ]
+      },
+      "links": [
+        {
+          "rel": "self",
+          "href": "https://explorer.sandbox.dea.ga.gov.au/stac/collections/aster_aloh_group_composition/items/9425483c-0f29-4084-a9fd-07c86b451b97",
+          "type": "application/json"
+        },
+        {
+          "rel": "odc_yaml",
+          "href": "https://explorer.sandbox.dea.ga.gov.au/dataset/9425483c-0f29-4084-a9fd-07c86b451b97.odc-metadata.yaml",
+          "type": "text/yaml",
+          "title": "ODC Dataset YAML"
+        },
+        {
+          "rel": "collection",
+          "href": "https://explorer.sandbox.dea.ga.gov.au/stac/collections/aster_aloh_group_composition"
+        },
+        {
+          "rel": "product_overview",
+          "href": "https://explorer.sandbox.dea.ga.gov.au/product/aster_aloh_group_composition",
+          "type": "text/html",
+          "title": "ODC Product Overview"
+        },
+        {
+          "rel": "alternative",
+          "href": "https://explorer.sandbox.dea.ga.gov.au/dataset/9425483c-0f29-4084-a9fd-07c86b451b97",
+          "type": "text/html",
+          "title": "ODC Dataset Overview"
+        }
+      ],
+      "assets": {
+        "Band_1": {
+          "href": "s3://dea-public-data/ASTER_Geoscience_Map_of_Australia/AlOH_Group_Composition/SG56_AlOH_Group_Composition_Band1.tif",
+          "type": "image/tiff; application=geotiff; profile=cloud-optimized",
+          "title": "Band_1",
+          "eo:bands": [
+            {
+              "name": "Band_1"
+            }
+          ],
+          "roles": [
+            "data"
+          ]
+        }
+      },
+      "bbox": [
+        149.9997764340025,
+        -28.000103473134,
+        153.5475542976365,
+        -23.9998255985495
+      ],
+      "stac_extensions": [
+        "https://stac-extensions.github.io/eo/v1.0.0/schema.json",
+        "https://stac-extensions.github.io/projection/v1.0.0/schema.json"
+      ],
+      "collection": "aster_aloh_group_composition"
+    },
+    {
+      "type": "Feature",
+      "stac_version": "1.0.0",
+      "id": "94afdaa5-7c32-4a37-b898-d703def71999",
+      "properties": {
+        "title": "SE54_AlOH_Group_Composition",
+        "created": "2012-01-01T00:00:00Z",
+        "proj:epsg": 4326,
+        "datetime": "2004-03-02T00:00:00.500000Z",
+        "cubedash:region_code": null
+      },
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              137.9997761436025,
+              -20.000103279534002
+            ],
+            [
+              137.9997761436025,
+              -15.999825404949501
+            ],
+            [
+              144.000054066587,
+              -15.999825404949501
+            ],
+            [
+              144.000054066587,
+              -20.000103279534002
+            ],
+            [
+              137.9997761436025,
+              -20.000103279534002
+            ]
+          ]
+        ]
+      },
+      "links": [
+        {
+          "rel": "self",
+          "href": "https://explorer.sandbox.dea.ga.gov.au/stac/collections/aster_aloh_group_composition/items/94afdaa5-7c32-4a37-b898-d703def71999",
+          "type": "application/json"
+        },
+        {
+          "rel": "odc_yaml",
+          "href": "https://explorer.sandbox.dea.ga.gov.au/dataset/94afdaa5-7c32-4a37-b898-d703def71999.odc-metadata.yaml",
+          "type": "text/yaml",
+          "title": "ODC Dataset YAML"
+        },
+        {
+          "rel": "collection",
+          "href": "https://explorer.sandbox.dea.ga.gov.au/stac/collections/aster_aloh_group_composition"
+        },
+        {
+          "rel": "product_overview",
+          "href": "https://explorer.sandbox.dea.ga.gov.au/product/aster_aloh_group_composition",
+          "type": "text/html",
+          "title": "ODC Product Overview"
+        },
+        {
+          "rel": "alternative",
+          "href": "https://explorer.sandbox.dea.ga.gov.au/dataset/94afdaa5-7c32-4a37-b898-d703def71999",
+          "type": "text/html",
+          "title": "ODC Dataset Overview"
+        }
+      ],
+      "assets": {
+        "Band_1": {
+          "href": "s3://dea-public-data/ASTER_Geoscience_Map_of_Australia/AlOH_Group_Composition/SE54_AlOH_Group_Composition_Band1.tif",
+          "type": "image/tiff; application=geotiff; profile=cloud-optimized",
+          "title": "Band_1",
+          "eo:bands": [
+            {
+              "name": "Band_1"
+            }
+          ],
+          "roles": [
+            "data"
+          ]
+        }
+      },
+      "bbox": [
+        137.9997761436025,
+        -20.000103279534002,
+        144.000054066587,
+        -15.999825404949501
+      ],
+      "stac_extensions": [
+        "https://stac-extensions.github.io/eo/v1.0.0/schema.json",
+        "https://stac-extensions.github.io/projection/v1.0.0/schema.json"
+      ],
+      "collection": "aster_aloh_group_composition"
+    },
+    {
+      "type": "Feature",
+      "stac_version": "1.0.0",
+      "id": "9b89fec1-66a8-45af-a043-0dc924785821",
+      "properties": {
+        "title": "SF51_AlOH_Group_Composition",
+        "created": "2012-01-01T00:00:00Z",
+        "proj:epsg": 4326,
+        "datetime": "2004-03-02T00:00:00.500000Z",
+        "cubedash:region_code": null
+      },
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              119.9997757080025,
+              -24.000103376334
+            ],
+            [
+              119.9997757080025,
+              -19.9998255017495
+            ],
+            [
+              126.000053630987,
+              -19.9998255017495
+            ],
+            [
+              126.000053630987,
+              -24.000103376334
+            ],
+            [
+              119.9997757080025,
+              -24.000103376334
+            ]
+          ]
+        ]
+      },
+      "links": [
+        {
+          "rel": "self",
+          "href": "https://explorer.sandbox.dea.ga.gov.au/stac/collections/aster_aloh_group_composition/items/9b89fec1-66a8-45af-a043-0dc924785821",
+          "type": "application/json"
+        },
+        {
+          "rel": "odc_yaml",
+          "href": "https://explorer.sandbox.dea.ga.gov.au/dataset/9b89fec1-66a8-45af-a043-0dc924785821.odc-metadata.yaml",
+          "type": "text/yaml",
+          "title": "ODC Dataset YAML"
+        },
+        {
+          "rel": "collection",
+          "href": "https://explorer.sandbox.dea.ga.gov.au/stac/collections/aster_aloh_group_composition"
+        },
+        {
+          "rel": "product_overview",
+          "href": "https://explorer.sandbox.dea.ga.gov.au/product/aster_aloh_group_composition",
+          "type": "text/html",
+          "title": "ODC Product Overview"
+        },
+        {
+          "rel": "alternative",
+          "href": "https://explorer.sandbox.dea.ga.gov.au/dataset/9b89fec1-66a8-45af-a043-0dc924785821",
+          "type": "text/html",
+          "title": "ODC Dataset Overview"
+        }
+      ],
+      "assets": {
+        "Band_1": {
+          "href": "s3://dea-public-data/ASTER_Geoscience_Map_of_Australia/AlOH_Group_Composition/SF51_AlOH_Group_Composition_Band1.tif",
+          "type": "image/tiff; application=geotiff; profile=cloud-optimized",
+          "title": "Band_1",
+          "eo:bands": [
+            {
+              "name": "Band_1"
+            }
+          ],
+          "roles": [
+            "data"
+          ]
+        }
+      },
+      "bbox": [
+        119.9997757080025,
+        -24.000103376334,
+        126.000053630987,
+        -19.9998255017495
+      ],
+      "stac_extensions": [
+        "https://stac-extensions.github.io/eo/v1.0.0/schema.json",
+        "https://stac-extensions.github.io/projection/v1.0.0/schema.json"
+      ],
+      "collection": "aster_aloh_group_composition"
+    }
+  ],
+  "links": [
+    {
+      "rel": "next",
+      "href": "https://explorer.sandbox.dea.ga.gov.au/stac/search?collections=aster_aloh_group_composition&limit=20&_o=20&_full=True"
+    },
+    {
+      "href": "https://explorer.sandbox.dea.ga.gov.au/stac/search",
+      "rel": "search",
+      "title": "Search",
+      "type": "application/geo+json",
+      "method": "GET"
+    },
+    {
+      "href": "https://explorer.sandbox.dea.ga.gov.au/stac/search",
+      "rel": "search",
+      "title": "Search",
+      "type": "application/geo+json",
+      "method": "POST"
+    },
+    {
+      "rel": "root",
+      "href": "https://explorer.sandbox.dea.ga.gov.au/stac"
+    }
+  ],
+  "numberReturned": 20,
+  "context": {
+    "page": 0,
+    "limit": 20,
+    "returned": 20,
+    "matched": 37
+  },
+  "numberMatched": 37
+}

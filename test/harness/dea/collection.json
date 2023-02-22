@@ -1,0 +1,40 @@
+{
+  "stac_version": "1.0.0",
+  "id": "aster_aloh_group_composition",
+  "title": "aster_aloh_group_composition",
+  "type": "Collection",
+  "license": null,
+  "description": "ASTER",
+  "properties": {},
+  "providers": [],
+  "extent": {
+    "temporal": {
+      "interval": [
+        [
+          "2004-03-02T00:00:00.500000+00:00",
+          "2004-03-02T00:00:00.500000+00:00"
+        ]
+      ]
+    },
+    "spatial": {
+      "bbox": [
+        [
+          112.917275536606,
+          -43.79261862769363,
+          153.640054299875,
+          -10.28565859999998
+        ]
+      ]
+    }
+  },
+  "links": [
+    {
+      "rel": "items",
+      "href": "https://explorer.sandbox.dea.ga.gov.au/stac/collections/aster_aloh_group_composition/items"
+    },
+    {
+      "rel": "root",
+      "href": "https://explorer.sandbox.dea.ga.gov.au/stac"
+    }
+  ]
+}
