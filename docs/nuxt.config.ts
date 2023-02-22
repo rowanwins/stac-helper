@@ -4,6 +4,7 @@ import { AntDesignVueResolver } from 'unplugin-vue-components/resolvers';
 
 export default defineNuxtConfig({
   app: {
+    baseUrl: 'https://rowanwins.github.io/stac-helper/docs/.output/public/',
     head: {
       meta: [
         { name: 'description', content: '' },
