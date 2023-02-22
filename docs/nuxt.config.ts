@@ -5,6 +5,7 @@ import { AntDesignVueResolver } from 'unplugin-vue-components/resolvers';
 export default defineNuxtConfig({
   app: {
     baseURL: '/stac-helper/built/',
+    buildAssetsDir: '/assets/',
     head: {
       meta: [
         { name: 'description', content: '' },
