@@ -38,7 +38,7 @@
   "scripts": {
     "docs:extract": "node docs/create-config.js",
     "docs:dev": "concurrently \"nuxt dev docs\" \"watch 'npm run docs:extract' src\"",
-    "docs:generate": "nuxt generate docs",
+    "docs:generate": "nuxt generate docs && cp -r ./docs/.output/public  ./docs/built",
     "build": "rollup -c",
     "test": "vitest",
     "coverage": "vitest run --coverage"
